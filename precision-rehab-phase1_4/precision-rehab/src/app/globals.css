@@ -1,0 +1,86 @@
+@import "tailwindcss";
+
+/* ============================================================================
+   BRAND THEME TOKENS
+   Colors sampled directly from the client's Precision Rehab & Performance
+   logo (navy + gold). Tailwind v4 CSS-first theme — edit here to restyle
+   the whole site.
+   ============================================================================ */
+@theme {
+  --font-display: "Plus Jakarta Sans Variable", ui-sans-serif, system-ui, sans-serif;
+  --font-body: "Inter Variable", ui-sans-serif, system-ui, sans-serif;
+
+  /* Navy — primary brand color, sampled from logo runner mark */
+  --color-navy-50: #eef3fa;
+  --color-navy-100: #d7e3f2;
+  --color-navy-200: #b0c7e4;
+  --color-navy-300: #82a5d0;
+  --color-navy-400: #4f7cb3;
+  --color-navy-500: #2c5a91;
+  --color-navy-600: #1c4577;
+  --color-navy-700: #123a70;
+  --color-navy-800: #0e2e58;
+  --color-navy-900: #0a2244;
+  --color-navy-950: #061530;
+
+  /* Gold — accent, sampled from logo compass star + underline */
+  --color-gold-50: #fdf6ec;
+  --color-gold-100: #faead0;
+  --color-gold-200: #f3d19e;
+  --color-gold-300: #eab66c;
+  --color-gold-400: #de9c46;
+  --color-gold-500: #c6862a;
+  --color-gold-600: #a66b1e;
+  --color-gold-700: #825419;
+  --color-gold-800: #5f3d14;
+  --color-gold-900: #3e280d;
+
+  /* Neutral warm-gray for body copy / surfaces */
+  --color-stone-25: #fbfaf8;
+
+  --shadow-soft: 0 1px 2px rgba(10, 34, 68, 0.04), 0 8px 24px -8px rgba(10, 34, 68, 0.12);
+  --shadow-card: 0 1px 1px rgba(10, 34, 68, 0.04), 0 12px 32px -12px rgba(10, 34, 68, 0.18);
+}
+
+:root {
+  --background: #ffffff;
+  --foreground: #101418;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-display);
+}
+
+/* Respect reduced-motion preferences site-wide */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* Visible, on-brand focus ring for keyboard navigation (a11y) */
+:focus-visible {
+  outline: 2px solid var(--color-gold-500);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
