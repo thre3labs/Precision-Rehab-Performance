@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { GraduationCap, MapPinned, Syringe, Camera } from "lucide-react";
+import { Camera } from "lucide-react";
 import { provider } from "@/lib/content";
 import { Container } from "@/components/ui/Container";
 import { Eyebrow } from "@/components/ui/Eyebrow";
@@ -44,30 +44,6 @@ export function AboutPT() {
             <div className="mt-6 space-y-4 text-[15.5px] leading-relaxed text-navy-700">
               <p>{provider.experience}</p>
               <p>{provider.personalNote}</p>
-            </div>
-
-            <div className="mt-8 grid gap-4 sm:grid-cols-3">
-              <div className="rounded-xl border border-navy-900/8 bg-navy-50/60 p-4">
-                <GraduationCap className="h-5 w-5 text-navy-700" strokeWidth={1.75} />
-                <p className="mt-2 text-[13px] font-bold text-navy-900">Education</p>
-                <p className="mt-0.5 text-[12.5px] leading-snug text-navy-600">
-                  {provider.education}
-                </p>
-              </div>
-              <div className="rounded-xl border border-navy-900/8 bg-navy-50/60 p-4">
-                <MapPinned className="h-5 w-5 text-navy-700" strokeWidth={1.75} />
-                <p className="mt-2 text-[13px] font-bold text-navy-900">Experience</p>
-                <p className="mt-0.5 text-[12.5px] leading-snug text-navy-600">
-                  VA, DC, Indiana &amp; Florida, incl. Brevard County
-                </p>
-              </div>
-              <div className="rounded-xl border border-navy-900/8 bg-navy-50/60 p-4">
-                <Syringe className="h-5 w-5 text-navy-700" strokeWidth={1.75} />
-                <p className="mt-2 text-[13px] font-bold text-navy-900">Certifications</p>
-                <p className="mt-0.5 text-[12.5px] leading-snug text-navy-600">
-                  {provider.continuingEducation.join(", ")}
-                </p>
-              </div>
             </div>
           </div>
         </div>
