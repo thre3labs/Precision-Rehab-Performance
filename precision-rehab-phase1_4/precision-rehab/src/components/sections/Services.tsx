@@ -17,14 +17,15 @@ export function Services() {
     <section id="services" className="scroll-mt-20 bg-stone-25 py-20 sm:py-28">
       <Container>
         <div className="mx-auto max-w-2xl text-center">
-          <Eyebrow>Services &amp; Conditions</Eyebrow>
+          <Eyebrow>How We Can Help</Eyebrow>
           <h2 className="mt-4 text-3xl font-extrabold tracking-tight text-navy-950 sm:text-4xl">
-            Do You See Your Problem Here?
+            What&rsquo;s Holding You Back?
           </h2>
           <p className="mt-4 text-lg leading-relaxed text-navy-600">
-            Precision Rehab &amp; Performance treats a focused set of
-            conditions with real depth — from everyday pain to
-            post-surgical recovery to getting back to sport.
+            Whether you&rsquo;re dealing with pain, recovering from surgery,
+            or trying to get back to the activities you love, we&rsquo;ll
+            help you move better, feel stronger, and get back to doing what
+            matters most.
           </p>
         </div>
 
