@@ -96,10 +96,18 @@ export const differentiators = [
   },
 ] as const;
 
+export type TreatmentItem = {
+  name: string;
+  // One-line, general/standard description of what the item is and what it
+  // commonly helps with. Left undefined for self-explanatory items (like a
+  // body-part pain location) that don't need further explanation.
+  blurb?: string;
+};
+
 export type TreatmentCategory = {
   title: string;
   description: string;
-  items: string[];
+  items: TreatmentItem[];
   note?: string;
 };
 
@@ -109,10 +117,22 @@ export const treatmentCategories: TreatmentCategory[] = [
     description:
       "Comprehensive, hands-on physical therapy for injury, surgery recovery, and chronic pain.",
     items: [
-      "Physical Therapy",
-      "Manual Therapy",
-      "Post-Op Rehab",
-      "Chronic Pain Management",
+      {
+        name: "Physical Therapy",
+        blurb: "Hands-on care to reduce pain, restore movement, and rebuild strength.",
+      },
+      {
+        name: "Manual Therapy",
+        blurb: "Joint and soft-tissue techniques that ease stiffness and improve mobility.",
+      },
+      {
+        name: "Post-Op Rehab",
+        blurb: "Guided recovery to safely rebuild strength and motion after surgery.",
+      },
+      {
+        name: "Chronic Pain Management",
+        blurb: "Individualized care for persistent pain that hasn't improved elsewhere.",
+      },
     ],
   },
   {
@@ -120,18 +140,31 @@ export const treatmentCategories: TreatmentCategory[] = [
     description:
       "Common pain points and problem areas patients bring to Precision Rehab & Performance.",
     items: [
-      "Hip Pain",
-      "Knee Pain",
-      "Foot Pain",
-      "Back Pain",
-      "Cervical (Neck) Pain",
+      { name: "Hip Pain" },
+      { name: "Knee Pain" },
+      { name: "Foot Pain" },
+      { name: "Back Pain" },
+      { name: "Cervical (Neck) Pain" },
     ],
   },
   {
     title: "Recovery Modalities",
     description:
       "Cash-based modalities used alongside your treatment plan to accelerate recovery.",
-    items: ["Dry Needling", "Shockwave Therapy", "Cupping"],
+    items: [
+      {
+        name: "Dry Needling",
+        blurb: "Relieves tight muscle knots and trigger points causing chronic tension.",
+      },
+      {
+        name: "Shockwave Therapy",
+        blurb: "Often used for plantar fasciitis, tennis elbow, and stubborn tendon pain.",
+      },
+      {
+        name: "Cupping",
+        blurb: "Eases muscle tightness and improves mobility via localized blood flow.",
+      },
+    ],
     note: "Cash-pay only",
   },
   {
@@ -139,11 +172,26 @@ export const treatmentCategories: TreatmentCategory[] = [
     description:
       "For patients who want to stay ahead of injury and keep performing at their best.",
     items: [
-      "Injury Prevention",
-      "Strength & Performance Training",
-      "Return to Sport",
-      "Gait Analysis",
-      "Maintenance Training",
+      {
+        name: "Injury Prevention",
+        blurb: "Movement screening to catch weaknesses before they become injuries.",
+      },
+      {
+        name: "Strength & Performance Training",
+        blurb: "Progressive strength work built around your sport or activity goals.",
+      },
+      {
+        name: "Return to Sport",
+        blurb: "A guided progression back to full activity after injury.",
+      },
+      {
+        name: "Gait Analysis",
+        blurb: "Identifies patterns in your walk or run that contribute to pain.",
+      },
+      {
+        name: "Maintenance Training",
+        blurb: "Ongoing sessions to stay strong and ahead of future injury.",
+      },
     ],
   },
 ];
