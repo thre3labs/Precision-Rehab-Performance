@@ -66,6 +66,13 @@ export const provider = {
   photo: "/images/kushal-patel.jpg",
 };
 
+export const missionVision = {
+  mission:
+    "Our mission is to address the root cause of pain, not just the symptoms, by applying precise assessments, individualized care, and intentional, movement-based solutions.",
+  vision:
+    "To set a new standard in rehabilitation and performance care by identifying the root cause, delivering precision treatment, and transforming how people move and perform.",
+};
+
 export const differentiators = [
   {
     title: "One-on-One, Every Visit",
