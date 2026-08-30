@@ -29,13 +29,13 @@ export function Treatments() {
           </p>
         </div>
 
-        <div className="mt-14 grid items-start gap-6 sm:grid-cols-2">
+        <div className="mx-auto mt-14 flex max-w-3xl flex-col gap-6">
           {treatmentCategories.map((category, i) => {
             const Icon = icons[i % icons.length];
             return (
               <div
                 key={category.title}
-                className="group flex h-fit flex-col self-start rounded-2xl border border-navy-900/8 bg-white p-6 shadow-soft transition-shadow hover:shadow-card sm:p-7"
+                className="group flex flex-col rounded-2xl border border-navy-900/8 bg-white p-6 shadow-soft transition-shadow hover:shadow-card sm:p-7"
               >
                 <span className="flex h-12 w-12 items-center justify-center rounded-xl bg-navy-700 text-white shadow-soft">
                   <Icon className="h-6 w-6" strokeWidth={1.75} />
