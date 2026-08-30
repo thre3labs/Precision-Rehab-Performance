@@ -35,7 +35,7 @@ export function Treatments() {
             return (
               <div
                 key={category.title}
-                className="group flex flex-col rounded-2xl border border-navy-900/8 bg-white p-6 shadow-soft transition-shadow hover:shadow-card sm:p-7"
+                className="group flex h-fit flex-col self-start rounded-2xl border border-navy-900/8 bg-white p-6 shadow-soft transition-shadow hover:shadow-card sm:p-7"
               >
                 <span className="flex h-12 w-12 items-center justify-center rounded-xl bg-navy-700 text-white shadow-soft">
                   <Icon className="h-6 w-6" strokeWidth={1.75} />
