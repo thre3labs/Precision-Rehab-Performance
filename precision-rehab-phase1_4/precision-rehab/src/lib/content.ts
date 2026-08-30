@@ -96,14 +96,14 @@ export const differentiators = [
   },
 ] as const;
 
-export type ServiceCategory = {
+export type TreatmentCategory = {
   title: string;
   description: string;
   items: string[];
   note?: string;
 };
 
-export const serviceCategories: ServiceCategory[] = [
+export const treatmentCategories: TreatmentCategory[] = [
   {
     title: "Physical Therapy & Rehabilitation",
     description:
