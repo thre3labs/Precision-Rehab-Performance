@@ -1,7 +1,6 @@
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { Hero } from "@/components/sections/Hero";
-import { TrustBar } from "@/components/sections/TrustBar";
 import { Services } from "@/components/sections/Services";
 import { WhyChooseUs } from "@/components/sections/WhyChooseUs";
 import { AboutPT } from "@/components/sections/AboutPT";
@@ -13,9 +12,9 @@ import { FinalCTA } from "@/components/sections/FinalCTA";
 
 /**
  * Phase 1 landing page. Sections are ordered to move a visitor through a
- * logical conversion funnel: hero -> trust -> services -> differentiation
- * -> provider bio -> free screening conversion point -> insurance/cash-pay
- * objection handling -> location/local SEO -> FAQ -> final CTA.
+ * logical conversion funnel: hero -> services -> differentiation -> provider
+ * bio -> free screening conversion point -> insurance/cash-pay objection
+ * handling -> location/local SEO -> FAQ -> final CTA.
  *
  * Phase 2: each <Section /> below is already a standalone component, so
  * promoting any of them to its own route (e.g. `/services`,
@@ -28,7 +27,6 @@ export default function Home() {
       <Header />
       <main id="main-content">
         <Hero />
-        <TrustBar />
         <Services />
         <WhyChooseUs />
         <AboutPT />
