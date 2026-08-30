@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { MapPin, Phone, ShieldCheck, Users } from "lucide-react";
-import { site } from "@/lib/content";
+import { site, missionVision } from "@/lib/content";
 import { Container } from "@/components/ui/Container";
 import { Button } from "@/components/ui/Button";
 import { Eyebrow } from "@/components/ui/Eyebrow";
@@ -22,9 +22,12 @@ export function Hero() {
           <div>
             <Eyebrow light>Melbourne, Florida &middot; Outpatient Physical Therapy</Eyebrow>
 
-            <h1 className="mt-5 text-4xl font-extrabold leading-[1.08] tracking-tight text-white sm:text-5xl lg:text-[3.4rem]">
-              One-on-One Physical Therapy, Built to Get You Back to{" "}
-              <span className="text-gold-400">What You Love.</span>
+            <h1 className="mt-5 text-3xl font-extrabold leading-[1.2] tracking-tight text-white sm:text-4xl lg:text-[2.75rem]">
+              Our mission is to address the{" "}
+              <span className="text-gold-400">root cause of pain</span>, not
+              just the symptoms, by applying precise assessments,
+              individualized care, and intentional, movement-based
+              solutions.
             </h1>
 
             <p className="mt-6 max-w-xl text-lg leading-relaxed text-navy-200">
@@ -91,12 +94,11 @@ export function Hero() {
                 />
               </div>
 
-              <p className="mt-6 text-center text-lg font-semibold text-white">
-                &ldquo;Individualized treatment to help you heal quicker —
-                and stay ahead of what&rsquo;s next.&rdquo;
+              <p className="mt-6 text-center text-[15px] font-semibold leading-snug text-white">
+                &ldquo;{missionVision.vision}&rdquo;
               </p>
-              <p className="mt-2 text-center text-sm text-navy-300">
-                — Dr. Kushal Patel, PT, DPT
+              <p className="mt-3 text-center text-sm text-navy-300">
+                — Our Vision
               </p>
 
               <div className="mt-7 grid grid-cols-2 gap-3">
