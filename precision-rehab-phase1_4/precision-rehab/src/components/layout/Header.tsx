@@ -25,7 +25,7 @@ export function Header() {
       <Container className="flex h-18 items-center justify-between py-3">
         <Link href="/" className="flex items-center gap-2.5 shrink-0" aria-label={`${site.name} — home`}>
           <Image
-            src="/images/logo-full.png"
+            src="/images/logo-transparent.png"
             alt={`${site.name} logo`}
             width={250}
             height={100}
