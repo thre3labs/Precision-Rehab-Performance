@@ -1,3 +1,6 @@
+"use client";
+
+import { useState } from "react";
 import {
   Activity,
   Bone,
@@ -12,7 +15,16 @@ import { Button } from "@/components/ui/Button";
 
 const icons = [Activity, Bone, Sparkles, Trophy];
 
+/**
+ * All category panels render in the markup at all times (only the active
+ * one is visually hidden via the `hidden` attribute) so every treatment,
+ * condition, and modality stays present in the page's HTML for SEO and
+ * accessibility — switching tabs is a pure visual toggle, not a content
+ * fetch or unmount.
+ */
 export function Treatments() {
+  const [active, setActive] = useState(0);
+
   return (
     <section id="treatments" className="scroll-mt-20 bg-stone-25 py-20 sm:py-28">
       <Container>
@@ -29,29 +41,75 @@ export function Treatments() {
           </p>
         </div>
 
-        <div className="mx-auto mt-14 flex max-w-3xl flex-col gap-6">
+        {/* Category selector */}
+        <div
+          role="tablist"
+          aria-label="Treatment categories"
+          className="mx-auto mt-12 grid max-w-2xl grid-cols-2 gap-2.5 sm:flex sm:flex-wrap sm:justify-center"
+        >
+          {treatmentCategories.map((category, i) => {
+            const Icon = icons[i % icons.length];
+            const isActive = i === active;
+            return (
+              <button
+                key={category.title}
+                type="button"
+                role="tab"
+                id={`treatment-tab-${i}`}
+                aria-selected={isActive}
+                aria-controls={`treatment-panel-${i}`}
+                onClick={() => setActive(i)}
+                className={`flex items-center justify-center gap-2 rounded-full border px-4 py-2.5 text-center text-[13px] font-bold transition-colors sm:text-[13.5px] ${
+                  isActive
+                    ? "border-navy-700 bg-navy-700 text-white shadow-soft"
+                    : "border-navy-900/10 bg-white text-navy-700 hover:border-navy-700/40"
+                }`}
+              >
+                <Icon className="h-4 w-4 shrink-0" strokeWidth={2} />
+                {category.title}
+              </button>
+            );
+          })}
+        </div>
+
+        {/* Active category panel */}
+        <div className="mx-auto mt-6 max-w-3xl">
           {treatmentCategories.map((category, i) => {
             const Icon = icons[i % icons.length];
             return (
               <div
                 key={category.title}
-                className="group flex flex-col rounded-2xl border border-navy-900/8 bg-white p-6 shadow-soft transition-shadow hover:shadow-card sm:p-7"
+                id={`treatment-panel-${i}`}
+                role="tabpanel"
+                aria-labelledby={`treatment-tab-${i}`}
+                hidden={i !== active}
+                className="rounded-2xl border border-navy-900/8 bg-white p-6 shadow-soft sm:p-8"
               >
-                <span className="flex h-12 w-12 items-center justify-center rounded-xl bg-navy-700 text-white shadow-soft">
-                  <Icon className="h-6 w-6" strokeWidth={1.75} />
-                </span>
-                <h3 className="mt-5 text-lg font-bold text-navy-950">
-                  {category.title}
-                </h3>
-                <p className="mt-2 text-[14px] leading-relaxed text-navy-600">
-                  {category.description}
-                </p>
-                <ul className="mt-5 space-y-4 border-t border-navy-900/5 pt-5">
+                <div className="flex flex-wrap items-center gap-4 border-b border-navy-900/5 pb-6">
+                  <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-navy-700 text-white shadow-soft">
+                    <Icon className="h-6 w-6" strokeWidth={1.75} />
+                  </span>
+                  <div className="min-w-0 flex-1">
+                    <h3 className="text-lg font-bold text-navy-950">
+                      {category.title}
+                    </h3>
+                    <p className="mt-1 text-[13.5px] leading-relaxed text-navy-600">
+                      {category.description}
+                    </p>
+                  </div>
+                  {category.note && (
+                    <span className="shrink-0 rounded-full bg-gold-50 px-3 py-1 text-[11px] font-bold uppercase tracking-wide text-gold-700">
+                      {category.note}
+                    </span>
+                  )}
+                </div>
+
+                <ul className="mt-6 grid gap-x-8 gap-y-4 sm:grid-cols-2">
                   {category.items.map((item) => (
-                    <li key={item.name} className="flex items-start gap-2.5">
-                      <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-gold-500" />
+                    <li key={item.name} className="flex items-start gap-3">
+                      <CheckCircle2 className="mt-0.5 h-[18px] w-[18px] shrink-0 text-gold-500" />
                       <div>
-                        <span className="text-[13.5px] font-bold text-navy-800">
+                        <span className="text-[14px] font-bold text-navy-800">
                           {item.name}
                         </span>
                         {item.blurb && (
@@ -63,17 +121,12 @@ export function Treatments() {
                     </li>
                   ))}
                 </ul>
-                {category.note && (
-                  <span className="mt-5 inline-block w-fit rounded-full bg-gold-50 px-3 py-1 text-[11px] font-bold uppercase tracking-wide text-gold-700">
-                    {category.note}
-                  </span>
-                )}
               </div>
             );
           })}
         </div>
 
-        <div className="mt-12 flex flex-col items-center gap-3 text-center">
+        <div className="mt-10 flex flex-col items-center gap-3 text-center">
           <p className="text-[15px] text-navy-600">
             Don&rsquo;t see your exact condition listed? We likely still
             treat it — the fastest way to find out is a free 15-minute
