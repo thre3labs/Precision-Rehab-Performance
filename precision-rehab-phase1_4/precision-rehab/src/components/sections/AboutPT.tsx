@@ -3,7 +3,6 @@ import { GraduationCap, MapPinned, Syringe, Camera } from "lucide-react";
 import { provider } from "@/lib/content";
 import { Container } from "@/components/ui/Container";
 import { Eyebrow } from "@/components/ui/Eyebrow";
-import { Button } from "@/components/ui/Button";
 
 export function AboutPT() {
   return (
@@ -69,12 +68,6 @@ export function AboutPT() {
                   {provider.continuingEducation.join(", ")}
                 </p>
               </div>
-            </div>
-
-            <div className="mt-9">
-              <Button href="#screening" variant="primary">
-                Talk to Dr. Patel — Book Your Free Screening
-              </Button>
             </div>
           </div>
         </div>
