@@ -29,13 +29,13 @@ export function Treatments() {
           </p>
         </div>
 
-        <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mt-14 grid items-start gap-6 sm:grid-cols-2">
           {treatmentCategories.map((category, i) => {
             const Icon = icons[i % icons.length];
             return (
               <div
                 key={category.title}
-                className="group flex flex-col rounded-2xl border border-navy-900/8 bg-white p-6 shadow-soft transition-shadow hover:shadow-card"
+                className="group flex flex-col rounded-2xl border border-navy-900/8 bg-white p-6 shadow-soft transition-shadow hover:shadow-card sm:p-7"
               >
                 <span className="flex h-12 w-12 items-center justify-center rounded-xl bg-navy-700 text-white shadow-soft">
                   <Icon className="h-6 w-6" strokeWidth={1.75} />
@@ -46,19 +46,25 @@ export function Treatments() {
                 <p className="mt-2 text-[14px] leading-relaxed text-navy-600">
                   {category.description}
                 </p>
-                <ul className="mt-4 space-y-2 border-t border-navy-900/5 pt-4">
+                <ul className="mt-5 space-y-4 border-t border-navy-900/5 pt-5">
                   {category.items.map((item) => (
-                    <li
-                      key={item}
-                      className="flex items-start gap-2 text-[13.5px] font-medium text-navy-700"
-                    >
+                    <li key={item.name} className="flex items-start gap-2.5">
                       <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-gold-500" />
-                      {item}
+                      <div>
+                        <span className="text-[13.5px] font-bold text-navy-800">
+                          {item.name}
+                        </span>
+                        {item.blurb && (
+                          <p className="mt-0.5 text-[13px] leading-snug text-navy-500">
+                            {item.blurb}
+                          </p>
+                        )}
+                      </div>
                     </li>
                   ))}
                 </ul>
                 {category.note && (
-                  <span className="mt-4 inline-block w-fit rounded-full bg-gold-50 px-3 py-1 text-[11px] font-bold uppercase tracking-wide text-gold-700">
+                  <span className="mt-5 inline-block w-fit rounded-full bg-gold-50 px-3 py-1 text-[11px] font-bold uppercase tracking-wide text-gold-700">
                     {category.note}
                   </span>
                 )}
