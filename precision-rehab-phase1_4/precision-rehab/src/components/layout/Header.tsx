@@ -7,12 +7,12 @@ import { Button } from "@/components/ui/Button";
 
 /**
  * Phase 2 note: nav items below are anchor links into this single page.
- * Once Services / About / Contact become standalone routes, swap the
- * `href="#id"` values for real paths (e.g. "/services") — the markup and
+ * Once Treatments / About / Contact become standalone routes, swap the
+ * `href="#id"` values for real paths (e.g. "/treatments") — the markup and
  * styling stay the same.
  */
 const navItems = [
-  { label: "Services", href: "#services" },
+  { label: "Treatments", href: "#treatments" },
   { label: "Why Precision Rehab", href: "#why-us" },
   { label: "About Dr. Patel", href: "#about" },
   { label: "Insurance & Pricing", href: "#insurance" },

@@ -5,7 +5,7 @@ import { Container } from "@/components/ui/Container";
 
 /**
  * Phase 2 note: footer link columns are intentionally pre-built with the
- * future sitemap (About, Services, Blog, Contact, individual condition
+ * future sitemap (About, Treatments, Blog, Contact, individual condition
  * pages) even though they currently point back to this single page's
  * anchors. Swap hrefs to real routes as those pages ship — no structural
  * change needed.
@@ -77,7 +77,7 @@ export function Footer() {
               Explore
             </h3>
             <ul className="mt-4 space-y-2.5 text-sm text-navy-200">
-              <li><a href="#services" className="hover:text-white">Services & Conditions</a></li>
+              <li><a href="#treatments" className="hover:text-white">Treatments & Conditions</a></li>
               <li><a href="#why-us" className="hover:text-white">Why Precision Rehab</a></li>
               <li><a href="#about" className="hover:text-white">About Dr. Patel</a></li>
               <li><a href="#screening" className="hover:text-white">Free 15-Min Screening</a></li>
