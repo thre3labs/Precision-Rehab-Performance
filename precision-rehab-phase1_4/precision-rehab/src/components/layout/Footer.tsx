@@ -81,7 +81,7 @@ export function Footer() {
               <li><a href="#why-us" className="hover:text-white">Why Precision Rehab</a></li>
               <li><a href="#about" className="hover:text-white">About Us</a></li>
               <li><a href="#screening" className="hover:text-white">Free 15-Min Screening</a></li>
-              <li><a href="#insurance" className="hover:text-white">Insurance &amp; Cash-Pay</a></li>
+              <li><a href="#conditions" className="hover:text-white">Conditions We Treat</a></li>
               <li><a href="#faq" className="hover:text-white">FAQ</a></li>
             </ul>
           </div>

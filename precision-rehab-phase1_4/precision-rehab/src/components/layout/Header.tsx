@@ -15,7 +15,7 @@ const navItems = [
   { label: "Treatments", href: "#treatments" },
   { label: "Why Precision Rehab", href: "#why-us" },
   { label: "About Us", href: "#about" },
-  { label: "Insurance & Pricing", href: "#insurance" },
+  { label: "Conditions We Treat", href: "#conditions" },
   { label: "FAQ", href: "#faq" },
 ];
 
