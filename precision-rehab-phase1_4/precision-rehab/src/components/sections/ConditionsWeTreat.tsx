@@ -10,7 +10,7 @@ import { Eyebrow } from "@/components/ui/Eyebrow";
  */
 export function ConditionsWeTreat() {
   return (
-    <section id="conditions" className="scroll-mt-20 bg-navy-50/60 py-20 sm:py-28">
+    <section id="conditions" className="scroll-mt-20 bg-navy-50 py-20 sm:py-28">
       <Container>
         <div className="mx-auto max-w-2xl text-center">
           <Eyebrow>What We Treat</Eyebrow>
