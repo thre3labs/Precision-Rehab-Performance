@@ -10,7 +10,6 @@ import {
 import { treatmentCategories } from "@/lib/content";
 import { Container } from "@/components/ui/Container";
 import { Eyebrow } from "@/components/ui/Eyebrow";
-import { Button } from "@/components/ui/Button";
 
 const icons = [Activity, Sparkles, Trophy];
 
@@ -131,9 +130,6 @@ export function Treatments() {
             treat it. The fastest way to find out is a free 15-minute
             screening.
           </p>
-          <Button href="#screening" variant="secondary">
-            Ask About Your Condition
-          </Button>
         </div>
       </Container>
     </section>
