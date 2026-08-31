@@ -23,7 +23,7 @@ export function Header() {
   return (
     <header className="sticky top-0 z-40 border-b border-navy-900/5 bg-white/90 backdrop-blur-md">
       <Container className="flex h-18 items-center justify-between py-3">
-        <Link href="/" className="flex items-center gap-2.5 shrink-0" aria-label={`${site.name} — home`}>
+        <Link href="/" className="flex items-center gap-2.5 shrink-0" aria-label={`${site.name}, home`}>
           <Image
             src="/images/logo-transparent.png"
             alt={`${site.name} logo`}

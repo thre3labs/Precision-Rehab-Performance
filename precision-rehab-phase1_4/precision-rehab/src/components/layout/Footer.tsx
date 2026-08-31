@@ -26,8 +26,8 @@ export function Footer() {
               className="h-11 w-auto brightness-0 invert opacity-95"
             />
             <p className="mt-4 max-w-xs text-sm leading-relaxed text-navy-300">
-              Cash-based outpatient physical therapy in Melbourne, FL —
-              individualized, one-on-one care focused on getting you back to
+              Cash-based outpatient physical therapy in Melbourne, FL.
+              Individualized, one-on-one care focused on getting you back to
               the life and activities you care about.
             </p>
           </div>
