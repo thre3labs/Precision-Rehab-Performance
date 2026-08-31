@@ -14,7 +14,7 @@ import { Button } from "@/components/ui/Button";
 const navItems = [
   { label: "Treatments", href: "#treatments" },
   { label: "Why Precision Rehab", href: "#why-us" },
-  { label: "About Dr. Patel", href: "#about" },
+  { label: "About Us", href: "#about" },
   { label: "Insurance & Pricing", href: "#insurance" },
   { label: "FAQ", href: "#faq" },
 ];
