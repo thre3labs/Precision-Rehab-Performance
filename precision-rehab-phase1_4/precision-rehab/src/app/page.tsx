@@ -5,7 +5,7 @@ import { Treatments } from "@/components/sections/Treatments";
 import { WhyChooseUs } from "@/components/sections/WhyChooseUs";
 import { AboutPT } from "@/components/sections/AboutPT";
 import { FreeScreening } from "@/components/sections/FreeScreening";
-import { Insurance } from "@/components/sections/Insurance";
+import { ConditionsWeTreat } from "@/components/sections/ConditionsWeTreat";
 import { Location } from "@/components/sections/Location";
 import { FAQ } from "@/components/sections/FAQ";
 import { FinalCTA } from "@/components/sections/FinalCTA";
@@ -13,8 +13,8 @@ import { FinalCTA } from "@/components/sections/FinalCTA";
 /**
  * Phase 1 landing page. Sections are ordered to move a visitor through a
  * logical conversion funnel: hero -> treatments -> differentiation -> provider
- * bio -> free screening conversion point -> insurance/cash-pay objection
- * handling -> location/local SEO -> FAQ -> final CTA.
+ * bio -> free screening conversion point -> conditions we treat ->
+ * location/local SEO -> FAQ -> final CTA.
  *
  * Phase 2: each <Section /> below is already a standalone component, so
  * promoting any of them to its own route (e.g. `/treatments`,
@@ -31,7 +31,7 @@ export default function Home() {
         <WhyChooseUs />
         <AboutPT />
         <FreeScreening />
-        <Insurance />
+        <ConditionsWeTreat />
         <Location />
         <FAQ />
         <FinalCTA />
