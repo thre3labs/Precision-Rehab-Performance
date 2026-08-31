@@ -1,19 +1,19 @@
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { Hero } from "@/components/sections/Hero";
-import { Treatments } from "@/components/sections/Treatments";
-import { WhyChooseUs } from "@/components/sections/WhyChooseUs";
-import { AboutPT } from "@/components/sections/AboutPT";
-import { FreeScreening } from "@/components/sections/FreeScreening";
 import { ConditionsWeTreat } from "@/components/sections/ConditionsWeTreat";
+import { Treatments } from "@/components/sections/Treatments";
+import { AboutPT } from "@/components/sections/AboutPT";
+import { WhyChooseUs } from "@/components/sections/WhyChooseUs";
+import { FreeScreening } from "@/components/sections/FreeScreening";
 import { Location } from "@/components/sections/Location";
 import { FAQ } from "@/components/sections/FAQ";
 import { FinalCTA } from "@/components/sections/FinalCTA";
 
 /**
  * Phase 1 landing page. Sections are ordered to move a visitor through a
- * logical conversion funnel: hero -> treatments -> differentiation -> provider
- * bio -> free screening conversion point -> conditions we treat ->
+ * logical conversion funnel: hero -> conditions we treat -> treatments ->
+ * provider bio -> differentiation -> free screening conversion point ->
  * location/local SEO -> FAQ -> final CTA.
  *
  * Phase 2: each <Section /> below is already a standalone component, so
@@ -27,11 +27,11 @@ export default function Home() {
       <Header />
       <main id="main-content">
         <Hero />
-        <Treatments />
-        <WhyChooseUs />
-        <AboutPT />
-        <FreeScreening />
         <ConditionsWeTreat />
+        <Treatments />
+        <AboutPT />
+        <WhyChooseUs />
+        <FreeScreening />
         <Location />
         <FAQ />
         <FinalCTA />
