@@ -1,7 +1,4 @@
-import { Phone } from "lucide-react";
-import { site } from "@/lib/content";
 import { Container } from "@/components/ui/Container";
-import { Button } from "@/components/ui/Button";
 
 export function FinalCTA() {
   return (
@@ -17,19 +14,6 @@ export function FinalCTA() {
           Schedule your free 15-minute screening with Dr. Patel — in person
           in Melbourne, FL or virtually. No obligation.
         </p>
-        <div className="mt-9 flex flex-col items-center justify-center gap-3.5 sm:flex-row">
-          <Button href="#screening" variant="primary" className="text-base">
-            Schedule Your Free 15-Minute Screening
-          </Button>
-          <Button
-            href={site.phoneHref}
-            variant="ghost"
-            icon={<Phone className="h-4 w-4" strokeWidth={2.5} />}
-            className="text-base"
-          >
-            Call {site.phoneDisplay}
-          </Button>
-        </div>
       </Container>
     </section>
   );
