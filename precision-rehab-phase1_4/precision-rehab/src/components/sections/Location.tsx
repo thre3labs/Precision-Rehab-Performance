@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/Button";
 
 export function Location() {
   return (
-    <section id="location" className="scroll-mt-20 bg-white py-20 sm:py-28">
+    <section id="location" className="scroll-mt-20 bg-navy-50 py-20 sm:py-28">
       <Container>
         <div className="mx-auto max-w-2xl text-center">
           <Eyebrow>Visit the Clinic</Eyebrow>
@@ -31,7 +31,7 @@ export function Location() {
             />
           </div>
 
-          <div className="flex flex-col justify-center p-8 sm:p-10">
+          <div className="flex flex-col justify-center bg-white p-8 sm:p-10">
             <div className="flex items-start gap-3">
               <MapPin className="mt-1 h-5 w-5 shrink-0 text-gold-500" />
               <div>
