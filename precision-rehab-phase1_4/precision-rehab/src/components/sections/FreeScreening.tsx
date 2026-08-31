@@ -1,8 +1,7 @@
-import { CheckCircle2, Phone, Video, Building2 } from "lucide-react";
-import { screening, site } from "@/lib/content";
+import { CheckCircle2, Video, Building2 } from "lucide-react";
+import { screening } from "@/lib/content";
 import { Container } from "@/components/ui/Container";
 import { Eyebrow } from "@/components/ui/Eyebrow";
-import { Button } from "@/components/ui/Button";
 import { ContactForm } from "@/components/sections/ContactForm";
 
 export function FreeScreening() {
@@ -38,16 +37,6 @@ export function FreeScreening() {
               <span className="inline-flex items-center gap-2 rounded-full bg-navy-900 px-4 py-2 text-sm font-semibold text-white">
                 <Video className="h-4 w-4" /> Virtual
               </span>
-            </div>
-
-            <div className="mt-9 flex flex-col gap-3 sm:flex-row">
-              <Button
-                href={site.phoneHref}
-                variant="secondary"
-                icon={<Phone className="h-4 w-4" strokeWidth={2.5} />}
-              >
-                Call {site.phoneDisplay}
-              </Button>
             </div>
           </div>
 
