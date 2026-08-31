@@ -12,10 +12,10 @@ import { Button } from "@/components/ui/Button";
  * styling stay the same.
  */
 const navItems = [
-  { label: "Treatments", href: "#treatments" },
-  { label: "Why Precision Rehab", href: "#why-us" },
-  { label: "About Us", href: "#about" },
   { label: "Conditions We Treat", href: "#conditions" },
+  { label: "Treatments", href: "#treatments" },
+  { label: "About Us", href: "#about" },
+  { label: "Why Precision Rehab", href: "#why-us" },
   { label: "FAQ", href: "#faq" },
 ];
 

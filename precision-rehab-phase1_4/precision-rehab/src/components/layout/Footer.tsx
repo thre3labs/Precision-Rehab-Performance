@@ -77,11 +77,11 @@ export function Footer() {
               Explore
             </h3>
             <ul className="mt-4 space-y-2.5 text-sm text-navy-200">
-              <li><a href="#treatments" className="hover:text-white">Treatments & Conditions</a></li>
-              <li><a href="#why-us" className="hover:text-white">Why Precision Rehab</a></li>
-              <li><a href="#about" className="hover:text-white">About Us</a></li>
-              <li><a href="#screening" className="hover:text-white">Free 15-Min Screening</a></li>
               <li><a href="#conditions" className="hover:text-white">Conditions We Treat</a></li>
+              <li><a href="#treatments" className="hover:text-white">Treatments</a></li>
+              <li><a href="#about" className="hover:text-white">About Us</a></li>
+              <li><a href="#why-us" className="hover:text-white">Why Precision Rehab</a></li>
+              <li><a href="#screening" className="hover:text-white">Free 15-Min Screening</a></li>
               <li><a href="#faq" className="hover:text-white">FAQ</a></li>
             </ul>
           </div>
