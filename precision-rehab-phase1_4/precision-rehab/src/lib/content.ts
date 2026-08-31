@@ -62,10 +62,10 @@ export const provider = {
   education:
     "Doctorate of Physical Therapy from the University of St. Augustine, 2022",
   experience:
-    "Our team is led by Dr. Patel, who brings hands-on clinical experience from practices across Virginia, Washington D.C., Indiana, and Florida — including time spent treating patients right here in Brevard County — before opening Precision Rehab & Performance.",
+    "Our team is led by Dr. Patel, who brings hands-on clinical experience from practices across Virginia, Washington D.C., Indiana, and Florida, including time spent treating patients right here in Brevard County, before opening Precision Rehab & Performance.",
   continuingEducation: ["Dry Needling Certification"],
   personalNote:
-    "We believe every patient deserves individualized, hands-on care focused on one outcome: getting back to a pain-free life. Outside the clinic, Dr. Patel stays active himself — working out, playing pickleball, and learning golf — and is a die-hard fan of his home-state Indiana teams (Colts, Pacers).",
+    "We believe every patient deserves individualized, hands-on care focused on one outcome: getting back to a pain-free life. Outside the clinic, Dr. Patel stays active himself (working out, playing pickleball, and learning golf) and is a die-hard fan of his home-state Indiana teams (Colts, Pacers).",
   photo: "/images/kushal-patel.jpg",
 };
 
@@ -80,12 +80,12 @@ export const differentiators = [
   {
     title: "One-on-One, Every Visit",
     description:
-      "You work directly with Dr. Patel — not passed between aides or juggled with three other patients an hour.",
+      "You work directly with Dr. Patel, not passed between aides or juggled with three other patients an hour.",
   },
   {
     title: "Individualized Treatment Plans",
     description:
-      "Your plan of care is built around your body, your goals, and your timeline — not a generic protocol.",
+      "Your plan of care is built around your body, your goals, and your timeline, not a generic protocol.",
   },
   {
     title: "Direct Access to Your Therapist",
@@ -95,7 +95,7 @@ export const differentiators = [
   {
     title: "Performance-Minded Rehab",
     description:
-      "Care that goes beyond pain relief — built to help you return to the activities, sport, and lifestyle you care about.",
+      "Care that goes beyond pain relief, built to help you return to the activities, sport, and lifestyle you care about.",
   },
 ] as const;
 
@@ -204,7 +204,7 @@ export const conditionsTreated = {
 export const screening = {
   heading: "Not Sure If We're the Right Fit? Find Out for Free.",
   body:
-    "Before you commit to a plan of care, talk directly with Dr. Patel about what's going on, what treatment could look like, and whether Precision Rehab & Performance is the right fit for you — no obligation, no pressure.",
+    "Before you commit to a plan of care, talk directly with Dr. Patel about what's going on, what treatment could look like, and whether Precision Rehab & Performance is the right fit for you. No obligation, no pressure.",
   bullets: [
     "15 minutes with Dr. Patel, not a sales rep",
     "Available in person at the Melbourne clinic or virtually from anywhere",
@@ -216,13 +216,13 @@ export const screening = {
 export const insurance = {
   heading: "Insurance & Cash-Based Care",
   intro:
-    "Precision Rehab & Performance is proudly cash-based, which allows Dr. Patel to design a treatment plan around what you actually need — not what a claims adjuster approves.",
+    "Precision Rehab & Performance is proudly cash-based, which allows Dr. Patel to design a treatment plan around what you actually need, not what a claims adjuster approves.",
   medicareNote:
     "Medicare is currently accepted. All other insurance plans are out-of-network.",
   superbillNote:
     "For out-of-network plans, a superbill can be provided so you can seek reimbursement directly from your insurance provider.",
   philosophy:
-    "Reduced reimbursement rates and increasing insurance restrictions have made it harder for many practices to provide the individualized, hands-on care patients actually need. A cash-based model lets Dr. Patel treat the whole patient, spend the time each visit actually requires, and build a plan aimed at getting you back to a pain-free life as efficiently as possible — instead of a plan built around what a claim will cover.",
+    "Reduced reimbursement rates and increasing insurance restrictions have made it harder for many practices to provide the individualized, hands-on care patients actually need. A cash-based model lets Dr. Patel treat the whole patient, spend the time each visit actually requires, and build a plan aimed at getting you back to a pain-free life as efficiently as possible, instead of a plan built around what a claim will cover.",
   cta: "Contact the clinic to talk through your specific insurance situation, cash-pay options, and what treatment could look like for you.",
   // Explicit disclosure per client instruction — pricing is not displayed at this stage.
   pricingDisclosure:
@@ -246,7 +246,7 @@ export const faqs: FaqItem[] = [
   {
     question: "Do I need a referral to see a physical therapist in Florida?",
     answer:
-      "Florida allows direct access to physical therapy, meaning many patients can be evaluated without a physician referral. Some insurance plans or specific situations may still require one — contact the clinic and we'll help you confirm what applies to your situation.",
+      "Florida allows direct access to physical therapy, meaning many patients can be evaluated without a physician referral. Some insurance plans or specific situations may still require one. Contact the clinic and we'll help you confirm what applies to your situation.",
   },
   {
     question: "Do you accept insurance?",
@@ -256,12 +256,12 @@ export const faqs: FaqItem[] = [
   {
     question: "Do you offer cash-pay physical therapy?",
     answer:
-      "Yes — Precision Rehab & Performance operates on a cash-based model, which allows for individualized, one-on-one treatment plans that aren't limited by insurance restrictions. Contact the clinic to discuss self-pay options for your specific needs.",
+      "Yes, Precision Rehab & Performance operates on a cash-based model, which allows for individualized, one-on-one treatment plans that aren't limited by insurance restrictions. Contact the clinic to discuss self-pay options for your specific needs.",
   },
   {
     question: "What is the free 15-minute screening?",
     answer:
-      "It's a complimentary conversation with Dr. Patel to discuss what you're dealing with, answer your questions, and help you understand what treatment could look like — with no obligation to book further care.",
+      "It's a complimentary conversation with Dr. Patel to discuss what you're dealing with, answer your questions, and help you understand what treatment could look like, with no obligation to book further care.",
   },
   {
     question: "Can the free screening be done virtually?",
@@ -271,7 +271,7 @@ export const faqs: FaqItem[] = [
   {
     question: "What conditions do you treat?",
     answer:
-      "Precision Rehab & Performance treats a range of conditions including hip, knee, foot, back, and cervical (neck) pain, post-operative recovery, and chronic pain — along with performance training, injury prevention, and return-to-sport programs for active patients.",
+      "Precision Rehab & Performance treats a range of conditions including hip, knee, foot, back, and cervical (neck) pain, post-operative recovery, and chronic pain, along with performance training, injury prevention, and return-to-sport programs for active patients.",
   },
   {
     question: "What happens during my first visit?",
@@ -281,7 +281,7 @@ export const faqs: FaqItem[] = [
   {
     question: "How do I know if physical therapy is right for me?",
     answer:
-      "If you're dealing with pain, recovering from an injury or surgery, or want to get ahead of an issue before it limits you, physical therapy is worth exploring. The free 15-minute screening is designed exactly for this — a no-obligation way to find out.",
+      "If you're dealing with pain, recovering from an injury or surgery, or want to get ahead of an issue before it limits you, physical therapy is worth exploring. The free 15-minute screening is designed exactly for this: a no-obligation way to find out.",
   },
 ];
 
