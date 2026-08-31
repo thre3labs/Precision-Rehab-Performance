@@ -62,10 +62,8 @@ export const provider = {
   education:
     "Doctorate of Physical Therapy from the University of St. Augustine, 2022",
   experience:
-    "Our team is led by Dr. Patel, who brings hands-on clinical experience from practices across Virginia, Washington D.C., Indiana, and Florida, including time spent treating patients right here in Brevard County, before opening Precision Rehab & Performance.",
+    "Dr. Kushal Patel is a dedicated physical therapist with extensive experience working in outpatient orthopedics. He takes a hands-on, individualized approach to help patients reduce pain, restore movement, and improve their quality of life. He has a certification in dry needling which he incorporates to help patients manage their pain and improve mobility. He founded this clinic with a passion for providing exceptional care that goes beyond traditional therapy to create a meaningful, lasting impact on the community he serves.",
   continuingEducation: ["Dry Needling Certification"],
-  personalNote:
-    "We believe every patient deserves individualized, hands-on care focused on one outcome: getting back to a pain-free life. Outside the clinic, Dr. Patel stays active himself (working out, playing pickleball, and learning golf) and is a die-hard fan of his home-state Indiana teams (Colts, Pacers).",
   photo: "/images/kushal-patel.jpg",
 };
 
