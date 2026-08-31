@@ -25,7 +25,7 @@ export function Treatments() {
   const [active, setActive] = useState(0);
 
   return (
-    <section id="treatments" className="scroll-mt-20 bg-stone-25 py-20 sm:py-28">
+    <section id="treatments" className="scroll-mt-20 bg-gold-50 py-20 sm:py-28">
       <Container>
         <div className="mx-auto max-w-2xl text-center">
           <Eyebrow>How We Can Help</Eyebrow>
