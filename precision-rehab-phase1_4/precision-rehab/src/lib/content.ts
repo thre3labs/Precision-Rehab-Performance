@@ -136,18 +136,6 @@ export const treatmentCategories: TreatmentCategory[] = [
     ],
   },
   {
-    title: "Conditions We Treat",
-    description:
-      "Common pain points and problem areas patients bring to Precision Rehab & Performance.",
-    items: [
-      { name: "Hip Pain" },
-      { name: "Knee Pain" },
-      { name: "Foot Pain" },
-      { name: "Back Pain" },
-      { name: "Cervical (Neck) Pain" },
-    ],
-  },
-  {
     title: "Recovery Modalities",
     description:
       "Cash-based modalities used alongside your treatment plan to accelerate recovery.",
@@ -195,6 +183,20 @@ export const treatmentCategories: TreatmentCategory[] = [
     ],
   },
 ];
+
+// Standalone "Conditions We Treat" section — split out from the treatment
+// categories above so it can stand on its own as a full page section.
+export const conditionsTreated = {
+  intro:
+    "Common pain points and problem areas patients bring to Precision Rehab & Performance.",
+  items: [
+    "Hip Pain",
+    "Knee Pain",
+    "Foot Pain",
+    "Back Pain",
+    "Cervical (Neck) Pain",
+  ],
+};
 
 export const screening = {
   heading: "Not Sure If We're the Right Fit? Find Out for Free.",
