@@ -43,7 +43,6 @@ export function AboutPT() {
 
             <div className="mt-6 space-y-4 text-[15.5px] leading-relaxed text-navy-700">
               <p>{provider.experience}</p>
-              <p>{provider.personalNote}</p>
             </div>
           </div>
         </div>
