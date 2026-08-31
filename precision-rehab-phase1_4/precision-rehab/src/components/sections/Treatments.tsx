@@ -29,7 +29,7 @@ export function Treatments() {
         <div className="mx-auto max-w-2xl text-center">
           <Eyebrow>How We Can Help</Eyebrow>
           <h2 className="mt-4 text-3xl font-extrabold tracking-tight text-navy-950 sm:text-4xl">
-            What&rsquo;s Holding You Back?
+            Get Back on Track with Precision
           </h2>
           <p className="mt-4 text-lg leading-relaxed text-navy-600">
             Whether you&rsquo;re dealing with pain, recovering from surgery,
