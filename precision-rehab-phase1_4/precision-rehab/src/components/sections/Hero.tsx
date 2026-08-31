@@ -23,11 +23,7 @@ export function Hero() {
             <Eyebrow light>Melbourne, Florida &middot; Outpatient Physical Therapy</Eyebrow>
 
             <h1 className="mt-5 text-3xl font-extrabold leading-[1.2] tracking-tight text-white sm:text-4xl lg:text-[2.75rem]">
-              Our mission is to address the{" "}
-              <span className="text-gold-400">root cause of pain</span>, not
-              just the symptoms, by applying precise assessments,
-              individualized care, and intentional, movement-based
-              solutions.
+              Precision Care Built Around You
             </h1>
 
             <p className="mt-6 max-w-xl text-lg leading-relaxed text-navy-200">
