@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { MapPin, Phone, ShieldCheck, Users } from "lucide-react";
+import { Phone } from "lucide-react";
 import { site, missionVision } from "@/lib/content";
 import { Container } from "@/components/ui/Container";
 import { Button } from "@/components/ui/Button";
@@ -56,27 +56,6 @@ export function Hero() {
               Available in person in Melbourne, FL or virtually &middot; No
               obligation
             </p>
-
-            <dl className="mt-10 grid grid-cols-3 gap-4 border-t border-white/10 pt-7 sm:max-w-lg">
-              <div>
-                <dt className="flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wide text-navy-400">
-                  <Users className="h-3.5 w-3.5" /> Model
-                </dt>
-                <dd className="mt-1.5 text-sm font-bold text-white">1-on-1 Care</dd>
-              </div>
-              <div>
-                <dt className="flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wide text-navy-400">
-                  <ShieldCheck className="h-3.5 w-3.5" /> Provider
-                </dt>
-                <dd className="mt-1.5 text-sm font-bold text-white">Doctor of PT</dd>
-              </div>
-              <div>
-                <dt className="flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wide text-navy-400">
-                  <MapPin className="h-3.5 w-3.5" /> Location
-                </dt>
-                <dd className="mt-1.5 text-sm font-bold text-white">Melbourne, FL</dd>
-              </div>
-            </dl>
           </div>
 
           {/* Visual column */}
