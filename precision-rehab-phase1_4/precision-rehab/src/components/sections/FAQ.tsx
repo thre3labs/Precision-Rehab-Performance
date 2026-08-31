@@ -7,7 +7,7 @@ export function FAQ() {
   const schema = buildFaqSchema();
 
   return (
-    <section id="faq" className="scroll-mt-20 bg-stone-25 py-20 sm:py-28">
+    <section id="faq" className="scroll-mt-20 bg-white py-20 sm:py-28">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
