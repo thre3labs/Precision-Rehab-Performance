@@ -56,13 +56,16 @@ export const provider = {
   firstName: "Dr. Patel",
   credentials: "PT, DPT",
   role: "Owner & Founder, Doctor of Physical Therapy",
+  // Team-facing headline for the About section — still just Dr. Patel today,
+  // but framed as "our team, led by..." rather than a solo-provider bio.
+  teamHeadline: "Led by Dr. Kushal Patel, PT, DPT",
   education:
     "Doctorate of Physical Therapy from the University of St. Augustine, 2022",
   experience:
-    "Dr. Patel has practiced across Virginia, Washington D.C., Indiana, and Florida — including time spent treating patients right here in Brevard County — before opening Precision Rehab & Performance.",
+    "Our team is led by Dr. Patel, who brings hands-on clinical experience from practices across Virginia, Washington D.C., Indiana, and Florida — including time spent treating patients right here in Brevard County — before opening Precision Rehab & Performance.",
   continuingEducation: ["Dry Needling Certification"],
   personalNote:
-    "Outside the clinic, Dr. Patel stays active himself — working out, playing pickleball, and learning golf — and is a die-hard fan of his home-state Indiana teams (Colts, Pacers). He opened Precision Rehab & Performance because he believes every patient deserves individualized, hands-on care focused on one outcome: getting back to a pain-free life.",
+    "We believe every patient deserves individualized, hands-on care focused on one outcome: getting back to a pain-free life. Outside the clinic, Dr. Patel stays active himself — working out, playing pickleball, and learning golf — and is a die-hard fan of his home-state Indiana teams (Colts, Pacers).",
   photo: "/images/kushal-patel.jpg",
 };
 
