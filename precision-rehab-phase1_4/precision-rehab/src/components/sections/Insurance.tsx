@@ -1,8 +1,7 @@
 import { FileCheck2, HandCoins, ShieldCheck } from "lucide-react";
-import { insurance, site } from "@/lib/content";
+import { insurance } from "@/lib/content";
 import { Container } from "@/components/ui/Container";
 import { Eyebrow } from "@/components/ui/Eyebrow";
-import { Button } from "@/components/ui/Button";
 
 export function Insurance() {
   return (
@@ -46,14 +45,6 @@ export function Insurance() {
           <p className="text-[15px] leading-relaxed text-navy-200">
             {insurance.philosophy}
           </p>
-          <div className="mt-7 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
-            <Button href="#screening" variant="primary">
-              Discuss Your Options — Free Screening
-            </Button>
-            <Button href={site.phoneHref} variant="ghost">
-              Call {site.phoneDisplay}
-            </Button>
-          </div>
         </div>
       </Container>
     </section>
