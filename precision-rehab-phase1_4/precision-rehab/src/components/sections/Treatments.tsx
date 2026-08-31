@@ -3,7 +3,6 @@
 import { useState } from "react";
 import {
   Activity,
-  Bone,
   Sparkles,
   Trophy,
   CheckCircle2,
@@ -13,7 +12,7 @@ import { Container } from "@/components/ui/Container";
 import { Eyebrow } from "@/components/ui/Eyebrow";
 import { Button } from "@/components/ui/Button";
 
-const icons = [Activity, Bone, Sparkles, Trophy];
+const icons = [Activity, Sparkles, Trophy];
 
 /**
  * All category panels render in the markup at all times (only the active
