@@ -39,7 +39,7 @@ export function WhyChooseUs() {
             <p className="mt-5 text-lg leading-relaxed text-navy-300">
               Many outpatient clinics are built to move as many patients
               through the door as possible. Precision Rehab &amp;
-              Performance is built the opposite way — around one patient at
+              Performance is built the opposite way, around one patient at
               a time.
             </p>
 

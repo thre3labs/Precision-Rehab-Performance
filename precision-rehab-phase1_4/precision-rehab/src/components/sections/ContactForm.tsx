@@ -106,7 +106,7 @@ export function ContactForm() {
 
         <div className="sm:col-span-2">
           <label htmlFor="reason" className={labelClasses}>
-            What brings you in? <span className="font-normal text-navy-400">(brief summary — please avoid sharing detailed medical history here)</span>
+            What brings you in? <span className="font-normal text-navy-400">(brief summary, please avoid sharing detailed medical history here)</span>
           </label>
           <textarea
             id="reason"
@@ -134,7 +134,7 @@ export function ContactForm() {
 
       {status === "error" && (
         <p className="mt-3 text-center text-sm font-medium text-red-600">
-          Something went wrong — please call or text us directly instead.
+          Something went wrong. Please call or text us directly instead.
         </p>
       )}
 
@@ -142,7 +142,7 @@ export function ContactForm() {
         <Lock className="mt-0.5 h-3.5 w-3.5 shrink-0" />
         Your information is used only to contact you about your inquiry and
         is never sold or shared. Please don&rsquo;t submit sensitive medical
-        details through this form — a team member will follow up to discuss
+        details through this form. A team member will follow up to discuss
         your care.
       </p>
     </form>

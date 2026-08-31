@@ -31,7 +31,7 @@ export function Hero() {
               physical therapy clinic in Melbourne, FL, led directly by{" "}
               <span className="font-semibold text-white">Dr. Kushal Patel, PT, DPT</span>.
               Individualized, hands-on treatment for pain, injury recovery,
-              and performance — with select insurance also accepted.
+              and performance, with select insurance also accepted.
             </p>
 
             <div className="mt-9 flex flex-col gap-3.5 sm:flex-row">

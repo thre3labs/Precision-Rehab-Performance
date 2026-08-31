@@ -49,7 +49,7 @@ export function Location() {
               <div>
                 <p className="font-bold text-navy-950">Hours</p>
                 <p className="text-navy-600">
-                  {site.hours ? "See hours below" : "Hours coming soon — call or text to confirm availability"}
+                  {site.hours ? "See hours below" : "Hours coming soon. Call or text to confirm availability"}
                 </p>
               </div>
             </div>

@@ -11,7 +11,7 @@ export function FinalCTA() {
           Ready to Get Back to What You Love?
         </h2>
         <p className="mx-auto mt-4 max-w-xl text-lg leading-relaxed text-navy-300">
-          Schedule your free 15-minute screening with Dr. Patel — in person
+          Schedule your free 15-minute screening with Dr. Patel, in person
           in Melbourne, FL or virtually. No obligation.
         </p>
       </Container>

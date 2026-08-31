@@ -128,7 +128,7 @@ export function Treatments() {
         <div className="mt-10 flex flex-col items-center gap-3 text-center">
           <p className="text-[15px] text-navy-600">
             Don&rsquo;t see your exact condition listed? We likely still
-            treat it — the fastest way to find out is a free 15-minute
+            treat it. The fastest way to find out is a free 15-minute
             screening.
           </p>
           <Button href="#screening" variant="secondary">

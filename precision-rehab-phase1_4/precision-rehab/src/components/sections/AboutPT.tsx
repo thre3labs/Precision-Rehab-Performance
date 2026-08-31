@@ -25,7 +25,7 @@ export function AboutPT() {
                   <p className="text-sm font-semibold text-navy-400">
                     Professional photo of Dr. Patel
                   </p>
-                  <p className="text-xs text-navy-300">Placeholder — to be added</p>
+                  <p className="text-xs text-navy-300">Placeholder, to be added</p>
                 </div>
               )}
               <div className="absolute inset-x-4 bottom-4 rounded-xl bg-white/95 px-4 py-3 shadow-soft backdrop-blur">
