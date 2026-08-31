@@ -15,7 +15,7 @@ import { MobileCTABar } from "@/components/layout/MobileCTABar";
 const title =
   "Physical Therapist in Melbourne, FL | Precision Rehab & Performance";
 const description =
-  "Precision Rehab & Performance is a cash-based outpatient physical therapy clinic in Melbourne, FL led by Dr. Kushal Patel, PT, DPT. Book a free 15-minute screening — in person or virtual.";
+  "Precision Rehab & Performance is a cash-based outpatient physical therapy clinic in Melbourne, FL led by Dr. Kushal Patel, PT, DPT. Book a free 15-minute screening, in person or virtual.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
@@ -47,7 +47,7 @@ export const metadata: Metadata = {
         url: "/images/og-default.jpg",
         width: 1200,
         height: 630,
-        alt: "Precision Rehab & Performance — Melbourne, FL",
+        alt: "Precision Rehab & Performance, Melbourne, FL",
       },
     ],
   },
