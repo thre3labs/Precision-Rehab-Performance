@@ -36,9 +36,9 @@ export function AboutPT() {
           </div>
 
           <div>
-            <Eyebrow>Meet Your Physical Therapist</Eyebrow>
+            <Eyebrow>Meet Our Team</Eyebrow>
             <h2 className="mt-4 text-3xl font-extrabold tracking-tight text-navy-950 sm:text-4xl">
-              {provider.name}
+              {provider.teamHeadline}
             </h2>
 
             <div className="mt-6 space-y-4 text-[15.5px] leading-relaxed text-navy-700">
