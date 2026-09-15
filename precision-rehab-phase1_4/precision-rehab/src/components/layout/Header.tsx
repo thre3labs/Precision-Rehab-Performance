@@ -1,72 +1,136 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import Image from "next/image";
-import Link from "next/link";
-import { Phone } from "lucide-react";
 import { site } from "@/lib/content";
-import { Container } from "@/components/ui/Container";
-import { Button } from "@/components/ui/Button";
 
 /**
- * Phase 2 note: nav items below are anchor links into this single page.
- * Once Treatments / About / Contact become standalone routes, swap the
- * `href="#id"` values for real paths (e.g. "/treatments") — the markup and
- * styling stay the same.
+ * Sticky header. Client-side only because of the mobile menu; the nav itself
+ * is plain markup, so it stays in the server-rendered HTML for crawlers.
+ *
+ * The desktop/mobile breakpoint is 1140px, not the more obvious 1024px: the
+ * full nav plus the phone number plus the CTA needs ~1140px, and switching
+ * earlier pushed the header 62px past the viewport at 1024px. The mobile CTA
+ * bar uses the same 1140px boundary so there is never a width with no visible
+ * "Free Screening" action. See DESIGN_AUDIT.md.
+ *
+ * Phase 2: swap the `href="#id"` values for real routes once Treatments /
+ * About / Conditions become standalone pages. Markup and styling stay.
  */
-const navItems = [
-  { label: "Conditions We Treat", href: "#conditions" },
-  { label: "Treatments", href: "#treatments" },
-  { label: "About Us", href: "#about" },
-  { label: "Why Precision Rehab", href: "#why-us" },
-  { label: "FAQ", href: "#faq" },
+
+const NAV = [
+  { href: "#conditions", short: "Conditions", long: "Conditions We Treat" },
+  { href: "#treatments", short: "Treatments", long: "Treatments" },
+  { href: "#modalities", short: "Technology", long: "Recovery Technology" },
+  { href: "#about", short: "About Us", long: "About Us" },
+  { href: "#why", short: "Why Precision", long: "Why Precision Rehab" },
+  { href: "#faq", short: "FAQ", long: "FAQ" },
 ];
 
 export function Header() {
-  return (
-    <header className="sticky top-0 z-40 border-b border-navy-900/5 bg-white/90 backdrop-blur-md">
-      <Container className="flex h-18 items-center justify-between py-3">
-        <Link href="/" className="flex items-center gap-2.5 shrink-0" aria-label={`${site.name}, home`}>
-          <Image
-            src="/images/logo-transparent.png"
-            alt={`${site.name} logo`}
-            width={250}
-            height={100}
-            priority
-            className="h-11 w-auto sm:h-12"
-          />
-        </Link>
+  const [open, setOpen] = useState(false);
 
-        <nav className="hidden items-center gap-7 lg:flex" aria-label="Primary">
-          {navItems.map((item) => (
-            <a
-              key={item.href}
-              href={item.href}
-              className="text-[14.5px] font-semibold text-navy-800/80 transition-colors hover:text-navy-700"
-            >
-              {item.label}
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setOpen(false);
+    };
+    const onResize = () => {
+      if (window.innerWidth >= 1140) setOpen(false);
+    };
+    document.addEventListener("keydown", onKey);
+    window.addEventListener("resize", onResize);
+    return () => {
+      document.removeEventListener("keydown", onKey);
+      window.removeEventListener("resize", onResize);
+    };
+  }, [open]);
+
+  return (
+    <header className="hdr">
+      <div className="wrap hdr-in">
+        <a className="brand" href="#" aria-label={`${site.name}, home`}>
+          <Image
+            className="brand-img"
+            src="/images/logo-transparent.png"
+            alt={site.name}
+            width={1876}
+            height={750}
+            priority
+          />
+        </a>
+
+        <nav className="hdr-nav" aria-label="Primary">
+          {NAV.map((n) => (
+            <a key={n.href} href={n.href}>
+              {n.short}
             </a>
           ))}
         </nav>
 
-        <div className="hidden items-center gap-3 md:flex">
-          <a
-            href={site.phoneHref}
-            className="flex items-center gap-2 text-[14.5px] font-bold text-navy-800 hover:text-navy-600"
-          >
-            <Phone className="h-4 w-4" strokeWidth={2.5} />
+        <div className="hdr-act">
+          <a className="hdr-tel" href={site.phoneHref}>
+            <PhoneIcon />
             {site.phoneDisplay}
           </a>
-          <Button href="#screening" variant="primary" className="px-5 py-2.5 text-sm">
+          <a
+            className="btn btn-primary"
+            href="#screening"
+            style={{ minHeight: "48px", padding: "0 22px", fontSize: "var(--fs-sm)" }}
+          >
             Free Screening
-          </Button>
+          </a>
         </div>
 
-        <a
-          href={site.phoneHref}
-          className="flex h-10 w-10 items-center justify-center rounded-full bg-navy-700 text-white md:hidden"
-          aria-label="Call Precision Rehab & Performance"
-        >
-          <Phone className="h-4.5 w-4.5" strokeWidth={2.25} />
+        <div className="hdr-mob">
+          <a
+            className="hdr-tel-sm"
+            href={site.phoneHref}
+            aria-label={`Call ${site.name}`}
+          >
+            <PhoneIcon />
+          </a>
+          <button
+            className="burger"
+            type="button"
+            aria-expanded={open}
+            aria-controls="mobnav"
+            aria-label={open ? "Close menu" : "Open menu"}
+            onClick={() => setOpen((v) => !v)}
+          >
+            <i />
+            <i />
+            <i />
+          </button>
+        </div>
+      </div>
+
+      <nav
+        className="mobnav"
+        id="mobnav"
+        aria-label="Primary"
+        hidden={!open}
+        onClick={(e) => {
+          if ((e.target as HTMLElement).closest("a")) setOpen(false);
+        }}
+      >
+        {NAV.map((n) => (
+          <a key={n.href} href={n.href}>
+            {n.long}
+          </a>
+        ))}
+        <a className="mob-cta" href="#screening">
+          Book Your Free Screening
         </a>
-      </Container>
+      </nav>
     </header>
+  );
+}
+
+function PhoneIcon() {
+  return (
+    <svg className="ico" viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.2a2 2 0 0 1 2.1-.5c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z" />
+    </svg>
   );
 }

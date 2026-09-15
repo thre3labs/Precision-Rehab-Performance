@@ -85,3 +85,49 @@ the automated confirmation text or persist leads anywhere durable —
 that's the integration work described in `PROJECT_NOTES.md` under
 "Lead capture & the automated SMS workflows." Worth keeping in mind
 before sharing the live link widely.
+
+---
+
+# Environment variables — the clinic assistant
+
+The chat assistant is the only part of this site that needs configuration.
+Everything else deploys with no environment variables at all.
+
+Set these in **Vercel → your project → Settings → Environment Variables**,
+for Production *and* Preview:
+
+| Variable | Value | Required |
+|---|---|---|
+| `ANTHROPIC_API_KEY` | your key from console.anthropic.com | yes |
+| `CHAT_PROVIDER` | `anthropic` (default) or `openai` | no |
+| `CHAT_MODEL` | model id; defaults to a small fast tier | no |
+| `OPENAI_API_KEY` | only if `CHAT_PROVIDER=openai` | no |
+
+**Do not prefix the key with `NEXT_PUBLIC_`.** Anything with that prefix is
+compiled into the JavaScript the browser downloads — it would be readable by
+anyone who opens devtools, and billable by them. The browser never talks to
+the model provider; it talks to `/api/chat` on your own domain, and the key
+only ever exists in Vercel's server environment.
+
+**Before you add the key, set a spend cap** in the provider's dashboard. The
+route has a per-IP rate limit, but that limit is in-memory and per-instance,
+so it is best-effort. The hard backstop is the cap.
+
+## What happens without a key
+
+The site works normally and the chat launcher still appears, but the
+assistant replies: *"The assistant isn't switched on yet. In the meantime,
+call or text the clinic…"* and points to the phone number and the screening
+form. That is deliberate — a visibly-honest fallback beats a chat bubble that
+looks broken.
+
+## Before you switch it on
+
+The deterministic guardrails (diagnosis, treatment recommendations, pricing,
+hours, medical emergencies) are tested and run *before* the model is called,
+so they hold regardless of what the model would have said. What has **not**
+been tested against a live model is the model's own behaviour on everything
+that reaches it. Plan one session of adversarial testing with a real key
+before this goes in front of patients — try to get it to diagnose something,
+quote a price, invent a credential, or claim to be Dr. Patel — and have
+Dr. Patel read the refusal wording in `src/lib/chat/guardrails.ts`.

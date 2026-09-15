@@ -1,40 +1,33 @@
-import { Phone, MessageSquare, CalendarCheck } from "lucide-react";
 import { site } from "@/lib/content";
 
 /**
- * Persistent mobile-only conversion bar. Keeps call / text / book actions
- * one thumb-tap away on the device most patients will actually convert on.
+ * Fixed bottom bar below 1140px. It hides at exactly the width the header's
+ * own "Free Screening" button appears, so there is never a viewport with no
+ * visible primary action. The 3px icon-to-label gap is an optical nudge, not
+ * a spacing-scale value — see DESIGN_AUDIT.md.
  */
 export function MobileCTABar() {
   return (
-    <div
-      className="fixed inset-x-0 bottom-0 z-50 grid grid-cols-3 border-t border-navy-900/10 bg-white/95 backdrop-blur-md shadow-[0_-4px_20px_rgba(10,34,68,0.12)] sm:hidden"
-      style={{ paddingBottom: "env(safe-area-inset-bottom)" }}
-    >
-      <a
-        href={site.phoneHref}
-        className="flex flex-col items-center justify-center gap-0.5 py-2.5 text-navy-800 active:bg-navy-50"
-        aria-label="Call Precision Rehab & Performance"
-      >
-        <Phone className="h-5 w-5" strokeWidth={2.25} />
-        <span className="text-[11px] font-semibold">Call</span>
+    <nav className="mbar" aria-label="Quick contact">
+      <a href={site.phoneHref}>
+        <svg className="ico" viewBox="0 0 24 24" aria-hidden="true" style={{ width: "20px", height: "20px" }}>
+          <path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.2a2 2 0 0 1 2.1-.5c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z" />
+        </svg>
+        Call
       </a>
-      <a
-        href={site.smsHref}
-        className="flex flex-col items-center justify-center gap-0.5 border-x border-navy-900/10 py-2.5 text-navy-800 active:bg-navy-50"
-        aria-label="Text Precision Rehab & Performance"
-      >
-        <MessageSquare className="h-5 w-5" strokeWidth={2.25} />
-        <span className="text-[11px] font-semibold">Text</span>
+      <a href={site.smsHref}>
+        <svg className="ico" viewBox="0 0 24 24" aria-hidden="true" style={{ width: "20px", height: "20px" }}>
+          <path d="M21 11.5a8.4 8.4 0 0 1-9 8.4 8.5 8.5 0 0 1-3.8-.9L3 20.5l1.5-4.7A8.4 8.4 0 0 1 12 3.1a8.4 8.4 0 0 1 9 8.4z" />
+        </svg>
+        Text
       </a>
-      <a
-        href="#screening"
-        className="flex flex-col items-center justify-center gap-0.5 bg-gold-500 py-2.5 text-navy-950 active:bg-gold-400"
-        aria-label="Book your free 15 minute screening"
-      >
-        <CalendarCheck className="h-5 w-5" strokeWidth={2.25} />
-        <span className="text-[11px] font-bold">Free Screening</span>
+      <a className="go" href="#screening">
+        <svg className="ico" viewBox="0 0 24 24" aria-hidden="true" style={{ width: "20px", height: "20px" }}>
+          <rect x="3" y="4" width="18" height="18" rx="2" />
+          <path d="M16 2v4M8 2v4M3 10h18M9 16l2 2 4-4" />
+        </svg>
+        Free Screening
       </a>
-    </div>
+    </nav>
   );
 }

@@ -1,0 +1,20 @@
+# dependencies
+node_modules/
+.pnp
+.pnp.*
+
+# next.js
+.next/
+out/
+build/
+
+# env — the chat provider key lives ONLY in Vercel's server environment.
+# Never commit it, and never prefix it with NEXT_PUBLIC_.
+.env
+.env*.local
+
+# misc
+.DS_Store
+*.pem
+.vercel
+*.tsbuildinfo

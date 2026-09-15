@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
-import "@fontsource-variable/inter";
-import "@fontsource-variable/plus-jakarta-sans";
+import "@fontsource/figtree/500.css";
+import "@fontsource/figtree/600.css";
 import "./globals.css";
 import { site } from "@/lib/content";
 import { buildLocalBusinessSchema } from "@/lib/schema";
 import { MobileCTABar } from "@/components/layout/MobileCTABar";
+import { ChatWidget } from "@/components/chat/ChatWidget";
 
 // Fonts are self-hosted via @fontsource (bundled at build time) rather than
 // next/font/google, since that requires a live connection to
@@ -88,12 +89,13 @@ export default function RootLayout({
       <body className="antialiased">
         <a
           href="#main-content"
-          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-lg focus:bg-navy-900 focus:px-4 focus:py-3 focus:text-sm focus:font-bold focus:text-white"
+          className="skip-link"
         >
           Skip to main content
         </a>
         {children}
         <MobileCTABar />
+        <ChatWidget />
       </body>
     </html>
   );

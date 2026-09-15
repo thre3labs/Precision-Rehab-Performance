@@ -1,44 +1,49 @@
 import { faqs } from "@/lib/content";
 import { buildFaqSchema } from "@/lib/schema";
-import { Container } from "@/components/ui/Container";
-import { Eyebrow } from "@/components/ui/Eyebrow";
 
+/**
+ * Native <details>, so the answers are in the DOM and expandable with no
+ * JavaScript at all. The chevron rotates the inner <svg> rather than the
+ * circular wrapper: rotating a 34px square 45deg grows its layout box to
+ * 48.1px and pushed 7px past the container. See DESIGN_AUDIT.md.
+ */
 export function FAQ() {
-  const schema = buildFaqSchema();
-
   return (
-    <section id="faq" className="scroll-mt-20 bg-white py-20 sm:py-28">
+    <section className="faq" id="faq">
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(buildFaqSchema()) }}
       />
-      <Container className="max-w-3xl">
-        <div className="text-center">
-          <Eyebrow>FAQ</Eyebrow>
-          <h2 className="mt-4 text-3xl font-extrabold tracking-tight text-navy-950 sm:text-4xl">
-            Common Questions
-          </h2>
+      <div className="wrap">
+        <div className="axis">
+          <div className="axis-rail" aria-hidden="true" />
+          <div className="axis-body">
+            <span className="note">FAQ</span>
+            <h2>Common questions.</h2>
+          </div>
         </div>
 
-        <div className="mt-12 divide-y divide-navy-900/8 rounded-2xl border border-navy-900/8 bg-white shadow-soft">
-          {faqs.map((faq) => (
-            <details key={faq.question} className="group p-5 sm:p-6">
-              <summary className="flex cursor-pointer list-none items-center justify-between gap-4 font-bold text-navy-950 marker:content-none">
-                <span className="text-[15.5px]">{faq.question}</span>
-                <span
-                  className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-navy-50 text-navy-700 transition-transform duration-200 group-open:rotate-45"
-                  aria-hidden
-                >
-                  +
+        <div className="faq-list">
+          {faqs.map((f, i) => (
+            <details key={f.question} open={i === 0}>
+              <summary>
+                {f.question}
+                <span className="chev">
+                  <svg
+                    className="ico"
+                    viewBox="0 0 24 24"
+                    aria-hidden="true"
+                    style={{ width: "15px", height: "15px" }}
+                  >
+                    <path d="M12 5v14M5 12h14" />
+                  </svg>
                 </span>
               </summary>
-              <p className="mt-3 text-[14.5px] leading-relaxed text-navy-600">
-                {faq.answer}
-              </p>
+              <p>{f.answer}</p>
             </details>
           ))}
         </div>
-      </Container>
+      </div>
     </section>
   );
 }

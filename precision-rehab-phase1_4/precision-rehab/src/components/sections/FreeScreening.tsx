@@ -1,50 +1,63 @@
-import { CheckCircle2, Video, Building2 } from "lucide-react";
 import { screening } from "@/lib/content";
-import { Container } from "@/components/ui/Container";
-import { Eyebrow } from "@/components/ui/Eyebrow";
 import { ContactForm } from "@/components/sections/ContactForm";
 
+/**
+ * The form is the only client component in this section; everything to its
+ * left is static and stays a server component.
+ */
 export function FreeScreening() {
   return (
-    <section
-      id="screening"
-      className="scroll-mt-20 bg-gradient-to-b from-gold-50 via-white to-white py-20 sm:py-28"
-    >
-      <Container>
-        <div className="grid gap-14 lg:grid-cols-[1fr_1.05fr] lg:gap-16">
-          <div>
-            <Eyebrow>Free 15-Minute Screening</Eyebrow>
-            <h2 className="mt-4 text-3xl font-extrabold tracking-tight text-navy-950 sm:text-4xl">
-              {screening.heading}
-            </h2>
-            <p className="mt-5 text-lg leading-relaxed text-navy-700">
-              {screening.body}
-            </p>
-
-            <ul className="mt-8 space-y-3.5">
-              {screening.bullets.map((b) => (
-                <li key={b} className="flex items-start gap-3">
-                  <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-gold-500" />
-                  <span className="text-[15px] font-medium text-navy-800">{b}</span>
-                </li>
-              ))}
-            </ul>
-
-            <div className="mt-8 flex flex-wrap gap-3">
-              <span className="inline-flex items-center gap-2 rounded-full bg-navy-900 px-4 py-2 text-sm font-semibold text-white">
-                <Building2 className="h-4 w-4" /> In Person
-              </span>
-              <span className="inline-flex items-center gap-2 rounded-full bg-navy-900 px-4 py-2 text-sm font-semibold text-white">
-                <Video className="h-4 w-4" /> Virtual
-              </span>
+    <section className="screen" id="screening">
+      <div className="wrap screen-grid">
+        <div>
+          <div className="axis">
+            <div className="axis-rail" aria-hidden="true" />
+            <div className="axis-body">
+              <span className="note">Free 15-minute screening</span>
+              <h2>Not sure if we&rsquo;re the right fit? Find out for free.</h2>
+              <p className="lede">{screening.body}</p>
             </div>
           </div>
 
-          <div id="contact">
-            <ContactForm />
+          <ul className="checks">
+            {screening.bullets.map((b) => (
+              <li key={b}>
+                <svg className="ico" viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M20 6 9 17l-5-5" />
+                </svg>
+                <span>{b}</span>
+              </li>
+            ))}
+          </ul>
+
+          <div className="modes">
+            <span className="mode">
+              <svg
+                className="ico"
+                viewBox="0 0 24 24"
+                aria-hidden="true"
+                style={{ width: "16px", height: "16px" }}
+              >
+                <path d="M3 21h18M5 21V7l7-4 7 4v14M9 9h1m4 0h1M9 13h1m4 0h1M9 17h1m4 0h1" />
+              </svg>
+              In person
+            </span>
+            <span className="mode">
+              <svg
+                className="ico"
+                viewBox="0 0 24 24"
+                aria-hidden="true"
+                style={{ width: "16px", height: "16px" }}
+              >
+                <path d="m23 7-7 5 7 5V7zM14 5H3a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2z" />
+              </svg>
+              Virtual
+            </span>
           </div>
         </div>
-      </Container>
+
+        <ContactForm />
+      </div>
     </section>
   );
 }

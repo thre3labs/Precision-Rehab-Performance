@@ -97,6 +97,31 @@ export const differentiators = [
   },
 ] as const;
 
+// Side-by-side used in the "Why Precision Rehab" section. Deliberately framed
+// as a model comparison, not a claim about any named competitor.
+export const comparison = [
+  {
+    label: "Time with your provider",
+    traditional: "Split across 2–3 patients per hour",
+    precision: "Dedicated, one-on-one every visit",
+  },
+  {
+    label: "Who treats you",
+    traditional: "Rotates between aides & techs",
+    precision: "Directly with Dr. Patel, start to finish",
+  },
+  {
+    label: "Treatment plan",
+    traditional: "Standardized protocol",
+    precision: "Built around your body & goals",
+  },
+  {
+    label: "Care limited by",
+    traditional: "What insurance approves",
+    precision: "What you actually need",
+  },
+] as const;
+
 export type TreatmentItem = {
   name: string;
   // One-line, general/standard description of what the item is and what it
@@ -187,17 +212,218 @@ export const treatmentCategories: TreatmentCategory[] = [
 
 // Standalone "Conditions We Treat" section — split out from the treatment
 // categories above so it can stand on its own as a full page section.
+// Grouped by body region: a flat list of two dozen items reads as a wall on
+// mobile, and "where does it hurt" is how patients arrive at the question.
 export const conditionsTreated = {
   intro:
-    "Common pain points and problem areas patients bring to Precision Rehab & Performance.",
-  items: [
-    "Hip Pain",
-    "Knee Pain",
-    "Foot Pain",
-    "Back Pain",
-    "Cervical (Neck) Pain",
+    "Common pain points and problem areas patients bring to Precision Rehab & Performance, grouped by where it hurts.",
+  groups: [
+    {
+      region: "Neck & Back",
+      items: [
+        "Neck pain",
+        "TMJ pain",
+        "Back pain",
+        "Rib pain",
+        "SI joint dysfunction",
+      ],
+    },
+    {
+      region: "Shoulder & Arm",
+      items: ["Shoulder pain", "Elbow pain", "Wrist & hand pain"],
+    },
+    {
+      region: "Hip & Leg",
+      items: ["Hip pain", "Knee pain", "Ankle pain", "Foot pain"],
+    },
+    {
+      region: "Surgery & Sport",
+      items: [
+        "Pre-surgical therapy",
+        "Post-surgical rehabilitation",
+        "Sport injuries",
+      ],
+    },
+    {
+      region: "Ongoing Conditions",
+      items: [
+        "Arthritis",
+        "Fibromyalgia",
+        "Balance impairments",
+        "Acute pain",
+        "Chronic pain",
+      ],
+    },
   ],
 };
+
+// ============================================================================
+// RECOVERY MODALITIES — the "Advanced Recovery Technology" section.
+// Content comes from the client's Services document. Clinical claims,
+// contraindications and session protocols are reproduced from that source and
+// were not authored here; they should be re-confirmed by Dr. Patel before any
+// change. Layout variations (which figure appears where) live in the
+// component, not in this data.
+// ============================================================================
+export type Modality = {
+  id: string;
+  name: string;
+  /** one-line summary shown on the collapsed accordion head */
+  summary: string;
+  /** device or credential line under the summary */
+  device: string;
+  /** thumbnail on the accordion head */
+  thumb: { src: string; width: number; height: number; product?: boolean };
+  lede: string;
+  benefits: string[];
+  /** plain list, or name + short outcome note */
+  treats?: (string | { name: string; note: string })[];
+  treatsHeading?: string;
+  expect: string;
+  after?: string[];
+  notSuitable?: { heading: string; items: string[] };
+  risks?: string[];
+  protocol: string;
+};
+
+export const modalities: Modality[] = [
+  {
+    id: "shock",
+    name: "Shockwave Therapy",
+    summary:
+      "Acoustic pressure waves that break up stubborn scar tissue and calcification, and switch on the body's own repair cells.",
+    device: "Chattanooga Intelect® RPW 2",
+    thumb: { src: "/images/svc-shockwave.jpg", width: 820, height: 820 },
+    lede: "Radial Pressure Wave (RPW) therapy is a noninvasive treatment that involves the application of acoustic waves to injured soft tissue to alleviate pain and promote healing. RPW therapy is popular among patients because it is quick and effective. It also reduces the need for injections, drugs or surgical correction in many cases.",
+    benefits: [
+      "Promotes the formation of new blood vessels, increasing oxygen and nutrient delivery to the tissue",
+      "Activates the cells responsible for tissue repair, such as fibroblasts and osteoblasts",
+      "Breaks down scar tissue, fibrosis and calcifications",
+      "Releases natural growth factors that reduce inflammation and promote tissue regeneration",
+      "Desensitizes nerve receptors, helping to decrease pain",
+      "Quick and effective, eliminating the need for drugs or surgical correction in many cases",
+    ],
+    treatsHeading: "Commonly treats",
+    treats: [
+      { name: "Tendinopathy", note: "Less pain, better movement" },
+      { name: "Plantar fasciitis", note: "Relief standing and walking" },
+      { name: "Osteoarthritis", note: "Calms acute symptoms" },
+      { name: "Frozen shoulder", note: "More pain-free movement" },
+      { name: "Myofascial pain", note: "Lowers pain intensity" },
+      { name: "Tennis elbow", note: "For pickleball and tennis" },
+      { name: "Golfer's elbow", note: "For golf" },
+    ],
+    expect:
+      "Dr. Patel reviews your symptoms, medical history and treatment goals to determine whether RPW shockwave is appropriate. You'll be positioned comfortably and the treatment area exposed, then gel is applied. Expect mild to moderate discomfort during treatment, especially over the areas that need it most. Depending on the area, anywhere from 2,000 to 3,000 shocks are delivered per session.",
+    after: [
+      "Temporary soreness or aching in the treated area",
+      "Mild bruising or redness near the treatment area",
+      "Temporary fatigue of the treated area",
+      "A temporary increase in symptoms before improvement occurs",
+    ],
+    notSuitable: {
+      heading: "Not suitable if you",
+      items: [
+        "Are pregnant",
+        "Have active cancer",
+        "Have open wounds in the area",
+        "Have had a cortisone injection within the past 6 weeks",
+      ],
+    },
+    protocol:
+      "1–2× per week for 4–8 sessions for best results. Expect 20–40% relief after the first visit.",
+  },
+  {
+    id: "dn",
+    name: "Dry Needling",
+    summary:
+      "A thin sterile needle into the muscle or tendon itself, releasing trigger points that keep you tight and sore.",
+    device: "Dr. Patel is certified",
+    thumb: { src: "/images/svc-needling.jpg", width: 900, height: 601 },
+    lede: "Dry needling uses a sterile thin monofilament needle through the skin into affected tendons, ligaments or muscles, in order to relieve pain, decrease muscle tension, and improve mobility. It is based on Western medicine principles and research, and works by enhancing the body's ability to heal while reducing pain in the process.",
+    benefits: [
+      "Decreases muscle pain and tenderness",
+      "Reduces muscle tightness and spasm",
+      "Improves range of motion and flexibility",
+      "Reduces cervicogenic headaches and migraines",
+      "Improves muscle function and movement",
+      "Reduces sensitivity in painful areas",
+    ],
+    expect:
+      "Dr. Patel reviews your symptoms, medical history and goals to determine whether dry needling is appropriate. You'll be positioned comfortably and the area cleaned, then a sterile, single-use filament needle is inserted into the targeted muscle or tissue. You may feel a muscle twitch, cramping, aching, pressure, or a brief return of your familiar symptoms. The needle stays in place a short time and is then removed. Electrical stimulation may be added to help restore normal contractile force. Treatment is often followed by stretching, movement exercises or manual therapy.",
+    after: [
+      "Temporary soreness or aching in the treated area",
+      "Mild bruising or pinpoint bleeding",
+      "Temporary fatigue or heaviness of the treated muscle",
+      "A temporary increase in symptoms before improvement occurs",
+    ],
+    risks: [
+      "Dizziness, lightheadedness, nausea or fainting",
+      "Injury to nerves or other tissues, which is uncommon",
+      "In certain areas of the body, pneumothorax (collapsed lung) is a rare but potentially serious complication that could require rest or hospitalization",
+    ],
+    notSuitable: {
+      heading: "Precautions & contraindications",
+      items: [
+        "History of pneumothorax or pneumonia",
+        "An active infection or open wound at the treatment site",
+        "Significant bleeding disorders",
+        "Medications that significantly increase bleeding risk, including some anticoagulants",
+        "A history of significant fainting with needles",
+        "Certain immune-system conditions or increased infection risk",
+        "Pregnancy, depending on the treatment area and protocol",
+        "Certain medical conditions or implanted devices such as a pacemaker, depending on technique",
+        "Significant fear of, or inability to tolerate, needles",
+      ],
+    },
+    protocol:
+      "1× per week per area. Many patients notice significant improvement after the first visit; follow-up plans are discussed after treatment.",
+  },
+  {
+    id: "laser",
+    name: "Class IV Laser Therapy",
+    summary:
+      "Painless laser energy that drives circulation and tissue healing. Sessions run 5–10 minutes, with most patients feeling relief in three to five visits.",
+    device: "LightForce® 15W",
+    thumb: {
+      src: "/images/svc-laser.jpg",
+      width: 560,
+      height: 560,
+      product: true,
+    },
+    lede: "Class IV laser therapy is a non-invasive healing method that uses laser energy to help damaged tissues reduce pain and inflammation, and to speed up the body's natural healing phase for a wide range of acute and chronic pain conditions. Treatments typically last 5–10 minutes and most patients experience relief in just three to five sessions.",
+    benefits: [
+      "Reduces pain and discomfort",
+      "Decreases inflammation and swelling",
+      "Improves local circulation",
+      "Promotes tissue healing and recovery",
+      "Supports soft-tissue healing",
+      "Reduces muscle tension and spasm",
+      "Improves joint mobility and function",
+      "Reduces recovery time following certain injuries or procedures",
+      "Supports healing of certain wounds and other soft-tissue conditions",
+    ],
+    treatsHeading: "Commonly treats",
+    treats: [
+      "Neck pain",
+      "Shoulder pain",
+      "Back pain",
+      "Knee pain",
+      "Sprains and strains",
+      "Plantar fasciitis",
+      "Carpal tunnel",
+      "Tennis elbow",
+      "Soft-tissue injuries",
+    ],
+    expect:
+      "Dr. Patel evaluates your condition to determine whether laser therapy is appropriate. The area may be exposed and cleaned, and protective eyewear is worn by both of you where the laser system requires it. The applicator is placed over or moved across the area. Treatment is generally painless: you may feel mild warmth, a gentle heating sensation, or little to nothing at all. Power, wavelength, time and area are set to your condition and goals, and sessions typically take several minutes.",
+    after: [
+      "Minimal to no increase in pain",
+      "Increased warmth in the tissue around the treated area",
+    ],
+    protocol: "1–2× per week, depending on the area being treated.",
+  },
+];
 
 export const screening = {
   heading: "Not Sure If We're the Right Fit? Find Out for Free.",
