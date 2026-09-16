@@ -488,6 +488,26 @@ export const insurance = {
     "Self-pay pricing is being finalized and will be shared directly when you contact the clinic.",
 };
 
+// ============================================================================
+// LEGAL NOTICES
+// ----------------------------------------------------------------------------
+// effectiveDate is set by the practice, not guessed here. The privacy page
+// renders a loud unset-date banner while it is null, deliberately — a legal
+// notice with a missing or invented date is worse than one that is obviously
+// incomplete. Confirmed by the client as September 1, 2026.
+//
+// npp and nondiscrimination are the two notices supplied separately (HIPAA 140
+// and BOM 244b). Each stays null until its document exists; the footer only
+// renders a link once one is set, so nothing ever points at a dead URL.
+// ============================================================================
+export const legal = {
+  privacy: {
+    effectiveDate: "September 1, 2026" as string | null,
+  },
+  npp: null as { page: string; pdf: string; effectiveDate: string } | null,
+  nondiscrimination: null as { page: string; pdf: string } | null,
+};
+
 export const serviceAreaTowns = [
   "Melbourne",
   "West Melbourne",

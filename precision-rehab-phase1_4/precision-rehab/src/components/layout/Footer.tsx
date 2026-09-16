@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { site } from "@/lib/content";
+import { site, legal } from "@/lib/content";
 
 /**
  * The footer plate is white in every theme (the transparent logo art is navy,
@@ -70,9 +70,25 @@ export function Footer() {
         </div>
 
         <div className="ftr-bot">
-          <p>
-            &copy; {new Date().getFullYear()} {site.name}. All rights reserved.
-          </p>
+          <div>
+            <p>
+              &copy; {new Date().getFullYear()} {site.name}. All rights
+              reserved.
+            </p>
+            {/* Each notice renders only once it exists in content.ts, so the
+                footer can never point at a document that has not been posted. */}
+            <nav className="ftr-legal" aria-label="Legal notices">
+              <a href="/privacy">Privacy Policy</a>
+              {legal.npp && (
+                <a href={legal.npp.page}>Notice of Privacy Practices</a>
+              )}
+              {legal.nondiscrimination && (
+                <a href={legal.nondiscrimination.page}>
+                  Non-Discrimination &amp; Accessibility
+                </a>
+              )}
+            </nav>
+          </div>
           <p>
             The information on this website is for general informational
             purposes only and is not a substitute for professional medical
