@@ -27,8 +27,8 @@ export function ConditionsWeTreat() {
         </div>
 
         <p className="cond-foot">
-          Don&rsquo;t see your exact condition listed? We likely still treat it.
-          <a href="#screening">Call to find out, or ask in a free screening</a>
+          Don&rsquo;t see your exact condition listed? This isn&rsquo;t a
+          complete list, and we very likely still treat it.
         </p>
       </div>
     </section>

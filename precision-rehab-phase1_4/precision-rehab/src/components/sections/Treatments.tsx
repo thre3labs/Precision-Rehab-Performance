@@ -126,8 +126,8 @@ export function Treatments() {
         </div>
 
         <p className="treat-foot">
-          Don&rsquo;t see what you&rsquo;re looking for? A free 15-minute
-          screening is the fastest way to find out if we can help.
+          Most plans of care combine several of these, built around what your
+          assessment actually shows.
         </p>
       </div>
     </section>

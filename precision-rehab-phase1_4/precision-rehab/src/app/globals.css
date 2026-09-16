@@ -552,14 +552,10 @@ section{
 .cond{ background: var(--surface); }
 .cond-foot{
   margin-top: var(--sp-7);
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: var(--sp-2h) var(--sp-4);
   color: var(--muted);
   font-size: var(--fs-base);
+  max-width: 62ch;
 }
-.cond-foot a{ display: inline-block; padding-block: var(--sp-2h); color: var(--amber); font-weight: var(--w-demi); text-decoration-thickness: 2px; text-underline-offset: 3px; }
 
 /* ============================================================
    TREATMENTS
