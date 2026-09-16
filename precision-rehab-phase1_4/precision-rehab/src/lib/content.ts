@@ -19,9 +19,21 @@ export const site = {
   legalCity: "Melbourne",
   legalState: "FL",
   legalStateFull: "Florida",
-  // NEEDS_CLIENT_INPUT: production domain (client owns via Domain.com).
-  // Placeholder used for canonical/OG URLs and JSON-LD until DNS is connected.
-  url: "https://www.precisionrehabfl.com",
+  // Production domain, confirmed by the client and already live on Vercel.
+  //
+  // THIS VALUE IS LOAD-BEARING. Every canonical tag, every Open Graph and
+  // Twitter URL, every sitemap entry, the robots.txt sitemap line and the
+  // JSON-LD `url` are built from it. It must be the exact scheme and host the
+  // site is actually served from, with no trailing slash.
+  //
+  // It previously read "https://www.precisionrehabfl.com" — a placeholder that
+  // turns out to belong to an unrelated company (Precision Rehab Enterprises,
+  // a therapy staffing agency in South Florida). While it was set, this site
+  // told search engines that another company's domain was the canonical
+  // version of every page, and every share preview asked that domain for its
+  // image, which returned 404. Both fail silently: the site looks fine to a
+  // visitor, and only a crawler or a link preview shows the damage.
+  url: "https://www.precisionrehabpt.com",
   phoneDisplay: "(321) 372-1055",
   phoneHref: "tel:+13213721055",
   // Same number is presented for both calling and texting per client info.

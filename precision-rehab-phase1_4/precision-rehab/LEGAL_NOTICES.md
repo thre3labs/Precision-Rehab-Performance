@@ -132,29 +132,48 @@ prospective patient. Worth deciding on before those pages exist, not after.
 
 ---
 
-## 1b. SEO — what is in place, and the one thing that is wrong
+## 1b. SEO and link previews — RESOLVED 16 September 2026
 
 Already built and working: per-page metadata, canonical URLs, Open Graph and
 Twitter cards, `MedicalBusiness` + `PhysiotherapyClinic` JSON-LD with the real
 address and provider, `FAQPage` JSON-LD matching the on-page FAQ exactly,
-`robots.txt`, and a `sitemap.xml` that now includes `/privacy`.
+`robots.txt`, and a `sitemap.xml` that includes `/privacy`.
 
-**The problem: `site.url` in `content.ts` is still a placeholder.**
+**What was wrong, and is now fixed.** `site.url` in `content.ts` held a
+placeholder:
 
 ```ts
-// NEEDS_CLIENT_INPUT: production domain (client owns via Domain.com).
-url: "https://www.precisionrehabfl.com",
+url: "https://www.precisionrehabfl.com",   // WRONG — a different company
 ```
 
-Every canonical tag, Open Graph URL, sitemap entry and JSON-LD `@id` is built
-from it. If the real domain differs — a different spelling, or no `www` — then
-the live site will tell Google its canonical address is a domain it is not
-served from. That is worse than having no canonical at all: it can suppress the
-real pages from search results entirely.
+That domain is not a typo of the clinic's and it is not unregistered. It is the
+live website of **Precision Rehab Enterprises, Inc.**, an unrelated therapy
+staffing agency in South Florida, running on GoDaddy. Every canonical tag,
+Open Graph URL, sitemap entry and JSON-LD `@id` on this site was built from it,
+which meant:
 
-**Confirm the exact production domain, including whether it uses `www`, before
-pushing.** It is one line to change and the single highest-impact SEO item
-here.
+- every page told Google that another company's domain was its canonical
+  address — which can remove the clinic's pages from search results entirely,
+  in favour of the other company;
+- every share preview requested its image from that domain and received a
+  **404**, so pasting the link into a text message, WhatsApp or Facebook
+  produced a card with no picture;
+- `sitemap.xml` and the `Sitemap:` line in `robots.txt` both pointed at the
+  other company's domain.
+
+None of this was visible to a visitor. The site rendered perfectly; only a
+crawler or a link preview saw the damage.
+
+The confirmed production domain is **`https://www.precisionrehabpt.com`**,
+already live on Vercel, and `site.url` is now set to it. Verified after the
+change: canonical, `og:url`, `og:image`, the sitemap and the JSON-LD `url` all
+resolve to that host, and the card renders identically for Facebook, iMessage,
+X, WhatsApp, Slack, LinkedIn and Googlebot.
+
+**Note for whoever maintains this:** the clinic email in `content.ts` is
+`Kushal.patel@precisionrpt.com` — `precisionrpt.com`, not `precisionrehabpt.com`.
+That may well be correct (a separate mail domain is common), but given what the
+last domain mix-up cost, it is worth one confirmation.
 
 Also still open, and for a local clinic it outranks the website itself in local
 search: the **Google Business Profile**. It is on the punch list in

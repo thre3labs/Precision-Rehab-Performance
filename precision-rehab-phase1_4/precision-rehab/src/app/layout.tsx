@@ -3,6 +3,9 @@ import "@fontsource/figtree/500.css";
 import "@fontsource/figtree/600.css";
 import "./globals.css";
 import { site, features } from "@/lib/content";
+// Share-preview strings and the card image live in one place so a page can
+// never half-declare an openGraph block and silently drop the image.
+import { pageMetadata, shareTitle, shareDescription } from "@/lib/seo";
 import { buildLocalBusinessSchema } from "@/lib/schema";
 import { MobileCTABar } from "@/components/layout/MobileCTABar";
 import { ChatWidget } from "@/components/chat/ChatWidget";
@@ -21,10 +24,6 @@ const description =
 
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
-  title: {
-    default: title,
-    template: `%s | ${site.name}`,
-  },
   description,
   keywords: [
     "physical therapist Melbourne FL",
@@ -34,30 +33,23 @@ export const metadata: Metadata = {
     "dry needling Melbourne FL",
     "physical therapy near me",
   ],
-  alternates: {
-    canonical: "/",
-  },
-  openGraph: {
+  // openGraph, twitter and the canonical link all come from one helper so
+  // they cannot drift apart. See src/lib/seo.ts for why a page must never
+  // hand-write a partial openGraph block.
+  ...pageMetadata({
+    title,
+    description,
+    path: "/",
     type: "website",
-    url: site.url,
-    title,
-    description,
-    siteName: site.name,
-    locale: "en_US",
-    images: [
-      {
-        url: "/images/og-default.jpg",
-        width: 1200,
-        height: 630,
-        alt: "Precision Rehab & Performance, Melbourne, FL",
-      },
-    ],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title,
-    description,
-    images: ["/images/og-default.jpg"],
+    shareTitle,
+    shareDescription,
+  }),
+  // Restored after the spread: the root layout needs the template form so
+  // child pages render as "Page name | Precision Rehab & Performance", which
+  // the helper's plain-string title would otherwise overwrite.
+  title: {
+    default: title,
+    template: `%s | ${site.name}`,
   },
   icons: {
     icon: [

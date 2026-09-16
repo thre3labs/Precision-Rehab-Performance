@@ -1,6 +1,6 @@
 # Clinic Assistant — Build Plan
 
-AI chat assistant for precisionrehabfl.com. Status: **Phase A built, currently switched
+AI chat assistant for precisionrehabpt.com. Status: **Phase A built, currently switched
 OFF.** The code is complete and in the codebase (`src/lib/chat/`,
 `src/app/api/chat/route.ts`, `src/components/chat/ChatWidget.tsx`), but
 `features.chatAssistant` in `src/lib/content.ts` is `false`, so none of it is reachable:

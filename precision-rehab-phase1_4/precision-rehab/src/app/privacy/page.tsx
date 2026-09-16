@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { site, legal, features } from "@/lib/content";
+import { pageMetadata } from "@/lib/seo";
 
 /**
  * ============================================================================
@@ -11,7 +13,7 @@ import { site, legal, features } from "@/lib/content";
  * Notice of Privacy Practices — that is a separate HIPAA document covering
  * treatment information, and it gets its own page and footer link.
  *
- Clauses removed from the supplied template because they described things
+ * Clauses removed from the supplied template because they described things
  * this website does not do:
  *
  *   - the payment-processor bullet (the site takes no payments)
@@ -49,10 +51,14 @@ import { site, legal, features } from "@/lib/content";
 const title = "Website Privacy Policy";
 const description = `How ${site.name} collects, uses, and protects information submitted through this website.`;
 
+// Without this, Next.js hands /privacy the LAYOUT's openGraph block unchanged
+// — so sharing the privacy policy produced a preview card for the home page,
+// pointing at the home page URL. Declaring a partial openGraph block here is
+// not the fix either: that replaces the layout's wholesale and silently drops
+// og:image, og:site_name and the wide Twitter card. pageMetadata() carries all
+// of those forward. See src/lib/seo.ts.
 export const metadata: Metadata = {
-  title,
-  description,
-  alternates: { canonical: "/privacy" },
+  ...pageMetadata({ title, description, path: "/privacy" }),
   robots: { index: true, follow: true },
 };
 
@@ -282,7 +288,7 @@ export default function PrivacyPolicy() {
             </ul>
 
             <p className="legal-back">
-              <a href="/">&larr; Back to {site.shortName}</a>
+              <Link href="/">&larr; Back to {site.shortName}</Link>
             </p>
           </div>
         </article>
