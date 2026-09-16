@@ -1,5 +1,5 @@
 import { NextRequest } from "next/server";
-import { site } from "@/lib/content";
+import { site, features } from "@/lib/content";
 import { buildSystemPrompt } from "@/lib/chat/knowledge";
 import {
   checkTopicGate,
@@ -38,6 +38,16 @@ function textResponse(body: string, status = 200) {
 }
 
 export async function POST(req: NextRequest) {
+  // The assistant is switched off in content.ts. Refuse here too rather than
+  // leaving a working endpoint behind a removed widget — the route is public
+  // and reachable whether or not anything on the page calls it.
+  if (!features.chatAssistant) {
+    return textResponse(
+      `The assistant isn't available. Please call or text the clinic at ${site.phoneDisplay}.`,
+      503,
+    );
+  }
+
   // Vercel sets x-forwarded-for; fall back to a constant so a missing header
   // shares one bucket rather than bypassing the limit entirely.
   const ip =

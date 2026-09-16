@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
-import { site, legal } from "@/lib/content";
+import { site, legal, features } from "@/lib/content";
 
 /**
  * ============================================================================
@@ -23,8 +23,13 @@ import { site, legal } from "@/lib/content";
  *     law" wording is kept, the jurisdiction-specific cite is not
  *
  * Two sections were ADDED because they are real data flows the template did
- * not cover: the clinic assistant (messages go to a third-party AI provider),
- * and Google Analytics.
+ * not cover: Google Analytics, and the clinic assistant.
+ *
+ * The clinic assistant passages render only while features.chatAssistant is
+ * true in content.ts. The feature and its disclosure are deliberately tied to
+ * one switch: a published privacy notice describing a feature the site does
+ * not have is the same class of error as one that fails to describe a feature
+ * it does.
  *
  * THIS PAGE MAKES SPECIFIC FACTUAL CLAIMS ABOUT WHAT THE SITE DOES. Two in
  * particular will go stale if someone changes the setup without reading here:
@@ -117,9 +122,10 @@ export default function PrivacyPolicy() {
 
             <h2>When Do We Collect Information?</h2>
             <p>
-              We collect information from you when you submit a contact form,
-              request an appointment or information, or send a message to the
-              clinic assistant described below.
+              We collect information from you when you submit a contact form
+              {features.chatAssistant
+                ? ", request an appointment or information, or send a message to the clinic assistant described below."
+                : " or request an appointment or information."}
             </p>
 
             <h2>How Do We Use Your Information?</h2>
@@ -173,21 +179,25 @@ export default function PrivacyPolicy() {
               browser settings and through the cookie controls described above.
             </p>
 
-            <h2>The Clinic Assistant</h2>
-            <p>
-              This website offers an automated chat assistant that answers
-              general questions about the clinic. It is not a person, it is not
-              a clinician, and it does not give medical advice. Please do not
-              share medical details with it.
-            </p>
-            <p>
-              Messages you type are sent to our website and passed to a
-              third-party artificial intelligence provider, which generates the
-              reply. We do not store the conversation: it is not written to any
-              database or log by this website, and it does not outlive your
-              browser tab. The provider handles the message under its own terms
-              and privacy policy.
-            </p>
+            {features.chatAssistant && (
+              <>
+                <h2>The Clinic Assistant</h2>
+                <p>
+                  This website offers an automated chat assistant that answers
+                  general questions about the clinic. It is not a person, it is
+                  not a clinician, and it does not give medical advice. Please
+                  do not share medical details with it.
+                </p>
+                <p>
+                  Messages you type are sent to our website and passed to a
+                  third-party artificial intelligence provider, which generates
+                  the reply. We do not store the conversation: it is not written
+                  to any database or log by this website, and it does not
+                  outlive your browser tab. The provider handles the message
+                  under its own terms and privacy policy.
+                </p>
+              </>
+            )}
 
             <h2>Reviewing and Correcting Your Information</h2>
             <p>
@@ -213,9 +223,11 @@ export default function PrivacyPolicy() {
               include website hosting partners and other parties who assist us
               in operating our website or servicing you, so long as those
               parties agree to keep this information confidential. Google
-              receives website usage data as described above, and the clinic
-              assistant&rsquo;s artificial intelligence provider receives the
-              messages you send it. We may also
+              receives website usage data as described above
+              {features.chatAssistant
+                ? ", and the clinic assistant\u2019s artificial intelligence provider receives the messages you send it."
+                : "."}{" "}
+              We may also
               release your information when we believe release is appropriate
               to comply with the law, enforce our site policies, or protect our
               rights, property, or safety, or the rights, property, or safety of

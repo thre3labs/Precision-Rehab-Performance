@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "@fontsource/figtree/500.css";
 import "@fontsource/figtree/600.css";
 import "./globals.css";
-import { site } from "@/lib/content";
+import { site, features } from "@/lib/content";
 import { buildLocalBusinessSchema } from "@/lib/schema";
 import { MobileCTABar } from "@/components/layout/MobileCTABar";
 import { ChatWidget } from "@/components/chat/ChatWidget";
@@ -102,7 +102,7 @@ export default function RootLayout({
         </a>
         {children}
         <MobileCTABar />
-        <ChatWidget />
+        {features.chatAssistant && <ChatWidget />}
         <Analytics />
       </body>
     </html>

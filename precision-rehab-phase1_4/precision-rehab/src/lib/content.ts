@@ -489,6 +489,23 @@ export const insurance = {
 };
 
 // ============================================================================
+// FEATURE SWITCHES
+// ----------------------------------------------------------------------------
+// chatAssistant turns the clinic assistant on and off as one piece: the widget
+// in the page, the /api/chat endpoint behind it, AND the section of the privacy
+// policy that describes it. They are tied to this single flag on purpose — a
+// published privacy notice that describes a feature the site does not have is
+// the same class of error as one that fails to describe a feature it does.
+//
+// Turning it back on: set this true, then set ANTHROPIC_API_KEY in Vercel and
+// redeploy. Without the key the widget renders but answers that it is not
+// switched on yet, which is the honest fallback, not a working assistant.
+// ============================================================================
+export const features = {
+  chatAssistant: false,
+};
+
+// ============================================================================
 // LEGAL NOTICES
 // ----------------------------------------------------------------------------
 // effectiveDate is set by the practice, not guessed here. The privacy page
