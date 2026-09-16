@@ -37,23 +37,33 @@ import { site } from "@/lib/content";
  */
 
 /**
- * The image every card falls back to. 1200x630 is the size Facebook, LinkedIn,
- * Slack and X all lay out at, and it is what iMessage renders as a large card
- * rather than a thumbnail.
+ * The image every card falls back to. Supplied by the client, resized from
+ * 1731x909 to 1200x630 — the size Facebook, LinkedIn, Slack and X all lay out
+ * at, and what iMessage renders as a large card rather than a small thumbnail.
  *
- * Keep it under a few hundred KB. WhatsApp in particular gives up on large
- * images and falls back to a bare link, and a preview nobody waits for is the
- * same as no preview.
+ * Two constraints if this is ever replaced:
  *
- * An alternative light-background version of this card is kept alongside it at
- * /images/og-alt-light.jpg. To use it, change the url below — nothing else.
+ *   1. The dimensions declared below must match the file. Platforms use them to
+ *      reserve the card's space before the image has downloaded; a mismatch
+ *      gives you a card that jumps, or one that is letterboxed.
+ *   2. Keep it a few hundred KB at most. WhatsApp gives up on large images and
+ *      falls back to a bare link, and a preview nobody waits for is the same as
+ *      no preview. This file is ~210KB as JPEG quality 95 — worth the size over
+ *      quality 90, which leaves visible ringing around the headline, on a card
+ *      that is almost entirely sharp text on near-white.
+ *
+ * Also keep anything that matters within roughly 8% of each edge. X crops a
+ * 1.91:1 card towards 2:1 and some clients crop a little further; the current
+ * artwork's headline sits at 8% left and 7.5% right, which survives that.
  */
 export const shareImage = {
   url: "/images/og-default.jpg",
   width: 1200,
   height: 630,
   type: "image/jpeg",
-  alt: "Precision Rehab & Performance — outpatient physical therapy in Melbourne, Florida",
+  // Describes what is actually on the card, for screen-reader users on
+  // Facebook and X. If the artwork changes, this changes with it.
+  alt: "Precision Rehab & Performance — one-on-one physical therapy, Melbourne, Florida. Pain, recovery, performance. Precision care, built around you.",
 };
 
 /**
