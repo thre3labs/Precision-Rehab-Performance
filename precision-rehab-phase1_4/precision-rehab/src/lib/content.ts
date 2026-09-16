@@ -136,9 +136,11 @@ export type TreatmentCategory = {
   items: TreatmentItem[];
   note?: string;
   /**
-   * Card image. These are labelled placeholders until the client supplies
-   * clinic photography — replace the file at this path, keep the name, and
-   * nothing else needs to change. 900x675 or larger, landscape.
+   * Card image. Landscape; rendered as a 116x86 cover-cropped thumbnail, so
+   * anything from ~240px wide up is enough. width/height must match the file
+   * on disk — next/image uses them to reserve the box, and a wrong ratio here
+   * is a layout-shift bug waiting to happen. Replace a photo by overwriting
+   * the file and updating these two numbers.
    */
   image: { src: string; width: number; height: number; alt: string };
 };
@@ -150,9 +152,9 @@ export const treatmentCategories: TreatmentCategory[] = [
       "Comprehensive, hands-on physical therapy for injury, surgery recovery, and chronic pain.",
     image: {
       src: "/images/treat-rehab.jpg",
-      width: 900,
-      height: 675,
-      alt: "Hands-on physical therapy treatment at the Melbourne clinic",
+      width: 531,
+      height: 354,
+      alt: "A physical therapist assessing an older patient's neck and shoulders in a treatment room",
     },
     items: [
       {
@@ -179,9 +181,9 @@ export const treatmentCategories: TreatmentCategory[] = [
       "Cash-based modalities used alongside your treatment plan to accelerate recovery.",
     image: {
       src: "/images/treat-modalities.jpg",
-      width: 900,
-      height: 675,
-      alt: "A recovery modality session in progress",
+      width: 523,
+      height: 342,
+      alt: "Cupping therapy being applied to a patient's back",
     },
     items: [
       {
@@ -205,9 +207,9 @@ export const treatmentCategories: TreatmentCategory[] = [
       "For patients who want to stay ahead of injury and keep performing at their best.",
     image: {
       src: "/images/treat-performance.jpg",
-      width: 900,
-      height: 675,
-      alt: "Strength and return-to-sport training with a patient",
+      width: 532,
+      height: 348,
+      alt: "An athlete gripping a loaded barbell at the start of a deadlift",
     },
     items: [
       {
