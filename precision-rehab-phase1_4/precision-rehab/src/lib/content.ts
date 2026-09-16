@@ -198,6 +198,15 @@ export const treatmentCategories: TreatmentCategory[] = [
         name: "Cupping",
         blurb: "Eases muscle tightness and improves mobility via localized blood flow.",
       },
+      {
+        name: "Class IV Laser Therapy",
+        // The "250+ teams" figure is LightForce's own marketing claim, supplied
+        // by the client. It is a statement about the manufacturer's install
+        // base, not a clinical outcome claim, and it is the clinic's to stand
+        // behind. Everything else on this page describes what a treatment does.
+        blurb:
+          "Aids post-activity recovery. LightForce lasers are used by 250+ pro, college and Olympic teams.",
+      },
     ],
     note: "Cash-pay only",
   },
