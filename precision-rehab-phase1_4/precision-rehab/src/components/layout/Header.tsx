@@ -49,7 +49,7 @@ export function Header() {
   return (
     <header className="hdr">
       <div className="wrap hdr-in">
-        <a className="brand" href="#" aria-label={`${site.name}, home`}>
+        <a className="brand" href="/" aria-label={`${site.name}, home`}>
           <Image
             className="brand-img"
             src="/images/logo-transparent.png"

@@ -97,6 +97,7 @@ export function Modalities() {
             const isOpen = open === m.id;
             return (
               <article className="acc-item" key={m.id}>
+                <h3 className="acc-h">
                 <button
                   className="acc-head"
                   type="button"
@@ -129,6 +130,7 @@ export function Modalities() {
                     </svg>
                   </span>
                 </button>
+                </h3>
 
                 <div className="acc-body det" id={`mp-${m.id}`} hidden={!isOpen}>
                   {m.id === "shock" ? (

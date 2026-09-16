@@ -658,6 +658,10 @@ section{
   overflow: hidden;
   box-shadow: var(--shadow-1);
 }
+/* The accordion control is wrapped in a heading so the cards are reachable by
+   heading navigation (WAI-ARIA accordion pattern). The heading is structural
+   only — every visual property still comes from .acc-head below. */
+.acc-h{ margin: 0; font: inherit; letter-spacing: normal; line-height: normal; }
 .acc-head{
   width: 100%;
   display: flex;
@@ -1419,7 +1423,7 @@ section{
 @media (min-width: 780px){ .ftr-grid{ grid-template-columns: 1fr 1fr 1fr; } }
 .ftr .brand-img{ height: 52px; }
 .ftr p.blurb{ margin-top: var(--sp-4); font-size: var(--fs-sm); line-height: 1.6; max-width: 34ch; }
-.ftr h4{ font-family: var(--display); font-size: var(--fs-2xs); letter-spacing: .15em; text-transform: uppercase; color: var(--amber-on-light); font-weight: var(--w-demi); }
+.ftr h3{ font-family: var(--display); font-size: var(--fs-2xs); letter-spacing: .15em; text-transform: uppercase; color: var(--amber-on-light); font-weight: var(--w-demi); }
 .ftr ul{ list-style: none; margin: var(--sp-3) 0 0; padding: 0; display: grid; gap: 0; font-size: var(--fs-sm); }
 .ftr ul li{ padding-block: 3px; }
 /* padding has to sit on the anchor: an inline <a> inside a padded <li> keeps a

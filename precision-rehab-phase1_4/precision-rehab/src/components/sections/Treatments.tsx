@@ -72,6 +72,7 @@ export function Treatments() {
             const panelId = `treat-panel-${i}`;
             return (
               <article className="acc-item" key={c.title}>
+                <h3 className="acc-h">
                 <button
                   className="acc-head"
                   type="button"
@@ -104,6 +105,7 @@ export function Treatments() {
                     </svg>
                   </span>
                 </button>
+                </h3>
 
                 <div className="acc-body" id={panelId} hidden={!isOpen}>
                   <ul className="items">

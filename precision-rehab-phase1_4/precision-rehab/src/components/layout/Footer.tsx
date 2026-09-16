@@ -38,7 +38,7 @@ export function Footer() {
           </div>
 
           <div>
-            <h4>Contact</h4>
+            <h3>Contact</h3>
             <ul>
               <li>
                 <a href={site.phoneHref}>{site.phoneDisplay}</a>
@@ -58,7 +58,7 @@ export function Footer() {
           </div>
 
           <div>
-            <h4>Explore</h4>
+            <h3>Explore</h3>
             <ul>
               {EXPLORE.map((e) => (
                 <li key={e.href}>
