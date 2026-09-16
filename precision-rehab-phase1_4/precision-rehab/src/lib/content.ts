@@ -135,6 +135,12 @@ export type TreatmentCategory = {
   description: string;
   items: TreatmentItem[];
   note?: string;
+  /**
+   * Card image. These are labelled placeholders until the client supplies
+   * clinic photography — replace the file at this path, keep the name, and
+   * nothing else needs to change. 900x675 or larger, landscape.
+   */
+  image: { src: string; width: number; height: number; alt: string };
 };
 
 export const treatmentCategories: TreatmentCategory[] = [
@@ -142,6 +148,12 @@ export const treatmentCategories: TreatmentCategory[] = [
     title: "Physical Therapy & Rehabilitation",
     description:
       "Comprehensive, hands-on physical therapy for injury, surgery recovery, and chronic pain.",
+    image: {
+      src: "/images/treat-rehab.jpg",
+      width: 900,
+      height: 675,
+      alt: "Hands-on physical therapy treatment at the Melbourne clinic",
+    },
     items: [
       {
         name: "Physical Therapy",
@@ -165,6 +177,12 @@ export const treatmentCategories: TreatmentCategory[] = [
     title: "Recovery Modalities",
     description:
       "Cash-based modalities used alongside your treatment plan to accelerate recovery.",
+    image: {
+      src: "/images/treat-modalities.jpg",
+      width: 900,
+      height: 675,
+      alt: "A recovery modality session in progress",
+    },
     items: [
       {
         name: "Dry Needling",
@@ -185,6 +203,12 @@ export const treatmentCategories: TreatmentCategory[] = [
     title: "Performance & Maintenance",
     description:
       "For patients who want to stay ahead of injury and keep performing at their best.",
+    image: {
+      src: "/images/treat-performance.jpg",
+      width: 900,
+      height: 675,
+      alt: "Strength and return-to-sport training with a patient",
+    },
     items: [
       {
         name: "Injury Prevention",

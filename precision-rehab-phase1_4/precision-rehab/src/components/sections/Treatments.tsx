@@ -1,19 +1,53 @@
 "use client";
 
-import { useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
+import Image from "next/image";
 import { treatmentCategories } from "@/lib/content";
 
 /**
- * Every panel stays in the markup at all times and only the inactive ones
- * carry `hidden`, so all three categories are in the server-rendered HTML for
- * crawlers. Switching tabs is a pure visual toggle, not a fetch or unmount.
+ * "How we can help" — the same card anatomy as the Recovery Technology
+ * accordion below it: image, title, summary, amber tag, and a plus that opens
+ * the detail. The two sections are meant to read as siblings.
  *
- * The segmented control is a pill only while the tabs fit on one line; once
- * they wrap, a 999px radius turns the container into a giant lozenge, so it
- * softens to a rounded rectangle below 880px (see globals.css).
+ * One deliberate difference: the first panel starts open. Recovery Technology
+ * opens fully collapsed because it is supporting detail, but this section is
+ * the clinic's core services — three closed bars would say nothing about what
+ * the practice actually does.
+ *
+ * Panels are `hidden` rather than unmounted, so every treatment stays in the
+ * server-rendered HTML for search engines; opening one is a visual toggle, not
+ * a fetch. Closing the open panel changes the page height above the one being
+ * opened, so openPanel scrolls its header back under the sticky bar.
  */
 export function Treatments() {
-  const [active, setActive] = useState(0);
+  const [open, setOpen] = useState<string | null>(
+    treatmentCategories[0]?.title ?? null,
+  );
+  const heads = useRef<Record<string, HTMLButtonElement | null>>({});
+  const firstPaint = useRef(true);
+
+  const toggle = useCallback((id: string) => {
+    setOpen((prev) => (prev === id ? null : id));
+  }, []);
+
+  useEffect(() => {
+    // don't yank the page on first render — only on a real interaction
+    if (firstPaint.current) {
+      firstPaint.current = false;
+      return;
+    }
+    if (!open) return;
+    const head = heads.current[open];
+    if (!head) return;
+    const raf = requestAnimationFrame(() => {
+      const bar = document.querySelector(".hdr");
+      const offset = (bar instanceof HTMLElement ? bar.offsetHeight : 0) + 14;
+      const y = head.getBoundingClientRect().top + window.scrollY - offset;
+      const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      window.scrollTo({ top: y, behavior: reduce ? "auto" : "smooth" });
+    });
+    return () => cancelAnimationFrame(raf);
+  }, [open]);
 
   return (
     <section className="treat" id="treatments">
@@ -32,51 +66,69 @@ export function Treatments() {
           </div>
         </div>
 
-        <div className="seg" role="tablist" aria-label="Treatment categories">
-          {treatmentCategories.map((c, i) => (
-            <button
-              key={c.title}
-              type="button"
-              role="tab"
-              id={`tab-${i}`}
-              aria-controls={`pan-${i}`}
-              aria-selected={i === active}
-              onClick={() => setActive(i)}
-            >
-              {c.title}
-            </button>
-          ))}
+        <div className="acc acc-treat">
+          {treatmentCategories.map((c, i) => {
+            const isOpen = open === c.title;
+            const panelId = `treat-panel-${i}`;
+            return (
+              <article className="acc-item" key={c.title}>
+                <button
+                  className="acc-head"
+                  type="button"
+                  aria-expanded={isOpen}
+                  aria-controls={panelId}
+                  onClick={() => toggle(c.title)}
+                  ref={(el) => {
+                    heads.current[c.title] = el;
+                  }}
+                >
+                  <Image
+                    className="acc-thumb wide"
+                    src={c.image.src}
+                    alt=""
+                    width={c.image.width}
+                    height={c.image.height}
+                  />
+                  <span className="acc-title">
+                    <b>{c.title}</b>
+                    <span>{c.description}</span>
+                    {c.note && <span className="dev">{c.note}</span>}
+                  </span>
+                  <span className="acc-plus" aria-hidden="true">
+                    <svg
+                      className="ico"
+                      viewBox="0 0 24 24"
+                      style={{ width: "17px", height: "17px" }}
+                    >
+                      <path d="M12 5v14M5 12h14" />
+                    </svg>
+                  </span>
+                </button>
+
+                <div className="acc-body" id={panelId} hidden={!isOpen}>
+                  <ul className="items">
+                    {c.items.map((item) => (
+                      <li key={item.name}>
+                        <svg className="ico" viewBox="0 0 24 24" aria-hidden="true">
+                          <path d="M20 6 9 17l-5-5" />
+                        </svg>
+                        <div>
+                          <b>{item.name}</b>
+                          {item.blurb && <span>{item.blurb}</span>}
+                        </div>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </article>
+            );
+          })}
         </div>
 
-        {treatmentCategories.map((c, i) => (
-          <div
-            key={c.title}
-            className="panel"
-            id={`pan-${i}`}
-            role="tabpanel"
-            aria-labelledby={`tab-${i}`}
-            hidden={i !== active}
-          >
-            <div className="panel-head">
-              <h3>{c.title}</h3>
-              <p>{c.description}</p>
-              {c.note && <span className="tag">{c.note}</span>}
-            </div>
-            <ul className="items">
-              {c.items.map((item) => (
-                <li key={item.name}>
-                  <svg className="ico" viewBox="0 0 24 24" aria-hidden="true">
-                    <path d="M20 6 9 17l-5-5" />
-                  </svg>
-                  <div>
-                    <b>{item.name}</b>
-                    {item.blurb && <span>{item.blurb}</span>}
-                  </div>
-                </li>
-              ))}
-            </ul>
-          </div>
-        ))}
+        <p className="treat-foot">
+          Don&rsquo;t see what you&rsquo;re looking for? A free 15-minute
+          screening is the fastest way to find out if we can help.
+        </p>
       </div>
     </section>
   );

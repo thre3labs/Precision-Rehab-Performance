@@ -248,7 +248,11 @@ p{ margin: 0; }
 .axis-body > .note{ color: var(--amber); display: block; margin-bottom: var(--sp-3h); }
 .axis-body > .lede{ margin-top: var(--sp-5); }
 
-section{ padding-block: clamp(66px, 8vw, 112px); }
+section{
+  padding-block: clamp(66px, 8vw, 112px);
+  /* clears the sticky header when a nav link jumps here */
+  scroll-margin-top: 86px;
+}
 
 /* ---------- buttons ---------- */
 .btn{
@@ -561,66 +565,27 @@ section{ padding-block: clamp(66px, 8vw, 112px); }
    TREATMENTS
    ============================================================ */
 .treat{ background: var(--paper); }
-.seg{
-  margin-top: var(--sp-9);
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--sp-2);
-  padding: var(--sp-2);
-  background: var(--surface);
-  border: 1px solid var(--line);
-  /* pill only while it fits on one line; once the tabs wrap, a pill
-     container becomes a giant lozenge, so soften to a rounded rect */
-  border-radius: 999px;
-  width: fit-content;
-  max-width: 100%;
+/* ---------- treatment accordion ----------
+   Reuses the .acc-* card anatomy from Recovery Technology so the two sections
+   read as siblings; only the thumbnail shape and the panel padding differ.
+   The thumb is landscape rather than square because clinic photography is,
+   and a square crop of a wide photo throws away the sides. */
+.acc-treat{ margin-top: var(--sp-9); }
+.acc-thumb.wide{
+  width: 116px;
+  height: 86px;
+  border-radius: 10px;
+  object-fit: cover;
 }
-@media (max-width: 880px){
-  .seg{
-    border-radius: 16px;
-    width: 100%;
-    justify-content: stretch;
-  }
-  .seg button{ flex: 1 1 auto; }
+@media (max-width: 620px){
+  .acc-thumb.wide{ width: 84px; height: 66px; }
 }
-.seg button{
-  appearance: none;
-  border: 0;
-  background: transparent;
-  border-radius: 999px;
-  padding: var(--sp-3) var(--sp-5);
-  min-height: 46px;
-  font-family: var(--display);
-  font-weight: var(--w-demi);
-  font-size: var(--fs-sm);
-  letter-spacing: -0.01em;
-  color: var(--muted);
-  cursor: pointer;
-  white-space: nowrap;
-  transition: background-color .18s ease, color .18s ease;
+.acc-treat .acc-body{ padding: 0 var(--sp-6) var(--sp-6); }
+@media (min-width: 760px){
+  .acc-treat .acc-body{ padding: 0 var(--sp-7) var(--sp-7); }
 }
-.seg button:hover{ color: var(--text); }
-.seg button[aria-selected="true"]{ background: var(--ink-2); color: #fff; }
+.acc-title .dev{ margin-top: var(--sp-2h); }
 
-.panel{
-  margin-top: var(--sp-6);
-  background: var(--surface);
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
-  padding: clamp(24px, 3.4vw, 40px);
-  box-shadow: var(--shadow-1);
-}
-.panel[hidden]{ display: none !important; }
-.panel-head{
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  gap: var(--sp-2h) var(--sp-5);
-  padding-bottom: var(--sp-6);
-  border-bottom: 1px solid var(--line-soft);
-}
-.panel-head h3{ font-size: clamp(1.25rem, 2.2vw, 1.6rem); }
-.panel-head p{ color: var(--muted); font-size: var(--fs-base); flex: 1 1 280px; }
 .tag{
   font-family: var(--display);
   font-size: var(--fs-3xs);
@@ -848,10 +813,19 @@ section{ padding-block: clamp(66px, 8vw, 112px); }
 .det-fig{ margin: var(--sp-6) 0 0; }
 .det-fig img{ width: 100%; max-height: 380px; object-fit: cover; border-radius: 12px; border: 1px solid var(--line-soft); }
 .det-fig figcaption{ margin-top: var(--sp-2h); font-size: var(--fs-xs); color: var(--muted); }
+/* .mod-foot sits on the navy Modalities ground and takes the on-dark muted
+   token. .treat-foot is the same line on a light section ground — they are
+   NOT interchangeable; using mod-foot on the light ground renders at 1.98:1. */
 .mod-foot{
   margin-top: var(--sp-7);
   font-size: var(--fs-sm);
   color: var(--onDark-mut);
+  text-align: center;
+}
+.treat-foot{
+  margin-top: var(--sp-7);
+  font-size: var(--fs-sm);
+  color: var(--muted);
   text-align: center;
 }
 
