@@ -6,6 +6,7 @@ import { site } from "@/lib/content";
 import { buildLocalBusinessSchema } from "@/lib/schema";
 import { MobileCTABar } from "@/components/layout/MobileCTABar";
 import { ChatWidget } from "@/components/chat/ChatWidget";
+import { Analytics } from "@/components/analytics/Analytics";
 
 // Fonts are self-hosted via @fontsource (bundled at build time) rather than
 // next/font/google, since that requires a live connection to
@@ -69,6 +70,12 @@ export const metadata: Metadata = {
     index: true,
     follow: true,
   },
+  // Set NEXT_PUBLIC_GSC_VERIFICATION to the token Google Search Console gives
+  // you for its "HTML tag" method. Omitted entirely when unset, so no empty
+  // meta tag ever ships.
+  ...(process.env.NEXT_PUBLIC_GSC_VERIFICATION
+    ? { verification: { google: process.env.NEXT_PUBLIC_GSC_VERIFICATION } }
+    : {}),
 };
 
 export default function RootLayout({
@@ -96,6 +103,7 @@ export default function RootLayout({
         {children}
         <MobileCTABar />
         <ChatWidget />
+        <Analytics />
       </body>
     </html>
   );

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, FormEvent } from "react";
+import { trackLead } from "@/components/analytics/Analytics";
 
 /**
  * Lead capture form. Submits to /api/contact (see route.ts), which is a
@@ -34,6 +35,9 @@ export function ContactForm() {
         body: JSON.stringify(data),
       });
       if (!res.ok) throw new Error("Request failed");
+      // Records that a screening was requested. Never the form contents —
+      // see the note on trackLead().
+      trackLead();
       setStatus("success");
       form.reset();
     } catch {

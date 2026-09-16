@@ -18,16 +18,20 @@ of the site.
 ### Clauses removed, and the evidence
 
 The template described several data practices this website does not have. Each
-was verified against the built site, not assumed: the page was loaded in a
-clean browser profile and its cookie jar, storage and network activity
+was checked against the built site rather than assumed: the page was loaded in
+a clean browser profile and its cookie jar, storage and network activity
 inspected.
 
 ```
-cookies set          : NONE
+cookies set          : NONE   (before Google Analytics was added)
 localStorage keys    : NONE
 sessionStorage keys  : NONE
-third-party hosts    : NONE
+third-party hosts    : NONE   (before Google Analytics was added)
 ```
+
+**Google Analytics was added after this audit**, at the client's direction, so
+the cookie and third-party lines above no longer hold. The policy was rewritten
+to match — see section 1a.
 
 | Template said | Reality | Action |
 |---|---|---|
@@ -65,6 +69,96 @@ Worth sending them this list, in particular:
    name the AI provider once one is chosen.
 3. Whether a Florida practice needs any state-specific disclosure the
    California-flavoured template omitted.
+
+---
+
+## 1a. Google Analytics — ADDED at the client's direction
+
+The practice chose Google Analytics for SEO and marketing measurement. It is
+implemented in `src/components/analytics/Analytics.tsx` and the privacy policy
+was rewritten to disclose it accurately: a cookies-and-analytics section, the
+Google opt-out link, a Do Not Track statement, and Google named in the
+third-party disclosure.
+
+### Two settings turned off deliberately
+
+```js
+allow_google_signals: false
+allow_ad_personalization_signals: false
+```
+
+These are the two that matter on a healthcare site. Together they stop this
+traffic being joined to Google's cross-device advertising identity graph and
+keep it out of remarketing audiences. The exposure behind the pixel class
+actions was that join — not page-view counting. GA4 truncates IP addresses
+before storage with no way to disable it, so that needs no flag.
+
+Turning either on later re-opens the question, and makes a paragraph of the
+published privacy policy false. That is noted in the page's own header comment
+so it cannot be flipped casually.
+
+### The conversion event carries no parameters
+
+`trackLead()` fires `generate_lead` on a successful form submission and sends
+nothing else. The "what brings you in" field is free text and patients put
+symptoms in it whatever the label says; sending any of that to Google would
+turn a page-view counter into a health-data disclosure. If conversion detail is
+ever wanted, screening type (in person / virtual) is safe, the reason field is
+not.
+
+### What this does NOT cover
+
+No advertising pixel and no Google Ads remarketing tag is installed, and the
+policy says so. Adding either is the change most worth pausing over: it is the
+specific pattern that produced the Advocate Aurora ($12.25M) and Novant Health
+($6.6M) settlements. If paid ads are planned, raise it with the compliance
+provider first rather than dropping a tag in.
+
+The same caution applies to **Phase 2 condition pages**. Today the site is one
+page, so analytics records "someone visited the homepage". The moment there is
+a `/conditions/knee-pain` URL, analytics records "this visitor looked at the
+knee pain page", which is a materially different thing to be holding about a
+prospective patient. Worth deciding on before those pages exist, not after.
+
+### Still to do
+
+- [ ] Create the GA4 property and set `NEXT_PUBLIC_GA_ID` in Vercel, **for the
+      Production environment only**. Setting it for Preview as well means every
+      test deployment pollutes the reporting with traffic that is not real.
+- [ ] Verify the site in Google Search Console and set
+      `NEXT_PUBLIC_GSC_VERIFICATION` to the token from its "HTML tag" method.
+- [ ] Re-check what cookies the live site actually sets once deployed. The
+      audit above ran against a local production build, not against Vercel.
+
+---
+
+## 1b. SEO — what is in place, and the one thing that is wrong
+
+Already built and working: per-page metadata, canonical URLs, Open Graph and
+Twitter cards, `MedicalBusiness` + `PhysiotherapyClinic` JSON-LD with the real
+address and provider, `FAQPage` JSON-LD matching the on-page FAQ exactly,
+`robots.txt`, and a `sitemap.xml` that now includes `/privacy`.
+
+**The problem: `site.url` in `content.ts` is still a placeholder.**
+
+```ts
+// NEEDS_CLIENT_INPUT: production domain (client owns via Domain.com).
+url: "https://www.precisionrehabfl.com",
+```
+
+Every canonical tag, Open Graph URL, sitemap entry and JSON-LD `@id` is built
+from it. If the real domain differs — a different spelling, or no `www` — then
+the live site will tell Google its canonical address is a domain it is not
+served from. That is worse than having no canonical at all: it can suppress the
+real pages from search results entirely.
+
+**Confirm the exact production domain, including whether it uses `www`, before
+pushing.** It is one line to change and the single highest-impact SEO item
+here.
+
+Also still open, and for a local clinic it outranks the website itself in local
+search: the **Google Business Profile**. It is on the punch list in
+`PROJECT_NOTES.md` and has no URL yet.
 
 ---
 

@@ -11,14 +11,10 @@ import { site, legal } from "@/lib/content";
  * Notice of Privacy Practices — that is a separate HIPAA document covering
  * treatment information, and it gets its own page and footer link.
  *
- * Clauses removed from the supplied template because they described things
- * this website does not do. Verified empirically against the built site:
- * zero cookies set, no localStorage or sessionStorage, no third-party
- * requests, no analytics, no payment processing.
+ Clauses removed from the supplied template because they described things
+ * this website does not do:
  *
- *   - the cookie section ("we use first party cookies to save your
- *     preferences and compile aggregate data")
- *   - the payment-processor bullet
+ *   - the payment-processor bullet (the site takes no payments)
  *   - "subscribe to updates" and the opt-in marketing email clause
  *   - "this website is scanned regularly for malware and security
  *     vulnerabilities" (not something the host does by default)
@@ -26,13 +22,22 @@ import { site, legal } from "@/lib/content";
  *     for a Florida practice — the surrounding "as required by applicable
  *     law" wording is kept, the jurisdiction-specific cite is not
  *
- * Added, because it is a real data flow the template predates: the clinic
- * assistant section. Messages typed into the chat widget are sent to a
- * third-party model provider to generate the reply. Omitting that would be a
- * worse error than including it.
+ * Two sections were ADDED because they are real data flows the template did
+ * not cover: the clinic assistant (messages go to a third-party AI provider),
+ * and Google Analytics.
  *
- * Every removal narrows what the practice claims to collect. All of it still
- * needs the compliance provider's sign-off — see PROJECT_NOTES.md.
+ * THIS PAGE MAKES SPECIFIC FACTUAL CLAIMS ABOUT WHAT THE SITE DOES. Two in
+ * particular will go stale if someone changes the setup without reading here:
+ *
+ *   1. "We have turned off Google Signals and ad personalization" — enforced
+ *      in components/analytics/Analytics.tsx. If those flags are flipped on to
+ *      enable remarketing, this paragraph becomes false and must change.
+ *   2. "We do not use advertising pixels or social network trackers" — true
+ *      today. Adding a Meta pixel or a Google Ads remarketing tag makes it
+ *      false, and on a healthcare site that is the change most worth pausing
+ *      over. See LEGAL_NOTICES.md.
+ *
+ * All of it still needs the compliance provider's sign-off.
  * ============================================================================
  */
 
@@ -102,6 +107,12 @@ export default function PrivacyPolicy() {
                 Standard server records of your visit, such as pages requested,
                 kept by our hosting provider.
               </li>
+              <li>
+                Website usage data collected through Google Analytics, such as
+                the pages you view, roughly where you are in the world, and
+                whether you arrived from a search engine, a link, or directly.
+                This is collected using cookies, described below.
+              </li>
             </ul>
 
             <h2>When Do We Collect Information?</h2>
@@ -118,19 +129,48 @@ export default function PrivacyPolicy() {
               <li>To operate and improve our website.</li>
             </ul>
 
-            <h2>Cookies and Tracking</h2>
+            <h2>Cookies and Analytics</h2>
             <p>
-              This website does not set cookies, does not use browser storage
-              to track you, and does not use an analytics service. It loads no
-              content from third-party servers, so no advertising or social
-              network can observe your visit here.
+              Cookies are small files a website stores in your browser. This
+              website uses Google Analytics, which sets cookies so that it can
+              tell a returning visit from a new one and report how the site is
+              used overall. We use this to understand which pages people find
+              useful and how they found us. We do not use it to identify you
+              personally.
+            </p>
+            <p>
+              We have turned off Google Signals and ad personalization for this
+              website. That means your visit here is not added to Google&rsquo;s
+              cross-device advertising profiles and is not used to build
+              remarketing audiences.
+            </p>
+            <p>
+              You can set your browser to warn you each time a cookie is sent,
+              or to turn off cookies entirely. Each major browser, such as
+              Microsoft Edge, Google Chrome, Apple Safari, and Mozilla Firefox,
+              includes instructions in its Help or Settings menu, usually under
+              Privacy. You can also opt out of Google Analytics on every website
+              using the{" "}
+              <a
+                href="https://tools.google.com/dlpage/gaoptout"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Google Analytics opt-out browser add-on
+              </a>
+              . Turning cookies off does not stop you using this site.
+            </p>
+            <p>
+              We do not use advertising pixels or social network trackers on
+              this website.
             </p>
 
             <h2>Do Not Track</h2>
             <p>
               There is no common industry standard for responding to Do Not
-              Track browser signals. Because this website does no tracking,
-              there is nothing for such a signal to disable.
+              Track browser signals, and this website does not respond to Do Not
+              Track signals at this time. You may control tracking through your
+              browser settings and through the cookie controls described above.
             </p>
 
             <h2>The Clinic Assistant</h2>
@@ -172,7 +212,10 @@ export default function PrivacyPolicy() {
               identifiable information to outside parties. This does not
               include website hosting partners and other parties who assist us
               in operating our website or servicing you, so long as those
-              parties agree to keep this information confidential. We may also
+              parties agree to keep this information confidential. Google
+              receives website usage data as described above, and the clinic
+              assistant&rsquo;s artificial intelligence provider receives the
+              messages you send it. We may also
               release your information when we believe release is appropriate
               to comply with the law, enforce our site policies, or protect our
               rights, property, or safety, or the rights, property, or safety of
