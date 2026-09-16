@@ -1431,7 +1431,7 @@ section{
 .ftr ul a{ display: inline-block; padding-block: var(--sp-2h); }
 .ftr a{ text-decoration: none; }
 .ftr a{ color: #0C1E33; }
-.ftr a:hover{ color: var(--amber-on-light); }
+.ftr a:hover{ color: var(--amber-on-light); text-decoration: underline; text-underline-offset: 3px; }
 .ftr-bot{
   margin-top: var(--sp-8);
   padding-top: var(--sp-6);
@@ -1476,6 +1476,10 @@ section{
 }
 .legal li::marker{ color: var(--amber); }
 .legal a{ color: var(--amber); font-weight: var(--w-demi); text-underline-offset: 3px; }
+/* Links inside prose carry an underline at rest: at 1.18:1 against the
+   surrounding body text, colour alone does not identify them (SC 1.4.1). */
+.legal p a, .legal li a{ text-decoration: underline; text-decoration-thickness: 1px; }
+.legal p a:hover, .legal li a:hover{ text-decoration-thickness: 2px; }
 .legal-date{
   margin-top: var(--sp-3h);
   font-family: var(--display);
@@ -1517,7 +1521,7 @@ section{
   color: var(--ftr-ink);
   text-underline-offset: 3px;
 }
-.ftr-legal a:hover{ color: var(--amber-on-light); }
+.ftr-legal a:hover{ color: var(--amber-on-light); text-decoration: underline; text-underline-offset: 3px; }
 
 /* ============================================================
    MOBILE CTA BAR

@@ -128,10 +128,9 @@ export function ChatWidget() {
         <span className="badge" aria-hidden="true" />
       </button>
 
-      <div
+      <section
         className={`chat${open ? " chat-open" : ""}`}
         id="chatPanel"
-        role="dialog"
         aria-label="Clinic assistant"
         hidden={!open}
       >
@@ -238,7 +237,7 @@ export function ChatWidget() {
             Please don&rsquo;t share medical details.
           </p>
         </div>
-      </div>
+      </section>
     </>
   );
 }
