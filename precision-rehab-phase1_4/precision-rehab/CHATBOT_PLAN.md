@@ -1,9 +1,18 @@
 # Clinic Assistant — Build Plan
 
-AI chat assistant for precisionrehabfl.com. Status: **Phase A built.** The assistant is
-live in the codebase (`src/lib/chat/`, `src/app/api/chat/route.ts`,
-`src/components/chat/ChatWidget.tsx`) and needs only an API key in Vercel to switch on —
-see DEPLOY.md. This document remains the design rationale; deltas from it are noted inline.
+AI chat assistant for precisionrehabfl.com. Status: **Phase A built, currently switched
+OFF.** The code is complete and in the codebase (`src/lib/chat/`,
+`src/app/api/chat/route.ts`, `src/components/chat/ChatWidget.tsx`), but
+`features.chatAssistant` in `src/lib/content.ts` is `false`, so none of it is reachable:
+the widget is not rendered, `/api/chat` returns 503, and the privacy policy does not
+describe the assistant. Turning it on is that flag plus an API key in Vercel — see
+DEPLOY.md.
+
+The flag covers the privacy disclosure on purpose. A published notice that describes a
+feature the site does not have is the same class of error as one that fails to describe a
+feature it does, and separating the two is exactly how that drift happens.
+
+This document remains the design rationale; deltas from it are noted inline.
 
 ---
 

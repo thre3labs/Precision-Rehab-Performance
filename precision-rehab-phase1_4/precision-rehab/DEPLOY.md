@@ -88,13 +88,46 @@ before sharing the live link widely.
 
 ---
 
-# Environment variables — the clinic assistant
+# Environment variables
 
-The chat assistant is the only part of this site that needs configuration.
-Everything else deploys with no environment variables at all.
+## Analytics and search — needed by the current build
 
-Set these in **Vercel → your project → Settings → Environment Variables**,
-for Production *and* Preview:
+Set in **Vercel → your project → Settings → Environment Variables**,
+**Production only**:
+
+| Variable | Value | Required |
+|---|---|---|
+| `NEXT_PUBLIC_GA_ID` | your GA4 measurement ID, `G-XXXXXXXXXX` | for analytics |
+| `NEXT_PUBLIC_GSC_VERIFICATION` | Search Console token, HTML-tag method | no |
+
+`NEXT_PUBLIC_` is correct for these two and only these two: a measurement ID
+and a verification token are public by design and ship in the page source of
+every site that uses them. Tick **Production only** — tick Preview as well and
+every test deployment pushes fake traffic into your reporting.
+
+An environment variable never changes a deployment that already exists. After
+saving either of these, **redeploy**, or the live site is still the build that
+had no variable.
+
+## The clinic assistant — currently OFF
+
+`features.chatAssistant` in `src/lib/content.ts` is `false`. While it is:
+
+- `<ChatWidget />` is not rendered
+- `POST /api/chat` returns 503 with the clinic phone number
+- the "The Clinic Assistant" section of `/privacy` is not published, and the
+  two in-line references to it elsewhere in the policy are not rendered
+
+Those three are tied to one flag deliberately. A published privacy notice that
+describes a feature the site does not have is the same class of error as one
+that fails to describe a feature it does, and it is the kind of mismatch that
+gets read first when someone is looking for one.
+
+**None of the variables below are needed while the flag is false.** Nothing is
+billable, and there is no key sitting in the environment to leak.
+
+To switch it back on: set the flag `true`, commit and merge, then set these in
+Vercel for Production *and* Preview and redeploy:
 
 | Variable | Value | Required |
 |---|---|---|
@@ -115,11 +148,14 @@ so it is best-effort. The hard backstop is the cap.
 
 ## What happens without a key
 
-The site works normally and the chat launcher still appears, but the
-assistant replies: *"The assistant isn't switched on yet. In the meantime,
-call or text the clinic…"* and points to the phone number and the screening
-form. That is deliberate — a visibly-honest fallback beats a chat bubble that
-looks broken.
+Only relevant once the flag is `true`. In that state the site works normally
+and the chat launcher appears, but the assistant replies: *"The assistant
+isn't switched on yet. In the meantime, call or text the clinic…"* and points
+to the phone number and the screening form. That is deliberate — a
+visibly-honest fallback beats a chat bubble that looks broken.
+
+With the flag `false`, which is how it ships today, there is no launcher at
+all and the key is irrelevant.
 
 ## Before you switch it on
 
