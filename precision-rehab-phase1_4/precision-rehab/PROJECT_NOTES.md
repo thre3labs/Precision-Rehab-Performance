@@ -66,8 +66,6 @@ and the cash-based care philosophy statement.
 - Business hours
 - Self-pay / cash pricing (intentionally withheld per your direction —
   the one-pager also says pricing is still being finalized)
-- Production domain (placeholder `precisionrehabfl.com` used in
-  metadata/JSON-LD/canonical URLs until the real domain is connected)
 - Google Business Profile / social links
 - Additional clinic-space / in-session photography (optional, beyond
   the headshot already in place)

@@ -1,115 +1,102 @@
 import Image from "next/image";
-import { MapPin, Phone, MessageSquare, Mail } from "lucide-react";
-import { site, serviceAreaTowns } from "@/lib/content";
-import { Container } from "@/components/ui/Container";
+import { site, legal } from "@/lib/content";
 
 /**
- * Phase 2 note: footer link columns are intentionally pre-built with the
- * future sitemap (About, Treatments, Blog, Contact, individual condition
- * pages) even though they currently point back to this single page's
- * anchors. Swap hrefs to real routes as those pages ship — no structural
- * change needed.
+ * The footer plate is white in every theme (the transparent logo art is navy,
+ * so the plate supplies its own white ground). That is why the section
+ * headings resolve --amber-on-light rather than --amber — see globals.css.
  */
-export function Footer() {
-  const year = new Date().getFullYear();
 
+const EXPLORE = [
+  { href: "#conditions", label: "Conditions We Treat" },
+  { href: "#treatments", label: "Treatments" },
+  { href: "#modalities", label: "Recovery Technology" },
+  { href: "#about", label: "About Us" },
+  { href: "#why", label: "Why Precision Rehab" },
+  { href: "#screening", label: "Free 15-Min Screening" },
+  { href: "#faq", label: "FAQ" },
+];
+
+export function Footer() {
   return (
-    <footer className="bg-navy-950 pb-24 pt-16 text-navy-100 sm:pb-16">
-      <Container>
-        <div className="grid gap-12 lg:grid-cols-[1.3fr_1fr_1fr_1fr]">
+    <footer className="ftr">
+      <div className="wrap">
+        <div className="ftr-grid">
           <div>
             <Image
+              className="brand-img"
               src="/images/logo-transparent.png"
-              alt={`${site.name} logo`}
-              width={250}
-              height={100}
-              className="h-11 w-auto brightness-0 invert opacity-95"
+              alt={site.name}
+              width={1876}
+              height={750}
             />
-            <p className="mt-4 max-w-xs text-sm leading-relaxed text-navy-300">
-              Cash-based outpatient physical therapy in Melbourne, FL.
-              Individualized, one-on-one care focused on getting you back to
-              the life and activities you care about.
+            <p className="blurb">
+              Cash-based outpatient physical therapy in {site.legalCity},{" "}
+              {site.legalState}. Individualized, one-on-one care focused on
+              getting you back to the life and activities you care about.
             </p>
           </div>
 
           <div>
-            <h3 className="text-sm font-bold uppercase tracking-wide text-gold-400">
-              Contact
-            </h3>
-            <ul className="mt-4 space-y-3 text-sm text-navy-200">
+            <h3>Contact</h3>
+            <ul>
               <li>
-                <a href={site.phoneHref} className="flex items-center gap-2 hover:text-white">
-                  <Phone className="h-4 w-4 shrink-0 text-gold-400" /> {site.phoneDisplay}
-                </a>
+                <a href={site.phoneHref}>{site.phoneDisplay}</a>
               </li>
               <li>
-                <a href={site.smsHref} className="flex items-center gap-2 hover:text-white">
-                  <MessageSquare className="h-4 w-4 shrink-0 text-gold-400" /> Text the clinic
-                </a>
+                <a href={site.smsHref}>Text the clinic</a>
               </li>
-              {site.email && (
-                <li>
-                  <a href={`mailto:${site.email}`} className="flex items-center gap-2 hover:text-white">
-                    <Mail className="h-4 w-4 shrink-0 text-gold-400" /> {site.email}
-                  </a>
+              <li>
+                <a href={`mailto:${site.email}`}>{site.email}</a>
+              </li>
+              <li>
+                {site.address.line1}, {site.address.line2}
+                <br />
+                {site.address.city}, {site.address.state} {site.address.zip}
+              </li>
+            </ul>
+          </div>
+
+          <div>
+            <h3>Explore</h3>
+            <ul>
+              {EXPLORE.map((e) => (
+                <li key={e.href}>
+                  <a href={e.href}>{e.label}</a>
                 </li>
-              )}
-              <li>
-                <a
-                  href={site.mapLinkHref}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-start gap-2 hover:text-white"
-                >
-                  <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-gold-400" />
-                  <span>
-                    {site.address.line1}, {site.address.line2}
-                    <br />
-                    {site.address.city}, {site.address.state} {site.address.zip}
-                  </span>
-                </a>
-              </li>
-            </ul>
-          </div>
-
-          <div>
-            <h3 className="text-sm font-bold uppercase tracking-wide text-gold-400">
-              Explore
-            </h3>
-            <ul className="mt-4 space-y-2.5 text-sm text-navy-200">
-              <li><a href="#conditions" className="hover:text-white">Conditions We Treat</a></li>
-              <li><a href="#treatments" className="hover:text-white">Treatments</a></li>
-              <li><a href="#about" className="hover:text-white">About Us</a></li>
-              <li><a href="#why-us" className="hover:text-white">Why Precision Rehab</a></li>
-              <li><a href="#screening" className="hover:text-white">Free 15-Min Screening</a></li>
-              <li><a href="#faq" className="hover:text-white">FAQ</a></li>
-            </ul>
-          </div>
-
-          <div>
-            <h3 className="text-sm font-bold uppercase tracking-wide text-gold-400">
-              Proudly Serving
-            </h3>
-            <ul className="mt-4 grid grid-cols-2 gap-x-3 gap-y-2.5 text-sm text-navy-200">
-              {serviceAreaTowns.map((town) => (
-                <li key={town}>{town}</li>
               ))}
             </ul>
           </div>
         </div>
 
-        <div className="mt-14 flex flex-col gap-3 border-t border-white/10 pt-6 text-xs text-navy-400 sm:flex-row sm:items-center sm:justify-between">
+        <div className="ftr-bot">
+          <div>
+            <p>
+              &copy; {new Date().getFullYear()} {site.name}. All rights
+              reserved.
+            </p>
+            {/* Each notice renders only once it exists in content.ts, so the
+                footer can never point at a document that has not been posted. */}
+            <nav className="ftr-legal" aria-label="Legal notices">
+              <a href="/privacy">Privacy Policy</a>
+              {legal.npp && (
+                <a href={legal.npp.page}>Notice of Privacy Practices</a>
+              )}
+              {legal.nondiscrimination && (
+                <a href={legal.nondiscrimination.page}>
+                  Non-Discrimination &amp; Accessibility
+                </a>
+              )}
+            </nav>
+          </div>
           <p>
-            © {year} {site.name}. All rights reserved.
-          </p>
-          <p className="max-w-2xl">
             The information on this website is for general informational
             purposes only and is not a substitute for professional medical
-            advice, diagnosis, or treatment. Always consult a qualified
-            provider regarding a medical condition.
+            advice, diagnosis, or treatment. Always consult a qualified provider
+            regarding a medical condition.
           </p>
         </div>
-      </Container>
+      </div>
     </footer>
   );
 }
