@@ -24,7 +24,6 @@ import {
  * DELIBERATELY ABSENT, because nobody has verified them:
  *   - openingHours      the clinic's hours are still an open item. Absent is
  *                       correct; invented hours send patients to a locked door.
- *   - geo               lat/long has not been confirmed against the unit.
  *   - priceRange        was "$$" here. It was never verified, and this clinic
  *                       deliberately does not publish pricing, so the site was
  *                       telling Google something it declines to tell patients.
@@ -81,6 +80,16 @@ export function buildLocalBusinessSchema() {
     telephone,
     ...(site.email ? { email: site.email } : {}),
     address: postalAddress,
+    // Straight from the Google Business Profile listing, so the site asserts
+    // the same point Google already has the clinic at. Geocoding the street
+    // address ourselves would have risked disagreeing with the listing, which
+    // is the one thing worse than omitting it.
+    geo: {
+      "@type": "GeoCoordinates",
+      latitude: site.geo.lat,
+      longitude: site.geo.lng,
+    },
+    ...(site.social.google ? { hasMap: site.social.google } : {}),
     medicalSpecialty: "https://schema.org/Physiotherapy",
     // The towns the clinic actually serves, from content.ts. This is the
     // honest way to signal a service area, and far better than a thin page

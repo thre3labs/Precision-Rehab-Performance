@@ -55,9 +55,36 @@ export const site = {
     "https://www.google.com/maps/search/?api=1&query=1305+S+Apollo+Blvd+Unit+101+Melbourne+FL+32901",
   // NEEDS_CLIENT_INPUT: business hours were not included in the one-pager.
   hours: null as { days: string; time: string }[] | null,
+  /**
+   * Coordinates of the clinic, taken from Google's own Business Profile
+   * listing rather than geocoded by us — so they are the exact point Google
+   * already places the business at, which is what we want the structured data
+   * to agree with.
+   *
+   * Pulled from the `!8m2!3d<lat>!4d<lng>` segment of the profile's Maps URL.
+   * Note that is NOT the `@lat,lng,17z` pair earlier in the same URL: that one
+   * is only wherever the map happened to be panned when the link was copied,
+   * and it differs here by about 250 metres.
+   */
+  geo: { lat: 28.088401, lng: -80.617183 },
   // NEEDS_CLIENT_INPUT: confirm/replace once social profiles exist.
   social: {
-    google: null as string | null,
+    /**
+     * The Google Business Profile, in its canonical `?cid=` form.
+     *
+     * Deliberately not the long `/maps/place/...` URL the browser gives you:
+     * that carries session parameters (`entry=ttu`, `g_ep=...`) which are
+     * ephemeral tracking cruft, and it encodes a map viewport that has nothing
+     * to do with the business. The CID is the listing's permanent identifier,
+     * so this URL keeps resolving to the same profile forever.
+     *
+     * CID 7794277478580003042 = 0x6c2ad6122796a0e2. Google's own Place ID for
+     * the listing is /g/11zdtdlrv3, kept here as a comment in case a future
+     * integration needs it.
+     */
+    google: "https://www.google.com/maps?cid=7794277478580003042" as
+      | string
+      | null,
     instagram: null as string | null,
     facebook: null as string | null,
   },
@@ -600,7 +627,6 @@ export const openItems = [
   // SEO-blocking. These are the values structured data and the Google Business
   // Profile both need, and both are currently absent rather than guessed.
   "Business hours — needed for LocalBusiness openingHours and the Google Business Profile; deliberately omitted from schema until confirmed",
-  "Google Business Profile URL — profile is verified, but the URL is needed for schema sameAs and to tie the site to the map listing",
   "Lead destination — set LEAD_WEBHOOK_URL or RESEND_API_KEY + LEAD_NOTIFY_EMAIL in Vercel, or the screening form refuses submissions (by design)",
   "Confirm clinic email domain: content.ts has precisionrpt.com, the site is precisionrehabpt.com",
   "Confirm phone line is SMS/text-enabled (for 'text us' CTAs and automated texts)",

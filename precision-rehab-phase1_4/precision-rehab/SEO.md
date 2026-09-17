@@ -104,9 +104,18 @@ been verified — the site was telling Google a price band it deliberately
 declines to tell patients. `additionalType` pointed at
 `schema.org/PhysiotherapyClinic`, which is not a schema.org type.
 
-**What is deliberately absent:** `openingHours` and `geo`, because nobody has
-confirmed them. Invented hours send a patient to a locked door, and structured
-data that contradicts reality is a manual-action risk on a medical site.
+**Added 17 September:** `geo` and `hasMap`, plus the Google Business Profile in
+`sameAs`. The coordinates come from Google's own listing (the
+`!8m2!3d<lat>!4d<lng>` segment of the profile's Maps URL), not from geocoding
+the street address ourselves — so the site asserts exactly the point Google
+already places the clinic at rather than risking a disagreement with it. The
+profile is stored in its canonical `?cid=` form, since the long
+`/maps/place/...` URL carries ephemeral session parameters and a map viewport
+that have nothing to do with the business.
+
+**Still deliberately absent:** `openingHours`, because nobody has confirmed the
+hours. Invented hours send a patient to a locked door, and structured data that
+contradicts reality is a manual-action risk on a medical site.
 `aggregateRating` is absent because there is nothing to aggregate and
 self-serving review markup is exactly what earns a penalty.
 
