@@ -56,8 +56,23 @@ import { site } from "@/lib/content";
  * 1.91:1 card towards 2:1 and some clients crop a little further; the current
  * artwork's headline sits at 8% left and 7.5% right, which survives that.
  */
+const SHARE_IMAGE_PATH = "/images/og-default.jpg";
+
 export const shareImage = {
-  url: "/images/og-default.jpg",
+  // Relative: Next.js resolves this against metadataBase.
+  url: SHARE_IMAGE_PATH,
+  // NOT relative, and deliberately so. Next.js resolves `url` against
+  // metadataBase but does NOT resolve `secureUrl` — hand it a relative path
+  // and it emits og:image:secure_url="/images/og-default.jpg" verbatim, which
+  // no scraper can resolve. That is worse than omitting the tag: a crawler
+  // that prefers secure_url over og:image gets a dead URL and falls back to no
+  // image at all. It is built from site.url here so it still cannot drift from
+  // the canonical domain.
+  //
+  // The tag is redundant for modern scrapers, which use og:image directly when
+  // it is already https. It is kept because WhatsApp and some older Meta
+  // scrapers have historically looked for secure_url first.
+  secureUrl: `${site.url}${SHARE_IMAGE_PATH}`,
   width: 1200,
   height: 630,
   type: "image/jpeg",
