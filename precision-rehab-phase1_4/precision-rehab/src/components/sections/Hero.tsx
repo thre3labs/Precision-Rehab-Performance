@@ -12,13 +12,31 @@ export function Hero() {
     <section className="hero" style={{ paddingTop: "clamp(48px,6vw,88px)" }}>
       <div className="wrap hero-grid">
         <div>
-          <span className="note hero-eyebrow">
-            {site.legalCity}, {site.legalStateFull}
-          </span>
+          {/*
+            The eyebrow now lives INSIDE the h1, and says what the clinic does
+            rather than only where it is.
+
+            The h1 is one of the strongest relevance signals a page has, and
+            this one previously read "Precision care, built around you." — a
+            good brand line that tells a search engine nothing about physical
+            therapy or Melbourne. Splitting the h1 into two spans keeps the
+            brand line visually dominant, exactly as designed, while the
+            heading's actual text reads "Physical Therapy in Melbourne,
+            Florida — Precision care, built around you."
+
+            Both halves are visible to everyone. This is not hidden keyword
+            text: the first span is styled as the eyebrow it already was, in
+            the same place it already sat.
+          */}
           <h1>
-            Precision care,
-            <br />
-            built around <em>you</em>.
+            <span className="note hero-eyebrow">
+              Physical Therapy in {site.legalCity}, {site.legalStateFull}
+            </span>
+            <span className="hero-h1-main">
+              Precision care,
+              <br />
+              built around <em>you</em>.
+            </span>
           </h1>
           <p className="hero-sub">
             A cash-based outpatient physical therapy clinic led directly by{" "}

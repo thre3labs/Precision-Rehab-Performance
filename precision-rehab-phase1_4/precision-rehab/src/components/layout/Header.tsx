@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { site } from "@/lib/content";
 
 /**
@@ -49,7 +50,7 @@ export function Header() {
   return (
     <header className="hdr">
       <div className="wrap hdr-in">
-        <a className="brand" href="/" aria-label={`${site.name}, home`}>
+        <Link className="brand" href="/" aria-label={`${site.name}, home`}>
           <Image
             className="brand-img"
             src="/images/logo-transparent.png"
@@ -58,7 +59,7 @@ export function Header() {
             height={750}
             priority
           />
-        </a>
+        </Link>
 
         <nav className="hdr-nav" aria-label="Primary">
           {NAV.map((n) => (

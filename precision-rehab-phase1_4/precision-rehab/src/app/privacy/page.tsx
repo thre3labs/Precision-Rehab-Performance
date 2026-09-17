@@ -59,7 +59,6 @@ const description = `How ${site.name} collects, uses, and protects information s
 // of those forward. See src/lib/seo.ts.
 export const metadata: Metadata = {
   ...pageMetadata({ title, description, path: "/privacy" }),
-  robots: { index: true, follow: true },
 };
 
 export default function PrivacyPolicy() {
@@ -214,6 +213,23 @@ export default function PrivacyPolicy() {
               before making changes.
             </p>
 
+            <h2>What Happens to a Request You Submit</h2>
+            <p>
+              When you submit the screening or contact form, the details you
+              entered are sent to the clinic so that a team member can follow
+              up with you. Delivery is handled by the email and request-handling
+              services the clinic uses to receive and keep track of new
+              inquiries; those services process your information on our behalf
+              and are not permitted to use it for their own purposes.
+            </p>
+            <p>
+              The contents of your request are not written to this
+              website&rsquo;s server logs. If your request cannot be delivered,
+              the form tells you so and asks you to call or text the clinic
+              instead &mdash; it will not report that your request was received
+              when it was not.
+            </p>
+
             <h2>How Do We Protect Your Information?</h2>
             <p>
               This website uses HTTPS encryption to protect information in
@@ -228,8 +244,10 @@ export default function PrivacyPolicy() {
               identifiable information to outside parties. This does not
               include website hosting partners and other parties who assist us
               in operating our website or servicing you, so long as those
-              parties agree to keep this information confidential. Google
-              receives website usage data as described above
+              parties agree to keep this information confidential. The services
+              that deliver your form submission to the clinic receive what you
+              entered, as described above. Google receives website usage data as
+              described above
               {features.chatAssistant
                 ? ", and the clinic assistant\u2019s artificial intelligence provider receives the messages you send it."
                 : "."}{" "}

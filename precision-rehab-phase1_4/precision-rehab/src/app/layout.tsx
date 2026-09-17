@@ -6,7 +6,11 @@ import { site, features } from "@/lib/content";
 // Share-preview strings and the card image live in one place so a page can
 // never half-declare an openGraph block and silently drop the image.
 import { pageMetadata, shareTitle, shareDescription } from "@/lib/seo";
-import { buildLocalBusinessSchema } from "@/lib/schema";
+import {
+  buildLocalBusinessSchema,
+  buildOrganizationSchema,
+  buildProviderSchema,
+} from "@/lib/schema";
 import { MobileCTABar } from "@/components/layout/MobileCTABar";
 import { ChatWidget } from "@/components/chat/ChatWidget";
 import { Analytics } from "@/components/analytics/Analytics";
@@ -17,8 +21,11 @@ import { Analytics } from "@/components/analytics/Analytics";
 // environment (e.g. offline/CI sandboxes). Self-hosting also means no
 // runtime dependency on Google's font CDN in production.
 
-const title =
-  "Physical Therapist in Melbourne, FL | Precision Rehab & Performance";
+// Leads with the primary local search term, and short enough not to truncate
+// in the results (Google cuts around 60 characters). The full brand name is
+// the title TEMPLATE for child pages; the home page uses the short form so the
+// keyword and the location both survive.
+const title = "Physical Therapy in Melbourne FL | Precision Rehab";
 const description =
   "Precision Rehab & Performance is a cash-based outpatient physical therapy clinic in Melbourne, FL led by Dr. Kushal Patel, PT, DPT. Book a free 15-minute screening, in person or virtual.";
 
@@ -58,15 +65,29 @@ export const metadata: Metadata = {
     ],
     apple: [{ url: "/apple-touch-icon.png", sizes: "180x180" }],
   },
-  robots: {
-    index: true,
-    follow: true,
-  },
-  // Set NEXT_PUBLIC_GSC_VERIFICATION to the token Google Search Console gives
-  // you for its "HTML tag" method. Omitted entirely when unset, so no empty
-  // meta tag ever ships.
-  ...(process.env.NEXT_PUBLIC_GSC_VERIFICATION
-    ? { verification: { google: process.env.NEXT_PUBLIC_GSC_VERIFICATION } }
+  // Search engine ownership verification. Each is the token that console
+  // gives you for its "HTML tag" method. Both are omitted entirely when unset,
+  // so no empty meta tag ever ships, and each is independent — you can verify
+  // Google without waiting on Bing.
+  //
+  // NEXT_PUBLIC_ is correct here: a verification token is public by design and
+  // is meant to be read out of the page source. It proves control of the site
+  // precisely because only someone who controls the site could put it there.
+  //
+  // Bing also imports a verified Google Search Console property directly,
+  // which is usually faster than verifying separately. See DEPLOY.md.
+  ...(process.env.NEXT_PUBLIC_GSC_VERIFICATION ||
+  process.env.NEXT_PUBLIC_BING_VERIFICATION
+    ? {
+        verification: {
+          ...(process.env.NEXT_PUBLIC_GSC_VERIFICATION
+            ? { google: process.env.NEXT_PUBLIC_GSC_VERIFICATION }
+            : {}),
+          ...(process.env.NEXT_PUBLIC_BING_VERIFICATION
+            ? { other: { "msvalidate.01": process.env.NEXT_PUBLIC_BING_VERIFICATION } }
+            : {}),
+        },
+      }
     : {}),
 };
 
@@ -75,15 +96,25 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const localBusinessSchema = buildLocalBusinessSchema();
+  // One <script> per entity. They reference each other by @id rather than
+  // nesting, so the clinic, the brand and the clinician stay one consistent
+  // graph instead of three competing descriptions of the same business.
+  const schemas = [
+    buildLocalBusinessSchema(),
+    buildOrganizationSchema(),
+    buildProviderSchema(),
+  ];
 
   return (
     <html lang="en">
       <head>
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessSchema) }}
-        />
+        {schemas.map((schema) => (
+          <script
+            key={schema["@id"]}
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+          />
+        ))}
       </head>
       <body className="antialiased">
         <a

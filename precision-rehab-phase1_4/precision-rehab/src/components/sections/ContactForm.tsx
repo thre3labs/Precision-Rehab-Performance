@@ -1,12 +1,17 @@
 "use client";
 
 import { useState, FormEvent } from "react";
-import { trackLead } from "@/components/analytics/Analytics";
+import { site } from "@/lib/content";
+import { track, trackLead } from "@/components/analytics/Analytics";
 
 /**
- * Lead capture form. Submits to /api/contact (see route.ts), which is a
- * documented stub — see PROJECT_NOTES.md for the recommended architecture to
- * wire this into real lead storage plus the automated SMS confirmation.
+ * Lead capture form. Submits to /api/contact, which delivers the lead to a
+ * configured destination and returns success ONLY if one accepted it.
+ *
+ * That contract is the whole point. This form previously showed "Request
+ * received" unconditionally, because the endpoint logged the lead and returned
+ * ok. If the endpoint cannot deliver, this form must say so and put the phone
+ * number in front of the patient — never claim a request went through.
  *
  * Field choices are deliberately minimal for a healthcare intake, and the
  * "what brings you in" field explicitly asks visitors not to submit detailed
@@ -34,10 +39,12 @@ export function ContactForm() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
       });
-      if (!res.ok) throw new Error("Request failed");
+      if (!res.ok) throw new Error(`Request failed: ${res.status}`);
       // Records that a screening was requested. Never the form contents —
-      // see the note on trackLead().
+      // see the note on trackLead(). Fired only after the server confirms
+      // delivery, so the conversion count matches leads the clinic received.
       trackLead();
+      track("free_screening_submit");
       setStatus("success");
       form.reset();
     } catch {
@@ -70,6 +77,24 @@ export function ContactForm() {
     >
       <h3>Request your free screening</h3>
       <p>Prefer to skip the form? Call or text us directly instead.</p>
+
+      {/*
+        Spam honeypot. Hidden from sighted users, from screen readers
+        (aria-hidden) and from the keyboard (tabIndex -1), so a real visitor
+        can never fill it in. A bot that fills every field does, and the server
+        drops that submission. autoComplete="off" stops a browser helpfully
+        filling it for someone.
+      */}
+      <div aria-hidden="true" className="hp-field">
+        <label htmlFor="p-company">Company</label>
+        <input
+          id="p-company"
+          name="company"
+          type="text"
+          tabIndex={-1}
+          autoComplete="off"
+        />
+      </div>
 
       <div className="fields">
         <div className="field full">
@@ -147,7 +172,12 @@ export function ContactForm() {
 
       {status === "error" && (
         <p className="form-err" role="alert">
-          Something went wrong. Please call or text us directly instead.
+          We couldn&rsquo;t send your request, so it has{" "}
+          <strong>not</strong> reached the clinic. Please call or text{" "}
+          <a href={site.phoneHref} onClick={() => track("phone_click")}>
+            {site.phoneDisplay}
+          </a>{" "}
+          instead and we&rsquo;ll get you booked.
         </p>
       )}
 

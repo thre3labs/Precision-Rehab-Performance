@@ -74,9 +74,47 @@ export function Analytics() {
  * screening type (in person / virtual) is fine, the reason field is not.
  */
 export function trackLead() {
+  track("generate_lead");
+}
+
+/**
+ * The conversion events this site records. A closed set on purpose: an open
+ * `track(name: string)` invites a future edit to send a free-text value, and
+ * on a healthcare site the free-text values are symptoms.
+ *
+ *   phone_click            tapped a tel: link
+ *   appointment_click      tapped a "book"/"request" CTA that scrolls to the form
+ *   free_screening_click   tapped a CTA specifically for the free screening
+ *   free_screening_submit  the SERVER confirmed the lead was delivered
+ *   directions_click       tapped through to the map / directions
+ *
+ * free_screening_submit fires only after /api/contact returns success, which
+ * it now does only when a destination accepted the lead. So the number in GA4
+ * is leads the clinic actually received, not forms that were filled in. Those
+ * were the same number only by accident before, and wrong in the direction
+ * that flatters the report.
+ */
+export type ConversionEvent =
+  | "generate_lead"
+  | "phone_click"
+  | "appointment_click"
+  | "free_screening_click"
+  | "free_screening_submit"
+  | "directions_click";
+
+/**
+ * Deliberately carries NO parameters. It records that something happened,
+ * never what was typed. The "what brings you in" field is free text and
+ * patients put symptoms in it whatever the label says — sending any of that to
+ * Google would turn a page-view counter into a health-data disclosure.
+ *
+ * If conversion detail is ever needed, add non-clinical dimensions only:
+ * screening type (in person / virtual) is fine, the reason field is not.
+ */
+export function track(event: ConversionEvent) {
   if (typeof window === "undefined") return;
   const w = window as typeof window & {
     gtag?: (...args: unknown[]) => void;
   };
-  w.gtag?.("event", "generate_lead");
+  w.gtag?.("event", event);
 }

@@ -597,12 +597,15 @@ export const faqs: FaqItem[] = [
 // NEEDS_CLIENT_INPUT — punch list surfaced in the UI and in PROJECT_NOTES.md
 // ============================================================================
 export const openItems = [
-  "Production domain / DNS target (client owns domain via Domain.com)",
-  "Business hours",
+  // SEO-blocking. These are the values structured data and the Google Business
+  // Profile both need, and both are currently absent rather than guessed.
+  "Business hours — needed for LocalBusiness openingHours and the Google Business Profile; deliberately omitted from schema until confirmed",
+  "Google Business Profile URL — profile is verified, but the URL is needed for schema sameAs and to tie the site to the map listing",
+  "Lead destination — set LEAD_WEBHOOK_URL or RESEND_API_KEY + LEAD_NOTIFY_EMAIL in Vercel, or the screening form refuses submissions (by design)",
+  "Confirm clinic email domain: content.ts has precisionrpt.com, the site is precisionrehabpt.com",
   "Confirm phone line is SMS/text-enabled (for 'text us' CTAs and automated texts)",
   "Additional clinic space / in-session photography (Dr. Patel headshot is in)",
   "Finalized self-pay / cash pricing (intentionally not displayed yet, per direction)",
-  "Google Business Profile URL (for review widget + citations)",
   "Facebook / Instagram profile URLs, if applicable",
   "Confirmation on any additional insurance plans as they're added",
   "Preferred scheduling method (phone/text/form now — online booking system later?)",
