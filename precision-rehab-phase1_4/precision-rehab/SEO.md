@@ -125,22 +125,34 @@ were filled in. Those were the same number only by accident before.
 
 ## Manual tasks — only you can do these
 
-### 1. Google Search Console
+### 1. Google Search Console — verify by DNS, not by meta tag
 
-1. `search.google.com/search-console` → **Add property** → **URL prefix** →
-   `https://www.precisionrehabpt.com`
-2. Choose **HTML tag** verification. Copy the `content="..."` value only — not
-   the whole tag.
-3. In Vercel → Settings → Environment Variables, add
-   `NEXT_PUBLIC_GSC_VERIFICATION` = that value, **Production only**.
-4. **Redeploy.** An environment variable does not change a deployment that
-   already exists. This is the step people miss.
-5. Back in Search Console, click **Verify**.
-6. **Sitemaps** → submit `sitemap.xml`.
-7. **URL Inspection** → paste the home page URL → **Request indexing**.
+Use the **Domain** property, not "URL prefix". It verifies through a DNS TXT
+record rather than a tag in the page, which is better here for four reasons:
+it covers `www` and the bare domain and http and https in one property, it
+needs no deploy, it survives any future change to the site's code, and it can
+be done before the branch is merged.
 
-`NEXT_PUBLIC_` is correct for a verification token: it is public by design and
-is meant to be read out of the page source.
+1. `search.google.com/search-console` → **Add property** → the **Domain** box
+   on the left → enter `precisionrehabpt.com` (no scheme, no `www`).
+2. Google gives a TXT record beginning `google-site-verification=`. Add it
+   wherever the domain's DNS lives — Vercel → Settings → Domains → DNS
+   Records if the nameservers point at Vercel, otherwise the registrar's DNS
+   panel. Type `TXT`, name `@` (or blank), value = the whole string.
+3. Wait a few minutes, then **Verify**. A first failure usually means DNS has
+   not propagated yet, not that anything is wrong. Leave the record in place
+   permanently — Google re-checks it, and deleting it later silently
+   un-verifies the property.
+4. **Sitemaps** → submit `sitemap.xml`.
+5. **URL Inspection** → home page URL → **Request indexing**. Do this *after*
+   the merge: until then the live site still names another company's domain as
+   canonical, and inviting Google to read that is worse than waiting.
+
+The meta-tag route still works if you prefer it — set
+`NEXT_PUBLIC_GSC_VERIFICATION` in Vercel and redeploy. `NEXT_PUBLIC_` is
+correct for a verification token; it is public by design and meant to be read
+out of the page source. But it only verifies the one URL prefix, and it breaks
+if the variable is ever dropped.
 
 ### 2. Bing Webmaster Tools
 
