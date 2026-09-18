@@ -1,8 +1,10 @@
 import { site } from "@/lib/content";
+import { SectionPhoto } from "@/components/ui/SectionPhoto";
 
 export function FinalCTA() {
   return (
     <section className="closer">
+      <SectionPhoto src="/images/cta-running.jpg" scrim="centre" position="center 62%" />
       <div className="wrap">
         <h2>Ready to get back to what you love?</h2>
         <p>

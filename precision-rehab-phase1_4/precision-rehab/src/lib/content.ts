@@ -53,8 +53,42 @@ export const site = {
     "https://www.google.com/maps?q=1305+S+Apollo+Blvd+Unit+101+Melbourne+FL+32901&output=embed",
   mapLinkHref:
     "https://www.google.com/maps/search/?api=1&query=1305+S+Apollo+Blvd+Unit+101+Melbourne+FL+32901",
-  // NEEDS_CLIENT_INPUT: business hours were not included in the one-pager.
-  hours: null as { days: string; time: string }[] | null,
+  /**
+   * Business hours, as lettered on the clinic's own front door.
+   *
+   * `days` and `time` are what a patient reads on the page. `openTime` and
+   * `closeTime` are 24-hour and exist for schema.org's
+   * openingHoursSpecification, which will not accept "8:00 AM". Keeping both
+   * on one object means the page and the structured data cannot drift into
+   * disagreeing about when the clinic is open — which is the kind of mismatch
+   * that sends someone to a locked door.
+   *
+   * `days` here covers Monday to Friday; `dayOfWeek` is the machine-readable
+   * list schema.org wants for exactly those days.
+   */
+  hours: [
+    {
+      days: "Monday–Friday",
+      time: "8:00 AM – 4:30 PM",
+      dayOfWeek: [
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+      ] as string[],
+      openTime: "08:00",
+      closeTime: "16:30",
+    },
+  ] as
+    | {
+        days: string;
+        time: string;
+        dayOfWeek: string[];
+        openTime: string;
+        closeTime: string;
+      }[]
+    | null,
   /**
    * Coordinates of the clinic, taken from Google's own Business Profile
    * listing rather than geocoded by us — so they are the exact point Google
@@ -564,6 +598,90 @@ export const legal = {
   nondiscrimination: null as { page: string; pdf: string } | null,
 };
 
+/**
+ * The photo tour that fills the panel in the Location section — the panel that
+ * used to hold a drawn map with an amber route that went nowhere.
+ *
+ * The order is the content, not decoration: it is the sequence a patient
+ * actually experiences the building, so the section answers "what am I walking
+ * into?", which is the only question a photo tour exists to answer.
+ *
+ * Every caption is either confirmed in this file or visible in its own
+ * photograph. Two earlier drafts were cut for failing that test — "dumbbells to
+ * 50lb" (not legible) and "two treatment rooms" (two are photographed, which is
+ * not evidence there are exactly two).
+ *
+ * Widths and heights are per photograph and they are NOT uniform: three were
+ * shot portrait and were re-cropped to 5:4 by hand rather than letting the
+ * browser crop them at render time.
+ */
+export type ClinicTourSlide = {
+  src: string;
+  width: number;
+  height: number;
+  alt: string;
+  caption: string;
+};
+
+export const clinicTour: ClinicTourSlide[] = [
+  {
+    src: "/images/clinic/exterior.jpg",
+    width: 1400,
+    height: 1050,
+    alt: "The building at 1305 S Apollo Blvd seen from the car park, with the monument sign at the entrance",
+    caption: "Arriving — easy to find, easy to park",
+  },
+  {
+    src: "/images/clinic/entrance.jpg",
+    width: 1219,
+    height: 975,
+    alt: "The ground-floor glass entrance, lettered with the clinic name, hours and phone number",
+    caption: "The door — ground-floor entrance, Suite 101",
+  },
+  {
+    src: "/images/clinic/waiting.jpg",
+    width: 1400,
+    height: 1050,
+    alt: "The waiting area, with seating and the reception desk beyond",
+    caption: "Waiting — the front of house",
+  },
+  {
+    src: "/images/clinic/reception.jpg",
+    width: 1400,
+    height: 1050,
+    alt: "The reception desk",
+    caption: "Checking in — reception",
+  },
+  {
+    src: "/images/clinic/treatment-1.jpg",
+    width: 1086,
+    height: 869,
+    alt: "A private treatment room with a treatment table, anatomy charts and a window",
+    caption: "Treatment — a private room with a door that closes",
+  },
+  {
+    src: "/images/clinic/treatment-2.jpg",
+    width: 1086,
+    height: 869,
+    alt: "A second treatment room with a treatment table and anatomy charts",
+    caption: "Treatment — another treatment room",
+  },
+  {
+    src: "/images/clinic/performance-1.jpg",
+    width: 1400,
+    height: 1050,
+    alt: "The performance space, with a rack, a bench and a rack of dumbbells",
+    caption: "Training — a real performance space",
+  },
+  {
+    src: "/images/clinic/performance-2.jpg",
+    width: 1400,
+    height: 1050,
+    alt: "Hands-on work alongside loading in the performance space",
+    caption: "Together — hands-on work and loading, one session",
+  },
+];
+
 export const serviceAreaTowns = [
   "Melbourne",
   "West Melbourne",
@@ -626,7 +744,6 @@ export const faqs: FaqItem[] = [
 export const openItems = [
   // SEO-blocking. These are the values structured data and the Google Business
   // Profile both need, and both are currently absent rather than guessed.
-  "Business hours — needed for LocalBusiness openingHours and the Google Business Profile; deliberately omitted from schema until confirmed",
   "Lead destination — set LEAD_WEBHOOK_URL or RESEND_API_KEY + LEAD_NOTIFY_EMAIL in Vercel, or the screening form refuses submissions (by design)",
   "Confirm clinic email domain: content.ts has precisionrpt.com, the site is precisionrehabpt.com",
   "Confirm phone line is SMS/text-enabled (for 'text us' CTAs and automated texts)",

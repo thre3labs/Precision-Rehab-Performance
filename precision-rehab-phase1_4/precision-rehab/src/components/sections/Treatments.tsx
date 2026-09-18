@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { treatmentCategories } from "@/lib/content";
+import { SectionPhoto } from "@/components/ui/SectionPhoto";
 
 /**
  * "How we can help" — the same card anatomy as the Recovery Technology
@@ -51,6 +52,11 @@ export function Treatments() {
 
   return (
     <section className="treat" id="treatments">
+      <SectionPhoto
+        src="/images/clinic/performance-1.jpg"
+        scrim="left"
+        position="center 46%"
+      />
       <div className="wrap">
         <div className="axis">
           <div className="axis-rail" aria-hidden="true" />

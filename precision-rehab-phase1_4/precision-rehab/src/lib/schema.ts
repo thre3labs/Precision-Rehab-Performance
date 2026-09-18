@@ -22,8 +22,6 @@ import {
  * not a reason to assert something nobody has confirmed.
  *
  * DELIBERATELY ABSENT, because nobody has verified them:
- *   - openingHours      the clinic's hours are still an open item. Absent is
- *                       correct; invented hours send patients to a locked door.
  *   - priceRange        was "$$" here. It was never verified, and this clinic
  *                       deliberately does not publish pricing, so the site was
  *                       telling Google something it declines to tell patients.
@@ -90,6 +88,20 @@ export function buildLocalBusinessSchema() {
       longitude: site.geo.lng,
     },
     ...(site.social.google ? { hasMap: site.social.google } : {}),
+    // Built from the same content.ts entry the Location section prints, so the
+    // hours a crawler reads and the hours a patient reads cannot disagree.
+    // Omitted entirely if hours are ever unset again — an empty
+    // openingHoursSpecification is worse than none.
+    ...(site.hours?.length
+      ? {
+          openingHoursSpecification: site.hours.map((h) => ({
+            "@type": "OpeningHoursSpecification",
+            dayOfWeek: h.dayOfWeek,
+            opens: h.openTime,
+            closes: h.closeTime,
+          })),
+        }
+      : {}),
     medicalSpecialty: "https://schema.org/Physiotherapy",
     // The towns the clinic actually serves, from content.ts. This is the
     // honest way to signal a service area, and far better than a thin page

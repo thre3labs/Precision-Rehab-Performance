@@ -1,4 +1,5 @@
 import { site, serviceAreaTowns } from "@/lib/content";
+import { ClinicTour } from "@/components/sections/ClinicTour";
 
 const { address } = site;
 const streetLine = `${address.line1}, ${address.line2}`;
@@ -21,37 +22,12 @@ export function Location() {
         </div>
 
         <div className="loc-card">
+          {/* This panel held a drawn map — grid lines and an amber route
+              that went nowhere. The clinic itself answers "visit the clinic"
+              better than a diagram of streets that do not exist, and it costs
+              the page no extra section. */}
           <div className="loc-map">
-            <svg
-              className="grid-lines"
-              aria-hidden="true"
-              preserveAspectRatio="none"
-              viewBox="0 0 400 300"
-            >
-              <g stroke="rgba(234,241,248,.10)" strokeWidth="1">
-                <line x1="0" y1="60" x2="400" y2="60" />
-                <line x1="0" y1="130" x2="400" y2="130" />
-                <line x1="0" y1="200" x2="400" y2="200" />
-                <line x1="0" y1="260" x2="400" y2="260" />
-                <line x1="70" y1="0" x2="70" y2="300" />
-                <line x1="165" y1="0" x2="165" y2="300" />
-                <line x1="255" y1="0" x2="255" y2="300" />
-                <line x1="335" y1="0" x2="335" y2="300" />
-              </g>
-              <path
-                d="M0 200 L130 200 L130 60 L400 60"
-                stroke="rgba(235,170,68,.34)"
-                strokeWidth="3"
-                fill="none"
-              />
-            </svg>
-            <div className="loc-pin">
-              <span className="ring">
-                <PinIcon size={28} />
-              </span>
-              <b>{streetLine}</b>
-              <span>{cityLine}</span>
-            </div>
+            <ClinicTour />
           </div>
 
           <div className="loc-info">
@@ -69,8 +45,8 @@ export function Location() {
               </svg>
               <div>
                 <b>Hours</b>
-                {/* NEEDS_CLIENT_INPUT: business hours. Until site.hours is
-                    populated, say so plainly rather than inventing any. */}
+                {/* Hours come from content.ts. The fallback stays: if they are
+                    ever unset, say so plainly rather than showing nothing. */}
                 <span>
                   {site.hours
                     ? site.hours.map((h) => `${h.days} ${h.time}`).join(" · ")

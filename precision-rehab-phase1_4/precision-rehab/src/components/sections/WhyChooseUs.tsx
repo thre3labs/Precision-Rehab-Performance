@@ -1,4 +1,5 @@
 import { differentiators, comparison } from "@/lib/content";
+import { SectionPhoto } from "@/components/ui/SectionPhoto";
 
 /**
  * Navy ground. The section re-points --focus at --amber-lift, because the
@@ -8,6 +9,11 @@ import { differentiators, comparison } from "@/lib/content";
 export function WhyChooseUs() {
   return (
     <section className="why" id="why">
+      <SectionPhoto
+        src="/images/clinic/waiting.jpg"
+        scrim="even"
+        position="center 44%"
+      />
       <div className="wrap">
         <div className="axis">
           <div className="axis-rail" aria-hidden="true" />
