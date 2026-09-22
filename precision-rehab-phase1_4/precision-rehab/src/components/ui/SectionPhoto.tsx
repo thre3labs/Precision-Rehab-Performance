@@ -73,6 +73,7 @@ export function SectionPhoto({ src, scrim, position, priority = false }: Props) 
         sizes="100vw"
         quality={65}
         priority={priority}
+        fetchPriority={priority ? "high" : "auto"}
         style={position ? { objectPosition: position } : undefined}
       />
       <div className="sec-ph-tint" aria-hidden="true" />
