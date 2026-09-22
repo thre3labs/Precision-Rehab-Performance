@@ -29,6 +29,7 @@ export function Footer() {
               alt={site.name}
               width={1876}
               height={750}
+              sizes="130px"
             />
             <p className="blurb">
               Cash-based outpatient physical therapy in {site.legalCity},{" "}

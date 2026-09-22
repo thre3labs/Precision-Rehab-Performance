@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 /**
  * A photograph dropped behind a navy section.
  *
@@ -21,12 +23,34 @@
  *   even    top wash, gentle left; both columns are printed, nowhere to hide
  *   centre  a radial pool; everything is centred, so there is no side
  *
- * Plain <img>, not next/image, and deliberately. These are absolutely
- * positioned full-bleed layers inside sections whose height is set by their
- * content, so there is no stable rendered width for `sizes` to describe.
- * `fill` would need a parent with a known aspect ratio, which none of these
- * have. The sources are already optimised and everything below the fold is
- * lazy.
+ * ---------------------------------------------------------------------------
+ * On next/image, and on the reasoning that was here before.
+ *
+ * This used to be a plain <img>, on two stated grounds, and both were wrong:
+ *
+ *   "There is no stable rendered width for `sizes` to describe."
+ *       There is. These are full-bleed layers. `sizes="100vw"` describes them
+ *       exactly, because the rendered width IS the viewport width.
+ *
+ *   "`fill` would need a parent with a known aspect ratio."
+ *       It does not. `fill` needs a positioned ancestor, and .hero, .treat,
+ *       .why and .closer all already set `position: relative` — they have to,
+ *       or the layers below would resolve `inset: 0` against the viewport.
+ *       Aspect ratio is irrelevant when the image is `object-fit: cover`.
+ *
+ * The cost of that mistake was measurable: PageSpeed put the hero's LCP at
+ * 5.4s and flagged 309 KiB of image-delivery savings, because a 1400px JPEG
+ * was being handed unchanged to a phone. Routing through next/image picks up
+ * the AVIF/WebP negotiation and the deviceSizes ladder already configured in
+ * next.config.ts, and `priority` emits a <link rel="preload"> so the hero
+ * starts downloading from the head rather than from the parser.
+ *
+ * `quality` is 65 rather than the default 75. These photographs sit under a
+ * 75% navy tint plus a gradient; compression artefacts that would be visible
+ * on a bare photo are not visible through that, and the bytes are real. The
+ * value has to be listed in `images.qualities` in next.config.ts — Next 16
+ * rejects any quality not declared there.
+ * ---------------------------------------------------------------------------
  */
 type Props = {
   src: string;
@@ -40,15 +64,15 @@ type Props = {
 export function SectionPhoto({ src, scrim, position, priority = false }: Props) {
   return (
     <>
-      {/* eslint-disable-next-line @next/next/no-img-element -- see the note above */}
-      <img
+      <Image
         className="sec-ph"
         src={src}
         alt=""
         aria-hidden="true"
-        loading={priority ? "eager" : "lazy"}
-        fetchPriority={priority ? "high" : "auto"}
-        decoding="async"
+        fill
+        sizes="100vw"
+        quality={65}
+        priority={priority}
         style={position ? { objectPosition: position } : undefined}
       />
       <div className="sec-ph-tint" aria-hidden="true" />

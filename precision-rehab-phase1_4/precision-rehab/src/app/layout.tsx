@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
-import "@fontsource/figtree/500.css";
-import "@fontsource/figtree/600.css";
+import localFont from "next/font/local";
 import "./globals.css";
 import { site, features } from "@/lib/content";
 // Share-preview strings and the card image live in one place so a page can
@@ -15,11 +14,36 @@ import { MobileCTABar } from "@/components/layout/MobileCTABar";
 import { ChatWidget } from "@/components/chat/ChatWidget";
 import { Analytics } from "@/components/analytics/Analytics";
 
-// Fonts are self-hosted via @fontsource (bundled at build time) rather than
-// next/font/google, since that requires a live connection to
-// fonts.googleapis.com at build time — not guaranteed in every deploy
-// environment (e.g. offline/CI sandboxes). Self-hosting also means no
-// runtime dependency on Google's font CDN in production.
+// Fonts are self-hosted rather than fetched from next/font/google, which
+// needs a live connection to fonts.googleapis.com at build time and is not
+// guaranteed in every deploy environment. The two woff2 files in ./fonts are
+// @fontsource's, copied into the repo so nothing resolves through
+// node_modules at build time.
+//
+// Routed through next/font/local rather than importing @fontsource's CSS,
+// because next/font emits a <link rel="preload"> for the font file. Importing
+// the CSS instead leaves the browser to discover the woff2 only after it has
+// parsed the stylesheet — an extra step in the critical chain, which is what
+// PageSpeed's "network dependency tree" was pointing at.
+//
+// Latin subset only. @fontsource also ships latin-ext, but next/font/local
+// takes one file per weight and cannot split by unicode-range; the site's
+// copy is English, so the extended range is not reachable. If that ever stops
+// being true, this is where it breaks.
+//
+// The stack in globals.css is "Avenir Next", "Avenir", var(--font-figtree),
+// ... — deliberately. Apple devices already have Avenir Next and never
+// download anything; this is what everyone else gets.
+const figtree = localFont({
+  src: [
+    { path: "./fonts/figtree-latin-500-normal.woff2", weight: "500", style: "normal" },
+    { path: "./fonts/figtree-latin-600-normal.woff2", weight: "600", style: "normal" },
+  ],
+  variable: "--font-figtree",
+  display: "swap",
+  preload: true,
+  fallback: ["Segoe UI", "Arial", "sans-serif"],
+});
 
 // Leads with the primary local search term, and short enough not to truncate
 // in the results (Google cuts around 60 characters). The full brand name is
@@ -106,7 +130,7 @@ export default function RootLayout({
   ];
 
   return (
-    <html lang="en">
+    <html lang="en" className={figtree.variable}>
       <head>
         {schemas.map((schema) => (
           <script

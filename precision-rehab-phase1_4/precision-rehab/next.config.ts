@@ -41,6 +41,10 @@ const nextConfig: NextConfig = {
    */
   images: {
     formats: ["image/avif", "image/webp"],
+    // Next 16 rejects any `quality` not listed here. 65 is for the
+    // full-bleed SectionPhoto layers, which sit under a 75% navy tint;
+    // 75 stays for everything else, which is looked at directly.
+    qualities: [65, 75],
     deviceSizes: [640, 750, 828, 1080, 1200, 1920],
     imageSizes: [16, 32, 64, 96, 128, 256, 384],
     minimumCacheTTL: 2678400,

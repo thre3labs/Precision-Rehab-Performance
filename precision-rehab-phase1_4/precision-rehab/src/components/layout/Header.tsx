@@ -57,6 +57,7 @@ export function Header() {
             alt={site.name}
             width={1876}
             height={750}
+            sizes="130px"
             priority
           />
         </Link>

@@ -80,8 +80,8 @@
   /* Brand face is Avenir Next (Demi Bold primary / Medium secondary).
      It ships with macOS + iOS, so Apple devices render the real thing.
      Figtree is the closest free stand-in for everyone else. */
-  --display: "Avenir Next", "Avenir", "Figtree", "Segoe UI", Arial, sans-serif;
-  --body: "Avenir Next", "Avenir", "Figtree", "Segoe UI", Arial, sans-serif;
+  --display: "Avenir Next", "Avenir", var(--font-figtree), "Segoe UI", Arial, sans-serif;
+  --body: "Avenir Next", "Avenir", var(--font-figtree), "Segoe UI", Arial, sans-serif;
   --w-demi: 600;
   --w-med: 500;
 
