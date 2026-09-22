@@ -1,6 +1,7 @@
 import type { CSSProperties } from "react";
 import Image from "next/image";
 import { site, provider } from "@/lib/content";
+import { SectionPhoto } from "@/components/ui/SectionPhoto";
 
 /**
  * The range-of-motion arc is the visual thesis of the design: assessment
@@ -10,6 +11,15 @@ import { site, provider } from "@/lib/content";
 export function Hero() {
   return (
     <section className="hero" style={{ paddingTop: "clamp(48px,6vw,88px)" }}>
+      {/* The performance room, behind the plate the hero already had. The only
+          photograph on the page that is above the fold, so it is the only one
+          that loads eagerly. */}
+      <SectionPhoto
+        src="/images/clinic/performance-2.jpg"
+        scrim="hero"
+        position="center 42%"
+        priority
+      />
       <div className="wrap hero-grid">
         <div>
           {/*

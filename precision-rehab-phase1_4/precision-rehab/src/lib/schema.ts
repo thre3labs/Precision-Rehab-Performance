@@ -22,8 +22,6 @@ import {
  * not a reason to assert something nobody has confirmed.
  *
  * DELIBERATELY ABSENT, because nobody has verified them:
- *   - openingHours      the clinic's hours are still an open item. Absent is
- *                       correct; invented hours send patients to a locked door.
  *   - priceRange        was "$$" here. It was never verified, and this clinic
  *                       deliberately does not publish pricing, so the site was
  *                       telling Google something it declines to tell patients.
@@ -74,7 +72,16 @@ export function buildLocalBusinessSchema() {
     "@type": ["MedicalBusiness", "Physiotherapy"],
     "@id": BUSINESS_ID,
     name: site.name,
-    image: `${site.url}/images/og-default.jpg`,
+    /**
+     * Candidates, not an instruction. Google crops the result thumbnail to
+     * roughly a square, so a lone 1.91:1 card gets cut through the middle of
+     * whatever it carries. Each of these is composed for its own frame.
+     */
+    image: [
+      `${site.url}/images/share-1x1.jpg`,
+      `${site.url}/images/share-4x3.jpg`,
+      `${site.url}/images/share-16x9.jpg`,
+    ],
     logo: `${site.url}/images/logo-transparent.png`,
     url: site.url,
     telephone,
@@ -90,6 +97,20 @@ export function buildLocalBusinessSchema() {
       longitude: site.geo.lng,
     },
     ...(site.social.google ? { hasMap: site.social.google } : {}),
+    // Built from the same content.ts entry the Location section prints, so the
+    // hours a crawler reads and the hours a patient reads cannot disagree.
+    // Omitted entirely if hours are ever unset again — an empty
+    // openingHoursSpecification is worse than none.
+    ...(site.hours?.length
+      ? {
+          openingHoursSpecification: site.hours.map((h) => ({
+            "@type": "OpeningHoursSpecification",
+            dayOfWeek: h.dayOfWeek,
+            opens: h.openTime,
+            closes: h.closeTime,
+          })),
+        }
+      : {}),
     medicalSpecialty: "https://schema.org/Physiotherapy",
     // The towns the clinic actually serves, from content.ts. This is the
     // honest way to signal a service area, and far better than a thin page

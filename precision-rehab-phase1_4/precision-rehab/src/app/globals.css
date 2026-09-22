@@ -626,6 +626,26 @@ section{
 .items span{ display: block; color: var(--muted); font-size: var(--fs-sm); line-height: 1.55; margin-top: 3px; }
 
 
+/* Pinned to a dark ground in BOTH themes, because this section now carries a
+   photograph: .treat was --paper, which is near-white in light mode, and dark
+   text on a navy photograph is unreadable. This is the rule .mod and .why
+   already follow. These declarations must sit AFTER .treat's own block, or the
+   section's later rules win on order and the heading vanishes in light mode —
+   which is exactly what happened the first time, and which axe cannot catch,
+   because it will not evaluate contrast over an image. */
+.treat{
+  --focus: var(--amber-lift);
+  background: var(--ink);
+  color: var(--onDark);
+}
+.treat .axis-body > .note{ color: var(--amber-lift); }
+.treat h2{ color: #fff; }
+.treat .lede{ color: var(--onDark-mut); }
+/* the axis rule and its ticks are drawn in --amber, the dark AA-on-light amber,
+   which drops to 2.2:1 on this ground */
+.treat .axis-rail{ border-left-color: var(--amber-lift); }
+.treat .axis-rail::before, .treat .axis-rail::after{ background: var(--amber-lift); }
+
 /* ============================================================
    MODALITIES  (navy ground, white accordion cards)
    Detail is heavy, so every panel is collapsed until asked for.
@@ -637,11 +657,33 @@ section{
   color: var(--onDark);
   overflow: hidden;
 }
-/* photo band, dropped almost entirely into navy */
+/* photo band, dropped almost entirely into navy.
+   ---------------------------------------------------------------------------
+   This is the only photograph on the site that next/image never touches, so it
+   is the only one whose raw file size is what the visitor actually downloads.
+   Two consequences, both handled here:
+
+   1. `image-set()` gives the browser AVIF first, then WebP, then the JPEG that
+      every browser can read. Safari 14+ and every current engine take one of
+      the first two; nothing ever falls through to the JPEG in practice, but it
+      is there so the band never fails to paint.
+   2. The JPEG is encoded far softer than anything else in the set. It is drawn
+      at 20% opacity under a near-opaque navy gradient and then desaturated —
+      no one can resolve detail through all three, so quality spent here is
+      quality thrown away. */
 .mod-bg{
   position: absolute;
   inset: 0;
+  /* The plain url() is declared FIRST on purpose. An engine that does not
+     understand image-set() with type() — Safari 15 and 16, among others —
+     throws the whole second declaration away, and without this line it would
+     throw away the band with it. The cascade then leaves the JPEG standing. */
   background-image: url("/images/band-needling.jpg");
+  background-image: image-set(
+    url("/images/band-needling.avif") type("image/avif"),
+    url("/images/band-needling.webp") type("image/webp"),
+    url("/images/band-needling.jpg") type("image/jpeg")
+  );
   background-size: cover;
   background-position: 50% 38%;
   opacity: .20;
@@ -661,8 +703,15 @@ section{
 
 .acc{ margin-top: var(--sp-9); display: grid; gap: var(--sp-3h); }
 .acc-item{
-  /* white card on the navy ground: undo the section's lifted focus ring,
-     or the indicator lands light-on-white at ~2:1 */
+  /* White card on a navy ground, so it pins its own ink the way the header and
+     footer plates do. Without the colour line, everything in an OPEN panel
+     inherits the section's --onDark and lands near-white on white: axe measured
+     1.13:1. The head already set --text explicitly, which is why only the open
+     panel was affected and why this went unseen in Recovery Technology, whose
+     panels all start closed. */
+  color: var(--text);
+  /* undo the section's lifted focus ring, or the indicator lands
+     light-on-white at ~2:1 */
   --focus: var(--amber);
   background: var(--surface);
   border: 1px solid var(--line);
@@ -837,7 +886,10 @@ section{
 .treat-foot{
   margin-top: var(--sp-7);
   font-size: var(--fs-sm);
-  color: var(--muted);
+  /* NOT --muted. This section is a dark plate in both themes now, and --muted
+     is #4C6379 in light mode: it measured 2.70:1 against the photograph. It
+     passed in dark mode only because --muted happens to be light there. */
+  color: var(--onDark-mut);
   text-align: center;
 }
 
@@ -1237,15 +1289,100 @@ section{
   font-size: var(--fs-sm);
 }
 
+/* ------------------------------------------------------------------
+   The screening card carries a photograph behind it, which makes it a
+   permanently dark surface — in EVERY theme, exactly like the header and
+   footer plates are permanently white in every theme.
+
+   Everything inside reads its colour from a token, so the card re-declares
+   the tokens rather than overriding thirty rules. Anything added to this card
+   later inherits the correction for free; anything that hard-codes a colour
+   inside it does not, which is why the two that do are patched below.
+
+   These values are the dark palette verbatim. Do not "simplify" them into
+   var(--x) references — the whole point is that they must NOT follow the
+   theme.
+   ------------------------------------------------------------------ */
 .form-card{
-  background: var(--paper);
+  --text:         #E8EFF6;
+  --muted:        #9CB3C9;
+  --line:         #1E3D5E;
+  --line-soft:    #163050;
+  --field-bg:     #1C3C60;
+  /* Lighter than the dark palette's #36648F, which is the one value in this
+     block that is NOT simply copied across. #36648F was drawn to sit against a
+     flat --paper; against the photograph's composited ground it measures
+     2.29:1 and fails SC 1.4.11, which asks 3:1 of the boundary of a user
+     interface component. This clears it at 3.77:1 with room to spare, and the
+     field still reads as the same blue-bordered control. */
+  --field-border: #5188B8;
+  --field-ph:     #9FB6CC;
+  --amber:        #EBAA44;
+  --amber-lift:   #F3BE6A;
+  --amber-wash:   #16273C;
+  /* --amber above is the dark-ground amber and already clears 3:1 here, so
+     unlike the light-surface plates this card's focus ring can use it. The
+     lift is kept for the ring itself, which sits against the photograph
+     rather than against the card. */
+  --focus:        #F3BE6A;
+
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  /* The navy is the floor, not the finish: it is what shows if the photograph
+     is slow, blocked, or removed later. Every contrast figure below is
+     measured against the photograph, which is lighter, so the fallback is
+     always the safer of the two. */
+  background: #0A2244;
+  color: var(--text);
   border: 1px solid var(--line);
   border-radius: var(--radius);
   padding: clamp(24px, 3.2vw, 38px);
   box-shadow: var(--shadow-2);
 }
+
+/* The photograph, its tint, and a vertical scrim. The card prints text edge to
+   edge, so the scrim cannot ramp to one side the way a section's can: it is
+   heaviest behind the heading at the top and under the fine print at the
+   bottom, and lifts through the middle where the opaque fields cover the
+   photograph anyway. */
+.form-card-bg{
+  position: absolute;
+  inset: 0;
+  z-index: -3;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 58% 42%;
+}
+.form-card-tint{
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  background: #0A2244;
+  opacity: .75;
+}
+.form-card-scrim{
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(180deg,
+    rgba(6,21,37,.86) 0%,
+    rgba(6,21,37,.60) 26%,
+    rgba(6,21,37,.50) 62%,
+    rgba(6,21,37,.72) 100%);
+}
 .form-card h3{ font-size: var(--fs-2xl); }
-.form-card > p{ color: var(--muted); font-size: var(--fs-sm); margin-top: var(--sp-1h); }
+/* Scoped to the sub line under the heading, and nothing else.
+   This was `.form-card > p`, which is specificity 0,1,1 and therefore beat
+   `.form-err` at 0,1,0 — so the failure message, the one that tells a patient
+   their request did NOT reach the clinic, has been rendering in muted grey
+   rather than in the error colour the rule below sets. `.privacy` was being
+   overridden the same way and only escaped notice because it wanted --muted
+   anyway. Targeting the adjacent sibling fixes both and stops the rule
+   swallowing any paragraph added to this card later. */
+.form-card > h3 + p{ color: var(--muted); font-size: var(--fs-sm); margin-top: var(--sp-1h); }
+
 .fields{ margin-top: var(--sp-6); display: grid; gap: var(--sp-5); }
 @media (min-width: 620px){ .fields{ grid-template-columns: 1fr 1fr; } }
 .field{ display: grid; gap: var(--sp-2); }
@@ -1293,7 +1430,12 @@ section{
    Sub-4px values here and above are optical baseline nudges, not spacing. */
 .form-err{
   margin-top: var(--sp-3);
-  color: #A4241A;
+  /* #A4241A is the light-surface error red and drops to about 1.9:1 on this
+     card's dark ground — it was legible only while the card was near-white.
+     This is the dark-ground counterpart, and it is a fixed value for the same
+     reason every other colour in this card is: the card does not follow the
+     theme. */
+  color: #FF9B90;
   font-size: var(--fs-sm);
   font-weight: var(--w-demi);
   text-align: center;
@@ -1344,6 +1486,78 @@ section{
 .btn[disabled]{ opacity: .7; cursor: default; }
 
 /* ============================================================
+   SECTION PHOTOGRAPHY
+   ----------------------------------------------------------------------------
+   Layers for <SectionPhoto>. See that component for why there are three of
+   them and why the scrim shape differs per section.
+
+   Negative z-index plus `isolation: isolate` on the section root keeps these
+   behind everything the section prints without needing a z-index on every
+   piece of content. The section's own background colour stays as the floor:
+   it is what shows if a photograph is slow, blocked, or removed later, and it
+   is always darker than the photograph, so the fallback is the safer of the
+   two.
+   ============================================================ */
+.sec-ph{
+  position: absolute;
+  inset: 0;
+  z-index: -3;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.sec-ph-tint{
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  background: #0A2244;
+  opacity: .75;
+}
+.sec-ph-scrim{ position: absolute; inset: 0; z-index: -1; }
+
+.sec-ph-scrim--hero{
+  /* The last two stops were .28 and .10 when this column held nothing but the
+     range-of-motion dial. It also holds the dial's caption, which measured
+     4.42:1 against the brightest pixel behind it — just under AA. */
+  background:
+    linear-gradient(100deg,
+      rgba(6,21,37,.92) 0%, rgba(6,21,37,.72) 34%,
+      rgba(6,21,37,.40) 62%, rgba(6,21,37,.26) 100%),
+    radial-gradient(900px 420px at 74% 42%, rgba(243,190,106,.10), transparent 64%);
+}
+.sec-ph-scrim--left{
+  background:
+    linear-gradient(104deg,
+      rgba(6,21,37,.90) 0%, rgba(6,21,37,.70) 34%,
+      rgba(6,21,37,.30) 62%, rgba(6,21,37,.12) 100%),
+    linear-gradient(to bottom, rgba(6,21,37,.38) 0%, rgba(6,21,37,0) 40%);
+}
+.sec-ph-scrim--even{
+  background:
+    linear-gradient(104deg,
+      rgba(6,21,37,.80) 0%, rgba(6,21,37,.66) 38%,
+      rgba(6,21,37,.50) 70%, rgba(6,21,37,.42) 100%),
+    linear-gradient(to bottom, rgba(6,21,37,.42) 0%, rgba(6,21,37,0) 42%);
+}
+.sec-ph-scrim--centre{
+  background:
+    radial-gradient(120% 130% at 50% 50%,
+      rgba(6,21,37,.86) 0%, rgba(6,21,37,.72) 34%,
+      rgba(6,21,37,.34) 66%, rgba(6,21,37,.16) 100%);
+}
+
+/* Sections that carry a photograph need a stacking context of their own, and
+   their content needs to sit above the layers. */
+/* Every section carrying a photograph needs BOTH of these. `isolation` keeps
+   the negative-z layers inside the section, and `position: relative` is what
+   the layers' `inset: 0` resolves against — without it they resolve against
+   the viewport, cover the whole page, and hide every section above. .hero
+   already had position: relative; .why did not. */
+.hero, .treat, .why, .closer{ position: relative; isolation: isolate; overflow: hidden; }
+.treat > .wrap, .why > .wrap, .closer > .wrap{ position: relative; z-index: 1; }
+
+
+/* ============================================================
    LOCATION
    ============================================================ */
 .loc{ background: var(--paper); }
@@ -1359,32 +1573,100 @@ section{
 .loc-map{
   position: relative;
   min-height: 300px;
-  background:
-    linear-gradient(135deg, var(--ink) 0%, var(--ink-2) 60%, var(--ink-3) 100%);
-  display: grid;
-  place-items: center;
-  padding: var(--sp-7);
+  /* the floor under the photographs, and what shows while the first one
+     decodes */
+  background: var(--ink);
   overflow: hidden;
 }
-.loc-map svg.grid-lines{ position: absolute; inset: 0; width: 100%; height: 100%; }
-.loc-pin{
+@media (max-width: 879px){ .loc-map{ min-height: 0; aspect-ratio: 4 / 3; } }
+
+/* ---- the clinic tour ---- */
+.tour{ position: absolute; inset: 0; display: grid; grid-template-rows: 1fr auto; }
+.tour-strip{
   position: relative;
-  z-index: 1;
-  text-align: center;
-  color: var(--onDark);
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
 }
-.loc-pin .ring{
-  width: 74px; height: 74px;
-  margin: 0 auto var(--sp-4);
+.tour-strip::-webkit-scrollbar{ display: none; }
+.tour-strip:focus-visible{ outline: 3px solid var(--amber-lift); outline-offset: -3px; }
+.tour-slide{
+  /* <figure> ships with `margin: 1em 40px`. Left in, every slide is 80px wider
+     than the frame it snaps into and the counter drifts out of step with the
+     picture by slide four. */
+  margin: 0;
+  position: relative;
+  flex: 0 0 100%;
+  scroll-snap-align: start;
+  overflow: hidden;
+  background: var(--ink);
+}
+/* The three portrait photographs were re-cropped to 5:4 by hand, so `cover`
+   fills the frame here without discarding anything that was not already
+   discarded deliberately. Letting the browser crop the portraits at render
+   time is what produced the "long and zoomed in" result that was rejected. */
+.tour-shot{ position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.tour-slide figcaption{
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  padding: var(--sp-8) var(--sp-5) var(--sp-3h);
+  background: linear-gradient(to top,
+    rgba(4,16,31,.94) 0%, rgba(4,16,31,.72) 46%, rgba(4,16,31,0) 100%);
+  display: flex;
+  align-items: baseline;
+  gap: var(--sp-3);
+}
+.tour-num{ font-family: var(--mono, ui-monospace, monospace); font-size: var(--fs-xs); color: var(--amber-lift); flex: none; }
+.tour-cap{ font-size: var(--fs-sm); line-height: 1.4; color: var(--onDark); }
+
+.tour-bar{
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  padding: var(--sp-3) var(--sp-4);
+  background: rgba(4,16,31,.92);
+  border-top: 1px solid rgba(234,241,248,.10);
+}
+.tour-count{ font-family: var(--mono, ui-monospace, monospace); font-size: var(--fs-xs); color: var(--onDark-mut); flex: none; }
+.tour-dots{ display: flex; gap: var(--sp-1h); margin-inline: auto; }
+/* 24px hit area around a 7px dot: WCAG 2.2 target size is 24px minimum, and a
+   7px dot on its own is nowhere near it. */
+.tour-dots button{
+  width: 24px; height: 24px; padding: 0;
+  border: 0; background: transparent; cursor: pointer;
+  display: grid; place-items: center;
+}
+.tour-dots button::before{
+  content: "";
+  width: 7px; height: 7px;
   border-radius: 50%;
-  border: 2px solid var(--amber-lift);
-  display: grid;
-  place-items: center;
-  color: var(--amber-lift);
-  background: rgba(8,24,46,.5);
+  background: rgba(234,241,248,.30);
+  transition: background-color .18s ease, transform .18s ease;
 }
-.loc-pin b{ display: block; font-family: var(--display); font-size: var(--fs-md); color: #fff; }
-.loc-pin span{ display: block; font-size: var(--fs-sm); color: var(--onDark-mut); margin-top: 3px; }
+.tour-dots button[aria-current="true"]::before{ background: var(--amber-lift); transform: scale(1.3); }
+.tour-dots button:focus-visible{ outline: 3px solid var(--amber-lift); outline-offset: 1px; border-radius: 6px; }
+.tour-nav{ display: flex; gap: var(--sp-2); flex: none; }
+.tour-nav button{
+  width: 38px; height: 38px;
+  border-radius: 50%;
+  border: 1px solid rgba(234,241,248,.22);
+  background: transparent;
+  color: var(--onDark);
+  display: grid; place-items: center;
+  cursor: pointer;
+}
+.tour-nav button:hover{ border-color: var(--amber-lift); color: var(--amber-lift); }
+.tour-nav button:focus-visible{ outline: 3px solid var(--amber-lift); outline-offset: 2px; }
+.tour-nav svg{ width: 17px; height: 17px; stroke: currentColor; fill: none; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+
+@media (prefers-reduced-motion: reduce){
+  .tour-strip{ scroll-behavior: auto; }
+}
+
 .loc-info{ padding: clamp(26px, 3.4vw, 40px); display: grid; align-content: center; gap: var(--sp-6); }
 .loc-line{ display: grid; grid-template-columns: 22px 1fr; gap: var(--sp-3h); }
 .loc-line svg{ color: var(--amber); margin-top: var(--sp-1); }
@@ -1432,6 +1714,7 @@ section{
 .faq details[open] .chev svg{ transform: rotate(45deg); }
 .faq details p{ padding-bottom: var(--sp-6); color: var(--muted); max-width: 72ch; font-size: var(--fs-base); }
 
+
 /* ============================================================
    CLOSER + FOOTER
    ============================================================ */
@@ -1445,6 +1728,16 @@ section{
 .closer h2{ color: var(--text); max-width: 20ch; margin-inline: auto; }
 .closer p{ margin-top: var(--sp-4); color: var(--muted); max-width: 52ch; margin-inline: auto; }
 .closer .btn{ margin-top: var(--sp-7); }
+
+/* Same treatment as .treat, and for the same reason: .closer was --paper and
+   now carries a photograph. After .closer's own rules so it wins on order. */
+.closer{
+  --focus: var(--amber-lift);
+  background: var(--ink);
+  color: var(--onDark);
+}
+.closer h2{ color: #fff; }
+.closer p{ color: var(--onDark-mut); }
 
 .ftr{
   /* Always-white plate, in every theme — so this block pins its own ink

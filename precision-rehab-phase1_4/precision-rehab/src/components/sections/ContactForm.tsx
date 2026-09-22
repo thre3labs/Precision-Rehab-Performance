@@ -75,6 +75,30 @@ export function ContactForm() {
       onSubmit={handleSubmit}
       aria-label="Contact and free screening request form"
     >
+      {/*
+        The treatment room, behind the card. Purely decorative: alt="" and
+        aria-hidden, because the room is atmosphere here, not information — the
+        clinic tour in the Location section is where the photographs are
+        described.
+
+        Not next/image. This is an absolutely positioned full-bleed layer
+        inside a card whose height is set by the form, so there is no stable
+        width for the sizes attribute to describe, and a fill image here buys
+        nothing the plain tag does not already give. It is 121 KB and it is
+        below the fold, so it is lazy by default.
+      */}
+      {/* eslint-disable-next-line @next/next/no-img-element -- see above */}
+      <img
+        className="form-card-bg"
+        src="/images/clinic/treatment-1.jpg"
+        alt=""
+        aria-hidden="true"
+        loading="lazy"
+        decoding="async"
+      />
+      <div className="form-card-tint" aria-hidden="true" />
+      <div className="form-card-scrim" aria-hidden="true" />
+
       <h3>Request your free screening</h3>
       <p>Prefer to skip the form? Call or text us directly instead.</p>
 

@@ -113,11 +113,14 @@ profile is stored in its canonical `?cid=` form, since the long
 `/maps/place/...` URL carries ephemeral session parameters and a map viewport
 that have nothing to do with the business.
 
-**Still deliberately absent:** `openingHours`, because nobody has confirmed the
-hours. Invented hours send a patient to a locked door, and structured data that
-contradicts reality is a manual-action risk on a medical site.
-`aggregateRating` is absent because there is nothing to aggregate and
-self-serving review markup is exactly what earns a penalty.
+**Added 17 September:** `openingHoursSpecification` — Monday–Friday, 08:00 to
+16:30, confirmed by the client and matching the clinic's own door signage. It
+is built from the same `content.ts` entry the Location section prints, so the
+hours a crawler reads and the hours a patient reads cannot drift apart. The
+same hours must go on the Google Business Profile.
+
+**Still deliberately absent:** `aggregateRating`, because there is nothing to
+aggregate and self-serving review markup is exactly what earns a penalty.
 
 ### Conversion tracking
 
@@ -206,8 +209,6 @@ the stale card from when the domain was wrong.
 
 ## Still needed from the clinic
 
-- **Business hours.** Blocks `openingHours` in structured data and the Business
-  Profile. Highest-value single missing fact.
 - **Google Business Profile URL**, for `sameAs`.
 - **Confirm the email domain.** `content.ts` has
   `Kushal.patel@precisionrpt.com` — `precisionrpt`, not `precisionrehabpt`.

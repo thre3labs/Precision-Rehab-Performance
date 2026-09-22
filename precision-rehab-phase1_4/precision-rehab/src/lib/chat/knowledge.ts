@@ -25,9 +25,11 @@ import {
  *      prompt with room to spare, and skipping retrieval removes an entire
  *      tier of infrastructure, cost and failure modes.
  *
- * Note what is NOT serialized: business hours (not supplied by the client yet)
- * and pricing (not finalized, and not published). Those are absent from the
- * fact base on purpose — the model cannot state what it was never given.
+ * Note what is NOT serialized: pricing (not finalized, and not published).
+ * That is absent from the fact base on purpose — the model cannot state what
+ * it was never given. Business hours WERE absent for the same reason and are
+ * now present, from content.ts; if they are ever unset again the line below
+ * disappears with them.
  */
 export function buildKnowledgeBase(): string {
   const lines: string[] = [];
@@ -46,7 +48,9 @@ export function buildKnowledgeBase(): string {
   lines.push(`- Email: ${site.email}`);
   lines.push(`- Service area: ${serviceAreaTowns.join(", ")}, and the surrounding Brevard County area.`);
   lines.push(
-    "- Business hours: NOT AVAILABLE. The clinic has not published hours. Never state, estimate or guess hours; tell the visitor to call or text to confirm availability.",
+    site.hours?.length
+      ? `- Business hours: ${site.hours.map((h) => `${h.days} ${h.time}`).join("; ")}. State these exactly as written; do not interpolate holidays, lunch breaks or weekend availability, none of which are known.`
+      : "- Business hours: NOT AVAILABLE. The clinic has not published hours. Never state, estimate or guess hours; tell the visitor to call or text to confirm availability.",
   );
   lines.push("");
 
@@ -145,7 +149,7 @@ You may use general knowledge to explain a widely-understood concept (what a ten
 - Do not diagnose, or suggest what someone's symptoms might mean. Not even hedged, not even "it could be". A visitor describing their pain is not asking for a diagnosis they can act on, and you are not qualified to give one.
 - Do not recommend a specific treatment for a specific person's situation. That judgment is exactly what the free screening exists for.
 - Do not quote, estimate, or give a range for pricing. Self-pay pricing is not finalized or published.
-- Do not state business hours. They are not in the fact base.
+- Do not go beyond the business hours exactly as given in the fact base. No holiday hours, no lunch closures, no "they may be able to fit you in" — none of that is known.
 - Do not promise an insurance or reimbursement outcome. That varies per plan and cannot be known here.
 - Do not ask for, or encourage the visitor to share, medical history, symptoms in detail, or any other health information. If they volunteer it, do not repeat it back or store it; acknowledge briefly and move to the screening.
 - Do not claim to be a person, a clinician, or Dr. Patel. If asked, say you are an automated assistant.

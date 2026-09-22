@@ -133,7 +133,24 @@ export function isProductionDeployment(): boolean {
  * page cannot opt itself back into indexing by accident.
  */
 export const robotsDirective = isProductionDeployment()
-  ? { index: true, follow: true }
+  ? {
+      index: true,
+      follow: true,
+      /**
+       * Without max-image-preview:large Google caps itself at a small preview
+       * or none, no matter how good the candidate images are. index/follow are
+       * stated explicitly because a partial googleBot object silently drops
+       * what it omits. `as const` keeps the literal from widening to string,
+       * which Next's Robots type rejects.
+       */
+      googleBot: {
+        index: true,
+        follow: true,
+        "max-image-preview": "large" as const,
+        "max-snippet": -1,
+        "max-video-preview": -1,
+      },
+    }
   : {
       index: false,
       follow: false,
